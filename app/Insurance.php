@@ -27,4 +27,9 @@ class Insurance extends Model
         'email' => 'email',
         'code' => 'max:255',
     ];
+
+    public function insureds()
+    {
+        return $this->hasMany('App\Insured');
+    }
 }

@@ -1,13 +1,14 @@
 <?php
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
-use App\Insured;
+use App\Service;
 use Faker\Generator as Faker;
 
-$factory->define(Insured::class, function (Faker $faker) {
+$factory->define(Service::class, function (Faker $faker) {
     return [
-        'person_data_id' => factory(App\PersonData::class)->create(['insured' => 1]),
-        'insurance_id' => factory(App\Insurance::class),
+        'code' => $faker->randomNumber(),
+        'description' => $faker->word(),
+        'total' => $faker->randomDigitNotNull,
         'created_at' => $faker->dateTimeThisYear,
         'updated_at' => $faker->dateTimeThisYear,
     ];

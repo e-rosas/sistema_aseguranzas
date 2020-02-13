@@ -14,7 +14,7 @@ class PersonDataController extends Controller
      */
     public function index(PersonData $model)
     {
-        return view('services.index', ['services' => $model->paginate(15)]);
+        return view('patients.index', ['patients' => $model->paginate(15)]);
     }
 
     /**

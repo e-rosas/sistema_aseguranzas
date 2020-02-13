@@ -59,4 +59,14 @@ class PersonData extends Model
         'email' => 'string',
         'insured' => 'boolean',
     ];
+
+    public function insured()
+    {
+        return $this->hasOne('App\Insured');
+    }
+
+    public function beneficiary()
+    {
+        return $this->hasOne('App\Beneficiary');
+    }
 }
