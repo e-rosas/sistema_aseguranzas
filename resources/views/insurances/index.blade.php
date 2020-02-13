@@ -10,10 +10,10 @@
                     <div class="card-header border-0">
                         <div class="row align-items-center">
                             <div class="col-8">
-                                <h3 class="mb-0">{{ __('Aseguranzas') }}</h3>
+                                <h3 class="mb-0">{{ __('Insurances') }}</h3>
                             </div>
                             <div class="col-4 text-right">
-                                <a href="{{ route('aseguranzas.create') }}" class="btn btn-sm btn-primary">{{ __('Add insurance') }}</a>
+                                <a href="{{ route('insurances.create') }}" class="btn btn-sm btn-primary">{{ __('Add insurance') }}</a>
                             </div>
                         </div>
                     </div>
@@ -42,27 +42,27 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($aseguranzas as $aseguranza)
+                                @foreach ($insurances as $insurance)
                                     <tr>
-                                        <td>{{ $aseguranza->nombre }}</td>
+                                        <td>{{ $insurance->name }}</td>
                                         <td>
-                                            <a href="mailto:{{ $aseguranza->correo_e }}">{{ $aseguranza->correo_e }}</a>
+                                            <a href="mailto:{{ $insurance->email }}">{{ $insurance->email }}</a>
                                         </td>
-                                        <td>{{ $aseguranza->telefono }}</td>
-                                        <td>{{ $aseguranza->ciudad }}</td>
-                                        <td>{{ $aseguranza->clave }}</td>
+                                        <td>{{ $insurance->phone_number }}</td>
+                                        <td>{{ $insurance->city }}</td>
+                                        <td>{{ $insurance->code }}</td>
                                         <td class="text-right">
                                             <div class="dropdown">
                                                 <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                     <i class="fas fa-ellipsis-v"></i>
                                                 </a>
                                                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                                        {{--  <form action="{{ route('aseguranza.destroy', $aseguranza) }}" method="post">
+                                                        {{--  <form action="{{ route('insurance.destroy', $insurance) }}" method="post">
                                                             @csrf
                                                             @method('delete')
                                                             
-                                                            <a class="dropdown-item" href="{{ route('aseguranza.edit', $aseguranza) }}">{{ __('Edit') }}</a>
-                                                            <button type="button" class="dropdown-item" onclick="confirm('{{ __("Are you sure you want to delete this aseguranza?") }}') ? this.parentElement.submit() : ''">
+                                                            <a class="dropdown-item" href="{{ route('insurance.edit', $insurance) }}">{{ __('Edit') }}</a>
+                                                            <button type="button" class="dropdown-item" onclick="confirm('{{ __("Are you sure you want to delete this insurance?") }}') ? this.parentElement.submit() : ''">
                                                                 {{ __('Delete') }}
                                                             </button>
                                                         </form>    --}}  
@@ -77,7 +77,7 @@
                     </div>
                     <div class="card-footer py-4">
                         <nav class="d-flex justify-content-end" aria-label="...">
-                            {{ $aseguranzas->links() }}
+                            {{ $insurances->links() }}
                         </nav>
                     </div>
                 </div>

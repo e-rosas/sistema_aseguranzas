@@ -19,7 +19,7 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::group(['middleware' => 'auth'], function () {
-    Route::resource('aseguranzas', 'AseguranzaController');
+    Route::resource('insurances', 'InsuranceController');
     Route::resource('services', 'ServiceController');
     Route::resource('discounts', 'DiscountController');
     Route::resource('user', 'UserController', ['except' => ['show']]);
