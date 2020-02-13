@@ -1,4 +1,4 @@
-@extends('layouts.app', ['title' => __('Insurance management')])
+@extends('layouts.app', ['title' => __('Beneficiary management')])
 
 @section('content')
     @include('layouts.headers.cards')
@@ -10,10 +10,10 @@
                     <div class="card-header border-0">
                         <div class="row align-items-center">
                             <div class="col-8">
-                                <h3 class="mb-0">{{ __('Insurances') }}</h3>
+                                <h3 class="mb-0">{{ __('Beneficiaries') }}</h3>
                             </div>
                             <div class="col-4 text-right">
-                                <a href="{{ route('insurances.create') }}" class="btn btn-sm btn-primary">{{ __('Add insurance') }}</a>
+                                <a href="{{ route('beneficiaries.create') }}" class="btn btn-sm btn-primary">{{ __('Add beneficiary') }}</a>
                             </div>
                         </div>
                     </div>
@@ -37,32 +37,34 @@
                                     <th scope="col">{{ __('Email') }}</th>
                                     <th scope="col">{{ __('Phone') }}</th>
                                     <th scope="col">{{ __('City') }}</th>
-                                    <th scope="col">{{ __('ID') }}</th>
+                                    <th scope="col">{{ __('Insuree') }}</th>
+                                    <th scope="col">{{ __('Insurance') }}</th>
                                     <th scope="col"></th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($insurances as $insurance)
+                                @foreach ($beneficiaries as $beneficiary)
                                     <tr>
-                                        <td>{{ $insurance->name }}</td>
+                                        <td>{{ $beneficiary->fullName() }}</td>
                                         <td>
-                                            <a href="mailto:{{ $insurance->email }}">{{ $insurance->email }}</a>
+                                            <a href="mailto:{{ $beneficiary->person_data->email }}">{{ $beneficiary->person_data->email }}</a>
                                         </td>
-                                        <td>{{ $insurance->phone_number }}</td>
-                                        <td>{{ $insurance->city }}</td>
-                                        <td>{{ $insurance->code }}</td>
+                                        <td>{{ $beneficiary->person_data->phone_number }}</td>
+                                        <td>{{ $beneficiary->person_data->city }}</td>
+                                        <td>{{ $beneficiary->insured->fullName() }}</td>
+                                        <td>{{ $beneficiary->insured->insurance->name }}</td>
                                         <td class="text-right">
                                             <div class="dropdown">
                                                 <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                     <i class="fas fa-ellipsis-v"></i>
                                                 </a>
                                                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                                        {{--  <form action="{{ route('insurance.destroy', $insurance) }}" method="post">
+                                                        {{--  <form action="{{ route('beneficiary.destroy', $beneficiary) }}" method="post">
                                                             @csrf
                                                             @method('delete')
                                                             
-                                                            <a class="dropdown-item" href="{{ route('insurance.edit', $insurance) }}">{{ __('Edit') }}</a>
-                                                            <button type="button" class="dropdown-item" onclick="confirm('{{ __("Are you sure you want to delete this insurance?") }}') ? this.parentElement.submit() : ''">
+                                                            <a class="dropdown-item" href="{{ route('beneficiary.edit', $beneficiary) }}">{{ __('Edit') }}</a>
+                                                            <button type="button" class="dropdown-item" onclick="confirm('{{ __("Are you sure you want to delete this beneficiary?") }}') ? this.parentElement.submit() : ''">
                                                                 {{ __('Delete') }}
                                                             </button>
                                                         </form>    --}}  
@@ -77,7 +79,7 @@
                     </div>
                     <div class="card-footer py-4">
                         <nav class="d-flex justify-content-end" aria-label="...">
-                            {{ $insurances->links() }}
+                            {{ $beneficiaries->links() }}
                         </nav>
                     </div>
                 </div>

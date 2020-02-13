@@ -11,8 +11,13 @@ class Beneficiary extends Model
         return $this->belongsTo('App\PersonData');
     }
 
-    public function insurance()
+    public function insured()
     {
-        return $this->hasOneThrough('App\Insurance', 'App\Insured');
+        return $this->belongsTo('App\Insured');
+    }
+
+    public function fullName()
+    {
+        return $this->person_data->last_name.' '.$this->person_data->maiden_name.' '.$this->person_data->name;
     }
 }
