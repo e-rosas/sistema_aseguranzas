@@ -24,6 +24,7 @@ class AseguranzaController extends Controller
      */
     public function create()
     {
+        return view('aseguranzas.create');
     }
 
     /**
@@ -33,6 +34,10 @@ class AseguranzaController extends Controller
      */
     public function store(Request $request)
     {
+        $validated = $this->validateInsurance();
+        Aseguranza::create($validated);
+
+        return redirect()->route('aseguranzas.index')->withStatus(__('Insurance successfully created.'));
     }
 
     /**
@@ -69,5 +74,19 @@ class AseguranzaController extends Controller
      */
     public function destroy(Aseguranza $aseguranza)
     {
+    }
+
+    protected function validateInsurance()
+    {
+        return request()->validate([
+            'nombre' => ['required', 'min:10', 'max:255'],
+            'domicilio' => ['max:255'],
+            'ciudad' => ['max:255'],
+            'estado' => ['max:255'],
+            'codigo_postal' => ['digits:5'],
+            'telefono' => ['required', 'max:255'],
+            'correo_e' => ['email'],
+            'clave' => ['max:255'],
+        ]);
     }
 }
