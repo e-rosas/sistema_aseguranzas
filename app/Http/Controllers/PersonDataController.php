@@ -12,10 +12,6 @@ class PersonDataController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(PersonData $model)
-    {
-        return view('patients.index', ['patients' => $model->paginate(15)]);
-    }
 
     /**
      * Show the form for creating a new resource.
@@ -31,7 +27,11 @@ class PersonDataController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function storeInsuree(Request $request)
+    {
+    }
+
+    public function storeBeneficiary(Request $request)
     {
     }
 

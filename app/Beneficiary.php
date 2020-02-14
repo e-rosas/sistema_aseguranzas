@@ -11,9 +11,9 @@ class Beneficiary extends Model
         return $this->belongsTo('App\PersonData');
     }
 
-    public function insured()
+    public function insuree()
     {
-        return $this->belongsTo('App\Insured');
+        return $this->belongsTo('App\Insuree');
     }
 
     public function fullName()

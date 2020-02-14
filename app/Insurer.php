@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Insurance extends Model
+class Insurer extends Model
 {
     public $fillable = [
         'name',
@@ -28,8 +28,8 @@ class Insurance extends Model
         'code' => 'max:255',
     ];
 
-    public function insureds()
+    public function insurees()
     {
-        return $this->hasMany('App\Insured');
+        return $this->hasMany('App\Insuree');
     }
 }

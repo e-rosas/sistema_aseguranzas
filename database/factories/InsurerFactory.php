@@ -1,10 +1,10 @@
 <?php
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
-use App\Insurance;
+use App\Insurer;
 use Faker\Generator as Faker;
 
-$factory->define(Insurance::class, function (Faker $faker) {
+$factory->define(Insurer::class, function (Faker $faker) {
     return [
         'name' => $faker->name,
         'address' => $faker->streetAddress,

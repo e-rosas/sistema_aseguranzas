@@ -1,7 +1,7 @@
-@extends('layouts.app', ['title' => __('Beneficiary Management')])
+@extends('layouts.app', ['title' => __('Insuree Management')])
 
 @section('content')
-    @include('beneficiaries.partials.header', ['title' => __('Add Beneficiary')])   
+    @include('insurees.partials.header', ['title' => __('Add Insuree')])   
 
     <div class="container-fluid mt--7">
         <div class="row">
@@ -10,15 +10,15 @@
                     <div class="card-header bg-white border-0">
                         <div class="row align-items-center">
                             <div class="col-8">
-                                <h3 class="mb-0">{{ __('Beneficiary Management') }}</h3>
+                                <h3 class="mb-0">{{ __('Insuree Management') }}</h3>
                             </div>
                             <div class="col-4 text-right">
-                                <a href="{{ route('beneficiaries.index') }}" class="btn btn-sm btn-primary">{{ __('Back to list') }}</a>
+                                <a href="{{ route('insurees.index') }}" class="btn btn-sm btn-primary">{{ __('Back to list') }}</a>
                             </div>
                         </div>
                     </div>
                     <div class="card-body">
-                        <form method="post" action="{{ route('persondata.storebeneficiary') }}" autocomplete="off">
+                        <form method="post" action="{{ route('persondata.storeinsuree') }}" autocomplete="off">
                             @csrf
                         @include('layouts.register')
                         <div class="text-center">

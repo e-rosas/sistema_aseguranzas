@@ -7,7 +7,7 @@ use Faker\Generator as Faker;
 $factory->define(Beneficiary::class, function (Faker $faker) {
     return [
         'person_data_id' => factory(App\PersonData::class)->create(['insured' => 0]),
-        'insured_id' => factory(App\Insured::class),
+        'insuree_id' => factory(App\Insuree::class),
         'created_at' => $faker->dateTimeThisYear,
         'updated_at' => $faker->dateTimeThisYear,
     ];

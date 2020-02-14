@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Insured extends Model
+class Insuree extends Model
 {
     public function person_data()
     {
@@ -16,9 +16,9 @@ class Insured extends Model
         return $this->hasMany('App\Beneficiary');
     }
 
-    public function insurance()
+    public function insurer()
     {
-        return $this->belongsTo('App\Insurance');
+        return $this->belongsTo('App\Insurer');
     }
 
     public function fullName()

@@ -14,10 +14,10 @@ class CreateBeneficiariesTable extends Migration
         Schema::create('beneficiaries', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('person_data_id');
-            $table->unsignedBigInteger('insured_id');
+            $table->unsignedBigInteger('insuree_id');
 
             $table->foreign('person_data_id')->references('id')->on('person_data');
-            $table->foreign('insured_id')->references('id')->on('insureds');
+            $table->foreign('insuree_id')->references('id')->on('insurees');
             $table->timestamps();
         });
     }

@@ -2,19 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Insurance;
+use App\Insurer;
 use Illuminate\Http\Request;
 
-class InsuranceController extends Controller
+class InsurerController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Insurance $model)
+    public function index(Insurer $model)
     {
-        return view('insurances.index', ['insurances' => $model->paginate(15)]);
+        return view('insurers.index', ['insurers' => $model->paginate(15)]);
     }
 
     /**
@@ -24,7 +24,7 @@ class InsuranceController extends Controller
      */
     public function create()
     {
-        return view('insurances.create');
+        return view('insurers.create');
     }
 
     /**
@@ -34,10 +34,10 @@ class InsuranceController extends Controller
      */
     public function store(Request $request)
     {
-        $validated = $this->validateInsurance();
-        Insurance::create($validated);
+        $validated = $this->validateInsurer();
+        Insurer::create($validated);
 
-        return redirect()->route('insurances.index')->withStatus(__('Insurance successfully created.'));
+        return redirect()->route('insurers.index')->withStatus(__('Insurer successfully created.'));
     }
 
     /**
@@ -45,7 +45,7 @@ class InsuranceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function show(Insurance $insurance)
+    public function show(Insurer $Insurer)
     {
     }
 
@@ -54,7 +54,7 @@ class InsuranceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function edit(Insurance $insurance)
+    public function edit(Insurer $Insurer)
     {
     }
 
@@ -63,7 +63,7 @@ class InsuranceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Insurance $insurance)
+    public function update(Request $request, Insurer $Insurer)
     {
     }
 
@@ -72,11 +72,11 @@ class InsuranceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Insurance $insurance)
+    public function destroy(Insurer $Insurer)
     {
     }
 
-    protected function validateInsurance()
+    protected function validateInsurer()
     {
         return request()->validate([
             'name' => ['required', 'min:10', 'max:255'],

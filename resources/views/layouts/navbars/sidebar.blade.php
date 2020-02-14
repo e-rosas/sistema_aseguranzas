@@ -82,8 +82,8 @@
                     <div class="collapse show" id="navbar-examples">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('insurances.index') }}">
-                                    {{ __('Insurances') }}
+                                <a class="nav-link" href="{{ route('insurers.index') }}">
+                                    {{ __('Insurers') }}
                                 </a>
                             </li>
                             <li class="nav-item">
@@ -118,8 +118,8 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('services.index') }}">
-                                    {{ __('Services') }}
+                                <a class="nav-link" href="{{ route('insurees.index') }}">
+                                    {{ __('Insurees') }}
                                 </a>
                             </li>
                         </ul>

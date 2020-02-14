@@ -24,6 +24,7 @@ class BeneficiaryController extends Controller
      */
     public function create()
     {
+        return view('beneficiaries.create');
     }
 
     /**
