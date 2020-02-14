@@ -74,4 +74,11 @@ class InsureeController extends Controller
     public function destroy(Insuree $Insuree)
     {
     }
+
+    public function search(Request $request)
+    {
+        $insurees = Insuree::query()
+            ->whereLike(['name', 'last_name', 'maiden_name', 'email'], $request->search)
+            ->get()->take(10);
+    }
 }

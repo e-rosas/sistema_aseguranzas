@@ -20,12 +20,17 @@
                     <div class="card-body">
                         <form method="post" action="{{ route('persondata.storebeneficiary') }}" autocomplete="off">
                             @csrf
-                        @include('layouts.register')
-                        <div class="text-center">
-                            <button type="submit" class="btn btn-success mt-4">{{ __('Save') }}</button>
+                        @component('components.register',['beneficiary' => '1'])
+                            
+                        @endcomponent
+                        @component('components.search')
+                            
+                        @endcomponent
+                        <div class="pl-lg-4">
+                            <button type="submit" class="btn btn-success mt-4 btn-block">{{ __('Save') }}</button>
                         </div>
                         </form>
-                </div>                    
+                    </div>                    
                 </div>
             </div>
         </div>
