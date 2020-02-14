@@ -15,7 +15,8 @@ class CreateServicesTable extends Migration
             $table->bigIncrements('id');
             $table->integer('code');
             $table->string('description');
-            $table->decimal('total', 13, 4);
+            $table->decimal('total_price', 13, 4);
+            $table->decimal('discounted_price', 13, 4);
             $table->timestamps();
             $table->softDeletes();
         });

@@ -47,15 +47,27 @@
                                         </span>
                                     @endif
                                 </div>
-                                {{--  Total  --}}
-                                <div class="form-group{{ $errors->has('total') ? ' has-danger' : '' }}">
-                                    <label class="form-control-label" for="input-total">Total</label>
-                                    <input type="numeric" name="total" id="input-total" class="form-control form-control-alternative{{ $errors->has('total') ? ' is-invalid' : '' }}" 
-                                    placeholder="Total" value="{{ old('total') }}" required>
+                                {{--  total_price  --}}
+                                <div class="form-group{{ $errors->has('total_price') ? ' has-danger' : '' }}">
+                                    <label class="form-control-label" for="input-total_price">{{ __('Total price') }}</label>
+                                    <input type="numeric" name="total_price" id="input-total_price" class="form-control form-control-alternative{{ $errors->has('total_price') ? ' is-invalid' : '' }}" 
+                                    placeholder="{{ __('Total price') }}" value="{{ old('total_price') }}" required>
                                 
-                                    @if ($errors->has('total'))
+                                    @if ($errors->has('total_price'))
                                         <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $errors->first('total') }}</strong>
+                                            <strong>{{ $errors->first('total_price') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+                                {{--  Discount  --}}
+                                <div class="form-group{{ $errors->has('discounted_price') ? ' has-danger' : '' }}">
+                                    <label class="form-control-label" for="input-discounted_price">{{ __('Discounted price') }}</label>
+                                    <input type="numeric" name="discounted_price" id="input-discounted_price" class="form-control form-control-alternative{{ $errors->has('discounted_price') ? ' is-invalid' : '' }}" 
+                                    placeholder="{{ __('Discounted price') }} value="{{ old('discounted_price') }}" required>
+                                
+                                    @if ($errors->has('discounted_price'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('discounted_price') }}</strong>
                                         </span>
                                     @endif
                                 </div>

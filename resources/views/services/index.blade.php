@@ -35,7 +35,8 @@
                                 <tr>
                                     <th scope="col">{{ __('Code') }}</th>
                                     <th scope="col">{{ __('Description') }}</th>
-                                    <th scope="col">{{ __('Total') }}</th>
+                                    <th scope="col">{{ __('Total Price') }}</th>
+                                    <th scope="col">{{ __('Discounted Price') }}</th>
                                     <th scope="col"></th>
                                 </tr>
                             </thead>
@@ -44,7 +45,8 @@
                                     <tr>
                                         <td>{{ $service->code }}</td>
                                         <td>{{ $service->description }}</td>
-                                        <td>{{ $service->total }}</td>
+                                        <td>{{ $service->total_price }}</td>
+                                        <td>{{ $service->discounted_price }}</td>
 
                                         <td class="text-right">
                                             <div class="dropdown">
