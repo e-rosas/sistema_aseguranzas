@@ -30,16 +30,16 @@ class PersonData extends Model
         'last_name' => 'max:255',
         'maiden_name' => 'max:255',
         'name' => 'required|max:255',
-        'birth_date' => 'required',
+        'birth_date' => 'date',
         'address' => 'max:255',
         'city' => 'max:255',
         'state' => 'max:255',
         'postal_code' => 'digits:5',
-        'phone' => 'max:255',
+        'phone_number' => 'max:255',
         'email' => 'email|max:255',
         'insured' => 'boolean',
     ];
-    protected $dates = ['deleted_at'];
+    protected $dates = ['birth_date'];
     /**
      * The attributes that should be casted to native types.
      *
@@ -50,7 +50,7 @@ class PersonData extends Model
         'last_nane' => 'string',
         'maiden_name' => 'string',
         'name' => 'string',
-        'birth_date' => 'date',
+        'birth_date' => 'date:Y-m-d',
         'address' => 'string',
         'city' => 'string',
         'state' => 'string',
@@ -60,9 +60,9 @@ class PersonData extends Model
         'insured' => 'boolean',
     ];
 
-    public function insured()
+    public function insuree()
     {
-        return $this->hasOne('App\Insured');
+        return $this->hasOne('App\Insuree');
     }
 
     public function beneficiary()

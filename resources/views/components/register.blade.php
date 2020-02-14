@@ -1,8 +1,4 @@
-
-{{--      <div class="card-body">
-        <form method="post" action="{{ route('persondata.store') }}" autocomplete="off">
-            @csrf  --}}
-            
+       
             <h6 class="heading-small text-muted mb-4">{{ __('Information') }}</h6>
             <div class="pl-lg-4">
                 {{--  Names  --}}
@@ -46,7 +42,7 @@
                             <div class="input-group-prepend">
                                 <span  class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
                             </div>
-                            <input name="birth_date" id="input-birth_date" class="form-control datepicker form-control-alternative{{ $errors->has('birth_date') ? ' is-invalid' : '' }}" placeholder="{{ __('Birth date') }}" type="text" value="{{ old('birth_date') }}" required>
+                            <input name="birth_date" id="input-birth_date" class="form-control form-control-alternative{{ $errors->has('birth_date') ? ' is-invalid' : '' }}"  type="date" required>
                         </div>
                         @if ($errors->has('birth_date'))
                             <span class="invalid-feedback" role="alert">
@@ -98,15 +94,15 @@
                         @endif
                     </div>
                 </div>
-                {{--  Phone, email, insured  --}}
+                {{--  phone_number, email, insured  --}}
                 <div class="row">
-                    <div class="form-group{{ $errors->has('phone') ? ' has-danger' : '' }} col-6">
-                        <label class="form-control-label" for="input-phone">{{ __('Phone') }}</label>
-                        <input type="text" name="phone" id="input-phone" class="form-control form-control-alternative{{ $errors->has('phone') ? ' is-invalid' : '' }}" placeholder="{{ __('Phone') }}" value="{{ old('phone') }}" required>
+                    <div class="form-group{{ $errors->has('phone_number') ? ' has-danger' : '' }} col-6">
+                        <label class="form-control-label" for="input-phone_number">{{ __('Phone number') }}</label>
+                        <input type="text" name="phone_number" id="input-phone_number" class="form-control form-control-alternative{{ $errors->has('phone_number') ? ' is-invalid' : '' }}" placeholder="{{ __('Phone number') }}" value="{{ old('phone_number') }}" required>
                     
-                        @if ($errors->has('phone'))
+                        @if ($errors->has('phone_number'))
                             <span class="invalid-feedback" role="alert">
-                                <strong>{{ $errors->first('phone') }}</strong>
+                                <strong>{{ $errors->first('phone_number') }}</strong>
                             </span>
                         @endif
                     </div>
@@ -121,16 +117,14 @@
                         @endif
                     </div>
                 </div>
-                <div class="custom-control custom-control-alternative custom-checkbox mb-3 col-4">
-                    <input type="checkbox" name="insured" id="input-insured" class="custom-control-input">
-                    <label class="custom-control-label" for="input-insured">{{ __('Insured') }}</label>    
-                </div>
+                @if ($beneficiary) //only display checkbox for beneficiaries
+                    <div class="custom-control custom-control-alternative custom-checkbox mb-3 col-4">
+                        <input type="checkbox" name="insured" id="input-insured" class="custom-control-input">
+                        <label class="custom-control-label" for="input-insured">{{ __('Insured') }}</label>    
+                    </div>
+                @endif
+                
             </div>
 
-{{--          </form>
-    </div>  --}}
-    @push('js')
-        <script src="{{ asset('argon') }}/vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
-    @endpush
    
 

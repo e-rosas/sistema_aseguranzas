@@ -6,6 +6,19 @@ use Illuminate\Database\Eloquent\Model;
 
 class Insuree extends Model
 {
+    public $fillable = [
+        'person_data_id',
+        'insurer_id',
+    ];
+    public static $rules = [
+        'person_data_id' => 'required',
+        'insurer_id' => 'required',
+    ];
+    protected $casts = [
+        'person_data_id' => 'integer',
+        'insurer_id' => 'integer',
+    ];
+
     public function person_data()
     {
         return $this->belongsTo('App\PersonData');
@@ -23,6 +36,8 @@ class Insuree extends Model
 
     public function fullName()
     {
-        return $this->person_data->last_name.' '.$this->person_data->maiden_name.' '.$this->person_data->name;
+        $data = $this->person_data;
+
+        return $data->last_name.' '.$data->maiden_name.' '.$data->name;
     }
 }

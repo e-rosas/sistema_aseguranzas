@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Insuree;
 use App\PersonData;
 use Illuminate\Http\Request;
 
@@ -29,6 +30,16 @@ class PersonDataController extends Controller
      */
     public function storeInsuree(Request $request)
     {
+        $data = $this->validateData();
+        $insuree = $this->validateInsuree();
+        $data['insured'] = 1;
+
+        $personData = PersonData::create($data);
+        $insuree['person_data_id'] = $personData->id;
+
+        Insuree::create($insuree);
+
+        return redirect()->route('insurees.index')->withStatus(__('Insuree successfully created.'));
     }
 
     public function storeBeneficiary(Request $request)
@@ -69,5 +80,29 @@ class PersonDataController extends Controller
      */
     public function destroy(PersonData $personData)
     {
+    }
+
+    protected function validateData()
+    {
+        return request()->validate([
+            'name' => ['required', 'min:3', 'max:255'],
+            'last_name' => ['max:255'],
+            'maiden_name' => ['max:255'],
+            'birth_date' => ['required'],
+            'city' => ['max:255'],
+            'address' => ['max:255'],
+            'city' => ['max:255'],
+            'state' => ['max:255'],
+            'postal_code' => ['digits:5'],
+            'phone_number' => ['required', 'max:255'],
+            'email' => ['email'],
+        ]);
+    }
+
+    protected function validateInsuree()
+    {
+        return request()->validate([
+            'insurer_id' => ['required'],
+        ]);
     }
 }

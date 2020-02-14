@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Insuree;
+use App\Insurer;
 use Illuminate\Http\Request;
 
 class InsureeController extends Controller
@@ -24,7 +25,9 @@ class InsureeController extends Controller
      */
     public function create()
     {
-        return view('insurees.create');
+        $insurers = Insurer::take(10)->get();
+
+        return view('insurees.create', compact('insurers'));
     }
 
     /**
