@@ -18,7 +18,7 @@ class Invoice extends Model
         'amount_paid',
     ];
     public static $rules = [
-        'number' => 'required|numeric',
+        'number' => 'required',
         'state' => 'max:255',
         'date' => 'date',
         'total' => 'numeric|required|between:0,999999999.999',
@@ -29,5 +29,11 @@ class Invoice extends Model
         'id' => 'integer',
         'person_data_id' => 'integer',
         'number' => 'string',
+        'date' => 'date',
+        'comments' => 'string',
+        'state' => 'string',
+        'total' => 'decimal:13',
+        'total_with_discounts' => 'decimal:13',
+        'amount_paid' => 'decimal:13',
     ];
 }

@@ -16,7 +16,7 @@ class CreateInvoicesTable extends Migration
             $table->unsignedBigInteger('person_data_id');
             $table->string('number')->unique();
             $table->date('date');
-            $table->string('comments');
+            $table->text('comments');
             $table->string('state');
             $table->decimal('total', 13, 4);
             $table->decimal('total_with_discounts', 13, 4);

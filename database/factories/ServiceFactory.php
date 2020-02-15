@@ -7,7 +7,14 @@ use Faker\Generator as Faker;
 $factory->define(Service::class, function (Faker $faker) {
     return [
         'code' => $faker->randomNumber(),
-        'description' => $faker->word(),
+        'description' => $faker->randomElement([
+            'URINALYSIS',
+            'CONSULTING',
+            'PELVIS ULTRASOUND',
+            'ABDOMINAL ULTRASOUND',
+            'ELECTROLYTE PANEL',
+            'CBC',
+        ]),
         'total_price' => $faker->numberBetween(200, 900),
         'discounted_price' => $faker->numberBetween(10, 100),
         'created_at' => $faker->dateTimeThisYear,

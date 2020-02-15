@@ -15,6 +15,7 @@ class CreateDiscountsTable extends Migration
             $table->increments('id');
             $table->decimal('percentage_increase', 5, 2);
             $table->string('range_of_days');
+            $table->integer('amount_of_days');
             $table->timestamps();
             $table->softDeletes();
         });
