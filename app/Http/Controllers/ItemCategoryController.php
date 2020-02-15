@@ -2,22 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Beneficiary;
+use App\ItemCategory;
 use Illuminate\Http\Request;
 
-class BeneficiaryController extends Controller
+class ItemCategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Beneficiary $model)
+    public function index()
     {
-        $beneficiaries = \App\Beneficiary::with(['person_data', 'insuree.insurer'])->paginate(15);
-
-        return view('beneficiaries.index', compact('beneficiaries'));
-        //return view('beneficiaries.index', ['beneficiaries' => $model->paginate(15)]);
+        //
     }
 
     /**
@@ -27,51 +24,62 @@ class BeneficiaryController extends Controller
      */
     public function create()
     {
-        return view('beneficiaries.create');
+        //
     }
 
     /**
      * Store a newly created resource in storage.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
+        //
     }
 
     /**
      * Display the specified resource.
      *
+     * @param  \App\ItemCategory  $itemCategory
      * @return \Illuminate\Http\Response
      */
-    public function show(Beneficiary $beneficiary)
+    public function show(ItemCategory $itemCategory)
     {
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
+     * @param  \App\ItemCategory  $itemCategory
      * @return \Illuminate\Http\Response
      */
-    public function edit(Beneficiary $beneficiary)
+    public function edit(ItemCategory $itemCategory)
     {
+        //
     }
 
     /**
      * Update the specified resource in storage.
      *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\ItemCategory  $itemCategory
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Beneficiary $beneficiary)
+    public function update(Request $request, ItemCategory $itemCategory)
     {
+        //
     }
 
     /**
      * Remove the specified resource from storage.
      *
+     * @param  \App\ItemCategory  $itemCategory
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Beneficiary $beneficiary)
+    public function destroy(ItemCategory $itemCategory)
     {
+        //
     }
 }

@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Invoice extends Model
 {
     use SoftDeletes;
+    public $patient;
     public $fillable = [
         'number',
         'comments',
@@ -36,4 +37,11 @@ class Invoice extends Model
         'total_with_discounts' => 'decimal:13',
         'amount_paid' => 'decimal:13',
     ];
+
+    public function patient()
+    {
+        $this->patient->belongsTo('App\PersonData');
+
+        return $this->belongsTo('App\PersonData');
+    }
 }

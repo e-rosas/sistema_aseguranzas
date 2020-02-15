@@ -69,4 +69,13 @@ class PersonData extends Model
     {
         return $this->hasOne('App\Beneficiary');
     }
+
+    public function person()
+    {
+        if ($this->insured) {
+            return $this->beneficiary();
+        }
+
+        return $this->insuree();
+    }
 }
