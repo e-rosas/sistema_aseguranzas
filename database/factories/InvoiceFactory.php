@@ -6,6 +6,7 @@ use Faker\Generator as Faker;
 
 $factory->define(Invoice::class, function (Faker $faker) {
     return [
+        'person_data_id' => $faker->numberBetween(1, 300),
         'number' => $faker->bankAccountNumber,
         'comments' => $faker->word(),
         'state' => $faker->word(),

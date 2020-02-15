@@ -9,18 +9,25 @@ class Invoice extends Model
 {
     use SoftDeletes;
     public $fillable = [
-        'code',
-        'description',
+        'number',
+        'comments',
+        'state',
+        'date',
         'total',
+        'total_with_discounts',
+        'amount_paid',
     ];
     public static $rules = [
-        'code' => 'numeric',
-        'description' => 'required|max:255',
+        'number' => 'required|numeric',
+        'state' => 'max:255',
+        'date' => 'date',
         'total' => 'numeric|required|between:0,999999999.999',
+        'total_with_discounts' => 'numeric|required|between:0,999999999.999',
+        'amount_paid' => 'numeric|between:0,999999999.999',
     ];
     protected $casts = [
         'id' => 'integer',
-        'code' => 'integer',
-        'description' => 'string',
+        'person_data_id' => 'integer',
+        'number' => 'string',
     ];
 }

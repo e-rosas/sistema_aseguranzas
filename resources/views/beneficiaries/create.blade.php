@@ -23,9 +23,9 @@
                         @component('components.register',['beneficiary' => '1'])
                             
                         @endcomponent
-                        @component('components.search')
+                        {{--  @component('components.searchInsurees',['insurees'=>$insurees])
                             
-                        @endcomponent
+                        @endcomponent  --}}
                         <div class="pl-lg-4">
                             <button type="submit" class="btn btn-success mt-4 btn-block">{{ __('Save') }}</button>
                         </div>
