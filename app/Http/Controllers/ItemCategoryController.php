@@ -34,7 +34,7 @@ class ItemCategoryController extends Controller
      */
     public function store(Request $request)
     {
-        $validated = $this->validateService();
+        $validated = $this->validateItemCategory();
         ItemCategory::create($validated);
 
         return redirect()->route('item_categories.index')->withStatus(__('Item category successfully created.'));
