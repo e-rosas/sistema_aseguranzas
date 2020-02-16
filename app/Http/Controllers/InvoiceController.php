@@ -14,7 +14,7 @@ class InvoiceController extends Controller
      */
     public function index()
     {
-        $invoices = \App\Invoice::with(['person_data.person'])->paginate(15);
+        $invoices = \App\Invoice::with(['person_data'])->paginate(15);
 
         return view('invoices.index', compact('invoices'));
     }

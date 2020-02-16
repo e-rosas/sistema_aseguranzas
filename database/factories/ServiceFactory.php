@@ -6,7 +6,7 @@ use Faker\Generator as Faker;
 
 $factory->define(Service::class, function (Faker $faker) {
     return [
-        'code' => $faker->randomNumber(),
+        'code' => $faker->randomNumber(7),
         'description' => $faker->randomElement([
             'URINALYSIS',
             'CONSULTING',

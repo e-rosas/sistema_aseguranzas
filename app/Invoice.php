@@ -38,11 +38,25 @@ class Invoice extends Model
         'amount_paid' => 'decimal:13',
     ];
 
+    protected $dates = ['date'];
+
+    public function getTotalAttribute($value)
+    {
+        return number_format($value, 3);
+    }
+
+    public function getTotalWithDiscountsAttribute($value)
+    {
+        return number_format($value, 3);
+    }
+
+    public function getAmountPaidAttribute($value)
+    {
+        return number_format($value, 3);
+    }
+
     public function person_data()
     {
         return $this->belongsTo('App\PersonData');
-        /* $this->patient = $this->belongsTo('App\PersonData');
-
-        return $this->patient->person(); */
     }
 }

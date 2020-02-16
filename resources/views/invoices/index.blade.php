@@ -34,8 +34,8 @@
                             <thead class="thead-light">
                                 <tr>
                                     <th scope="col">{{ __('Number') }}</th>
-                                    <th scope="col">{{ __('Person') }}</th>
-                                    <th scope="col">{{ __('Insurer') }}</th>
+                                    <th scope="col">{{ __('Patient') }}</th>
+                                    <th scope="col">{{ __('City') }}</th>
                                     <th scope="col">{{ __('Date') }}</th>
                                     <th scope="col">{{ __('Total') }}</th>
                                     <th scope="col">{{ __('Total with discounts') }}</th>
@@ -47,8 +47,9 @@
                                 @foreach ($invoices as $invoice)
                                     <tr>
                                         <td>{{ $invoice->number}}</td>
-                                        <td>{{ $invoice->person_data->phone_number }}</td>
+                                        <td>{{ $invoice->person_data->fullName() }}</td>
                                         <td>{{ $invoice->person_data->city }}</td>
+                                        <td>{{ $invoice->date->format('m-d-Y') }}</td>
                                         <td>{{ $invoice->total }}</td>
                                         <td>{{ $invoice->total_with_discounts }}</td>
                                         <td>{{ $invoice->amount_paid }}</td>
