@@ -13,9 +13,12 @@ class InsureeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Insuree $model)
+    public function index()
     {
-        return view('insurees.index', ['insurees' => $model->paginate(15)]);
+        $insurees = \App\Insuree::with(['person_data', 'insurer'])->paginate(15);
+
+        return view('insurees.index', compact('insurees'));
+        //return view('insurees.index', ['insurees' => $model->paginate(15)]);
     }
 
     /**

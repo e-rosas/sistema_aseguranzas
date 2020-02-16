@@ -38,10 +38,11 @@ class Invoice extends Model
         'amount_paid' => 'decimal:13',
     ];
 
-    public function patient()
+    public function person_data()
     {
-        $this->patient->belongsTo('App\PersonData');
-
         return $this->belongsTo('App\PersonData');
+        /* $this->patient = $this->belongsTo('App\PersonData');
+
+        return $this->patient->person(); */
     }
 }

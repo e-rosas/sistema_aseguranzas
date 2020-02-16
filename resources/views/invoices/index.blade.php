@@ -46,14 +46,12 @@
                             <tbody>
                                 @foreach ($invoices as $invoice)
                                     <tr>
-                                        <td>{{ $invoice->fullName() }}</td>
-                                        <td>
-                                            <a href="mailto:{{ $invoice->person_data->email }}">{{ $invoice->person_data->email }}</a>
-                                        </td>
+                                        <td>{{ $invoice->number}}</td>
                                         <td>{{ $invoice->person_data->phone_number }}</td>
                                         <td>{{ $invoice->person_data->city }}</td>
-                                        <td>{{ $invoice->insuree->fullName() }}</td>
-                                        <td>{{ $invoice->insuree->insurer->name }}</td>
+                                        <td>{{ $invoice->total }}</td>
+                                        <td>{{ $invoice->total_with_discounts }}</td>
+                                        <td>{{ $invoice->amount_paid }}</td>
                                         <td class="text-right">
                                             <div class="dropdown">
                                                 <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

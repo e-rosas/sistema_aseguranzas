@@ -12,7 +12,7 @@ class BeneficiaryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Beneficiary $model)
+    public function index()
     {
         $beneficiaries = \App\Beneficiary::with(['person_data', 'insuree.insurer'])->paginate(15);
 

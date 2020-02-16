@@ -97,6 +97,11 @@
                                 </a>
                             </li>
                             <li class="nav-item">
+                                <a class="nav-link" href="{{ route('invoices.index') }}">
+                                    {{ __('Invoices') }}
+                                </a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link" href="{{ route('user.index') }}">
                                     {{ __('User Management') }}
                                 </a>

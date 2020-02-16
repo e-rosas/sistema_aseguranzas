@@ -24,6 +24,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('discounts', 'DiscountController');
     Route::resource('beneficiaries', 'BeneficiaryController');
     Route::resource('insurees', 'InsureeController');
+    Route::resource('invoices', 'InvoiceController');
     Route::resource('user', 'UserController', ['except' => ['show']]);
     Route::post('insurees', ['as' => 'persondata.storeinsuree', 'uses' => 'PersonDataController@storeInsuree']);
     Route::post('beneficiaries', ['as' => 'persondata.storebeneficiary', 'uses' => 'PersonDataController@storeBeneficiary']);
