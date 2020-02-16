@@ -1,7 +1,7 @@
-@extends('layouts.app', ['title' => __('Beneficiary Management')])
+@extends('layouts.app', ['title' => __('Invoice Management')])
 
 @section('content')
-    @include('beneficiaries.partials.header', ['title' => __('Add Beneficiary')])   
+    @include('invoices.partials.header', ['title' => __('Add Invoice')])   
 
     <div class="container-fluid mt--7">
         <div class="row">
@@ -10,22 +10,17 @@
                     <div class="card-header bg-white border-0">
                         <div class="row align-items-center">
                             <div class="col-8">
-                                <h3 class="mb-0">{{ __('Beneficiary Management') }}</h3>
+                                <h3 class="mb-0">{{ __('Invoice Management') }}</h3>
                             </div>
                             <div class="col-4 text-right">
-                                <a href="{{ route('beneficiaries.index') }}" class="btn btn-sm btn-primary">{{ __('Back to list') }}</a>
+                                <a href="{{ route('invoices.index') }}" class="btn btn-sm btn-primary">{{ __('Back to list') }}</a>
                             </div>
                         </div>
                     </div>
                     <div class="card-body">
                         <form method="post" action="{{ route('persondata.storebeneficiary') }}" autocomplete="off">
                             @csrf
-                        @component('components.register',['beneficiary' => '1'])
-                            
-                        @endcomponent
-                        {{--  @component('components.searchInsurees',['insurees'=>$insurees])
-                            
-                        @endcomponent  --}}
+
                         <div class="pl-lg-4">
                             <button type="submit" class="btn btn-success mt-4 btn-block">{{ __('Save') }}</button>
                         </div>
