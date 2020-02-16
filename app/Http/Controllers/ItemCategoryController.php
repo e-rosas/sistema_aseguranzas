@@ -12,9 +12,9 @@ class ItemCategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(ItemCategory $model)
     {
-        //
+        return view('item_categories.index', ['item_categories' => $model->paginate(15)]);
     }
 
     /**
@@ -24,62 +24,62 @@ class ItemCategoryController extends Controller
      */
     public function create()
     {
-        //
+        return view('item_categories.create');
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        //
+        $validated = $this->validateService();
+        ItemCategory::create($validated);
+
+        return redirect()->route('item_categories.index')->withStatus(__('Item category successfully created.'));
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\ItemCategory  $itemCategory
      * @return \Illuminate\Http\Response
      */
     public function show(ItemCategory $itemCategory)
     {
-        //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\ItemCategory  $itemCategory
      * @return \Illuminate\Http\Response
      */
     public function edit(ItemCategory $itemCategory)
     {
-        //
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\ItemCategory  $itemCategory
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, ItemCategory $itemCategory)
     {
-        //
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\ItemCategory  $itemCategory
      * @return \Illuminate\Http\Response
      */
     public function destroy(ItemCategory $itemCategory)
     {
-        //
+    }
+
+    protected function validateItemCategory()
+    {
+        return request()->validate([
+            'name' => ['required', 'max:255'],
+        ]);
     }
 }
