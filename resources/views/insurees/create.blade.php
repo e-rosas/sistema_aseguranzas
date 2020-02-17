@@ -9,10 +9,10 @@
                 <div class="card bg-secondary shadow">
                     <div class="card-header bg-white border-0">
                         <div class="row align-insurers-center">
-                            <div class="col-8">
+                            <div class="col-8 col-auto">
                                 <h3 class="mb-0">{{ __('Insuree Management') }}</h3>
                             </div>
-                            <div class="col-4 text-right">
+                            <div class="col-4 col-auto text-right">
                                 <a href="{{ route('insurees.index') }}" class="btn btn-sm btn-primary">{{ __('Back to list') }}</a>
                             </div>
                         </div>
@@ -24,8 +24,9 @@
                             @component('components.register',['beneficiary'=>'0'])
                                 
                             @endcomponent
-                        <div class="pl-lg-4">
-                            <label for="insurer_id" class="col-4 col-form-label">{{ __('Insurer') }}</label>
+                        <div class="form-inline">
+                            <div class="form-group col-md-6 col-auto">
+                                <label for="insurer_id" class="col-auto col-form-label">{{ __('Insurer') }}</label>
                                 <select class="custom-select form-control{{ $errors->has('insurer_id') ? ' is-invalid' : '' }}" name="insurer_id">
                                 @foreach($insurers as $insurer)
                                     <option value="{{ $insurer->id }}">{{ $insurer->name }}</option>
@@ -36,6 +37,10 @@
                                         <strong>{{ $errors->first('insurer_id') }}</strong>
                                     </span>
                                 @endif
+                            </div>
+                            <div class="form-group col-auto text-right">
+                                <a href="{{ route('insurers.create') }}" class="btn btn-sm btn-primary">{{ __('Add Insurer') }}</a>
+                            </div>
                         </div>
                         <div class="pl-lg-4">
                             <button type="submit" class="btn btn-success mt-4 btn-block">{{ __('Save') }}</button>

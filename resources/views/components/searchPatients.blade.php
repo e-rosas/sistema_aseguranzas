@@ -1,7 +1,7 @@
 <!-- For defining autocomplete -->
 <div class="col-auto">
-  <select id='insuree_id' class="custom-select form-control{{ $errors->has('insuree_id') ? ' is-invalid' : '' }}" name="insuree_id"> 
-    <option value='0'>{{ __('Select insuree') }}</option>
+  <select id='person_data_id' class="custom-select form-control{{ $errors->has('person_data_id') ? ' is-invalid' : '' }}" name="person_data_id"> 
+    <option value='0'>{{ __('Select patient') }}</option>
   </select>
 </div>
 
@@ -15,10 +15,10 @@ $(document).ready(function(){
 
     
 
-  $("#insuree_id").select2({
+  $("#person_data_id").select2({
     minimumInputLength: 3,
     ajax: { 
-      url: "{{route('insurees.search')}}",
+      url: "{{route('patients.search')}}",
         type:'post',
       dataType: 'json',
       delay: 250,

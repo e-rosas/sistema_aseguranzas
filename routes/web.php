@@ -17,7 +17,11 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::post('insurees/search', 'InsureeController@search')->name('insurees.search');
+Route::post('insurees/search', 'SearchPatientController@searchInsuree')->name('insurees.search');
+Route::post('patients/search', 'SearchPatientController@search')->name('patients.search');
+Route::post('services/search', 'SearchProductController@searchService')->name('services.search');
+Route::post('services/find', 'SearchProductController@findService')->name('services.find');
+
 Route::group(['middleware' => 'auth'], function () {
     Route::resource('insurers', 'InsurerController');
     Route::resource('services', 'ServiceController');

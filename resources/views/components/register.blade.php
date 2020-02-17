@@ -3,7 +3,7 @@
             <div class="pl-lg-4">
                 {{--  Names  --}}
                 <div class="row">
-                    <div class="form-group{{ $errors->has('last_name') ? ' has-danger' : '' }} col-4">
+                    <div class="form-group{{ $errors->has('last_name') ? ' has-danger' : '' }} col-md-4 col-auto">
                         <label class="form-control-label" for="input-last_name">{{ __('Last name') }}</label>
                         <input type="text" name="last_name" id="input-last_name" class="form-control form-control-alternative{{ $errors->has('last_name') ? ' is-invalid' : '' }}" placeholder="{{ __('Last name') }}" value="{{ old('last_name') }}" required autofocus>
                     
@@ -13,7 +13,7 @@
                             </span>
                         @endif
                     </div>
-                    <div class="form-group{{ $errors->has('maiden_name') ? ' has-danger' : '' }} col-4">
+                    <div class="form-group{{ $errors->has('maiden_name') ? ' has-danger' : '' }} col-md-4 col-auto">
                         <label class="form-control-label" for="input-maiden_name">{{ __('Maiden name') }}</label>
                         <input type="text" name="maiden_name" id="input-maiden_name" class="form-control form-control-alternative{{ $errors->has('maiden_name') ? ' is-invalid' : '' }}" placeholder="{{ __('Maiden name') }}" value="{{ old('maiden_name') }}" required autofocus>
                     
@@ -23,7 +23,7 @@
                             </span>
                         @endif
                     </div>
-                    <div class="form-group{{ $errors->has('name') ? ' has-danger' : '' }} col-4">
+                    <div class="form-group{{ $errors->has('name') ? ' has-danger' : '' }} col-md-4 col-auto">
                         <label class="form-control-label" for="input-name">{{ __('Name') }}</label>
                         <input type="text" name="name" id="input-name" class="form-control form-control-alternative{{ $errors->has('name') ? ' is-invalid' : '' }}" placeholder="{{ __('Name') }}" value="{{ old('name') }}" required autofocus>
 
@@ -36,7 +36,7 @@
                 </div>
                 {{--  Birth and address  --}}
                 <div class="row">
-                    <div class="form-group{{ $errors->has('birth_date') ? ' has-danger' : '' }} col-4">
+                    <div class="form-group{{ $errors->has('birth_date') ? ' has-danger' : '' }} col-md-4 col-auto">
                         <label class="form-control-label" for="input-birth_date">{{ __('Birth date') }}</label>
                         <div class="input-group input-group-alternative">
                             <div class="input-group-prepend">
@@ -50,7 +50,7 @@
                             </span>
                         @endif
                     </div>
-                    <div class="form-group{{ $errors->has('address') ? ' has-danger' : '' }} col-8">
+                    <div class="form-group{{ $errors->has('address') ? ' has-danger' : '' }} col-md-8 col-auto">
                         <label class="form-control-label" for="input-address">{{ __('Address') }}</label>
                         <input type="text" name="address" id="input-address" class="form-control form-control-alternative{{ $errors->has('address') ? ' is-invalid' : '' }}" placeholder="{{ __('Address') }}" value="{{ old('address') }}" required>
                     
@@ -63,7 +63,7 @@
                 </div>
                 {{--  City, state, postal code  --}}
                 <div class="row">
-                    <div class="form-group{{ $errors->has('city') ? ' has-danger' : '' }} col-4">
+                    <div class="form-group{{ $errors->has('city') ? ' has-danger' : '' }} col-md-4 col-auto">
                         <label class="form-control-label" for="input-city">{{ __('City') }}</label>
                         <input type="text" name="city" id="input-city" class="form-control form-control-alternative{{ $errors->has('city') ? ' is-invalid' : '' }}" placeholder="{{ __('City') }}" value="{{ old('city') }}" required>
                     
@@ -73,7 +73,7 @@
                             </span>
                         @endif
                     </div>
-                    <div class="form-group{{ $errors->has('state') ? ' has-danger' : '' }} col-4">
+                    <div class="form-group{{ $errors->has('state') ? ' has-danger' : '' }} col-md-4 col-auto">
                         <label class="form-control-label" for="input-state">{{ __('State') }}</label>
                         <input type="text" name="state" id="input-state" class="form-control form-control-alternative{{ $errors->has('state') ? ' is-invalid' : '' }}" placeholder="{{ __('State') }}" value="{{ old('state') }}" required>
                     
@@ -83,7 +83,7 @@
                             </span>
                         @endif
                     </div>
-                    <div class="form-group{{ $errors->has('postal_code') ? ' has-danger' : '' }} col-4">
+                    <div class="form-group{{ $errors->has('postal_code') ? ' has-danger' : '' }} col-md-4 col-auto">
                         <label class="form-control-label" for="input-postal_code">{{ __('Postal code') }}</label>
                         <input type="text" name="postal_code" id="input-postal_code" class="form-control form-control-alternative{{ $errors->has('postal_code') ? ' is-invalid' : '' }}" placeholder="{{ __('Postal code') }}" value="{{ old('postal_code') }}" required>
                     
@@ -96,7 +96,7 @@
                 </div>
                 {{--  phone_number, email, insured  --}}
                 <div class="row">
-                    <div class="form-group{{ $errors->has('phone_number') ? ' has-danger' : '' }} col-6">
+                    <div class="form-group{{ $errors->has('phone_number') ? ' has-danger' : '' }} col-md-6 col-auto">
                         <label class="form-control-label" for="input-phone_number">{{ __('Phone number') }}</label>
                         <input type="text" name="phone_number" id="input-phone_number" class="form-control form-control-alternative{{ $errors->has('phone_number') ? ' is-invalid' : '' }}" placeholder="{{ __('Phone number') }}" value="{{ old('phone_number') }}" required>
                     
@@ -106,7 +106,7 @@
                             </span>
                         @endif
                     </div>
-                    <div class="form-group{{ $errors->has('email') ? ' has-danger' : '' }} col-6">
+                    <div class="form-group{{ $errors->has('email') ? ' has-danger' : '' }} col-md-6 col-auto">
                         <label class="form-control-label" for="input-email">{{ __('Email') }}</label>
                         <input type="email" name="email" id="input-email" class="form-control form-control-alternative{{ $errors->has('email') ? ' is-invalid' : '' }}" placeholder="{{ __('Email') }}" value="{{ old('email') }}" required>
     
@@ -118,7 +118,7 @@
                     </div>
                 </div>
                 {{--  @if ($beneficiary)
-                    <div class="custom-control custom-control-alternative custom-checkbox mb-3 col-4">
+                    <div class="custom-control custom-control-alternative custom-checkbox mb-3 col-md-4 col-auto">
                         <input type="checkbox" name="insured" id="input-insured" class="custom-control-input">
                         <label class="custom-control-label" for="input-insured">{{ __('Insured') }}</label>    
                     </div>

@@ -9,10 +9,10 @@
                 <div class="card bg-secondary shadow">
                     <div class="card-header bg-white border-0">
                         <div class="row align-items-center">
-                            <div class="col-8">
+                            <div class="col-8 auto">
                                 <h3 class="mb-0">{{ __('Insurers Management') }}</h3>
                             </div>
-                            <div class="col-4 text-right">
+                            <div class="col-4 col-auto text-right">
                                 <a href="{{ route('insurers.index') }}" class="btn btn-sm btn-primary">{{ __('Back to list') }}</a>
                             </div>
                         </div>

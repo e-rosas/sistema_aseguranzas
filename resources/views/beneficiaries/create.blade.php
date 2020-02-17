@@ -9,10 +9,10 @@
                 <div class="card bg-secondary shadow">
                     <div class="card-header bg-white border-0">
                         <div class="row align-items-center">
-                            <div class="col-8">
+                            <div class="col-8 col-auto">
                                 <h3 class="mb-0">{{ __('Beneficiary Management') }}</h3>
                             </div>
-                            <div class="col-4 text-right">
+                            <div class="col-4 col-auto text-right">
                                 <a href="{{ route('beneficiaries.index') }}" class="btn btn-sm btn-primary">{{ __('Back to list') }}</a>
                             </div>
                         </div>
@@ -23,9 +23,17 @@
                         @component('components.register',['beneficiary' => '1'])
                             
                         @endcomponent
-                        @component('components.searchInsurees')
-                            
-                        @endcomponent
+                        <div class="form-row">
+                            <div class="form-group col-md-8 col-auto">
+                                {{-- <label for="insuree_id" class="col-form-label">{{ __('Insuree') }}</label> --}}
+                                @component('components.searchInsurees')
+                                    
+                                @endcomponent
+                            </div>
+                            <div class="form-group col-md-4 col-auto text-right">
+                                <a href="{{ route('insurees.create') }}" class="btn btn-sm btn-primary">{{ __('Add Insuree') }}</a>
+                            </div>
+                        </div>
                         <div class="pl-lg-4">
                             <button type="submit" class="btn btn-success mt-4 btn-block">{{ __('Save') }}</button>
                         </div>

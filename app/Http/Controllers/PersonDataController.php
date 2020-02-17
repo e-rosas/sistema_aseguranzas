@@ -7,7 +7,6 @@ use App\Insuree;
 use App\PersonData;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 
 class PersonDataController extends Controller
 {
@@ -50,7 +49,6 @@ class PersonDataController extends Controller
         $data = $this->validateData();
         $beneficiary = $this->validateBeneficiary();
         $data['insured'] = 0;
-        Log::info('Showing id for beneficiary: '.$beneficiary['insuree_id']);
         $insuree = DB::table('insurees')->where('person_data_id', $beneficiary['insuree_id'])->value('id');
         $beneficiary['insuree_id'] = $insuree;
         $personData = PersonData::create($data);
