@@ -102,6 +102,11 @@
                                 </a>
                             </li>
                             <li class="nav-item">
+                                <a class="nav-link" href="{{ route('items.index') }}">
+                                    {{ __('Items') }}
+                                </a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link" href="{{ route('item_categories.index') }}">
                                     {{ __('Item categories') }}
                                 </a>

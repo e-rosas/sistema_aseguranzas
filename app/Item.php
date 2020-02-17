@@ -14,25 +14,32 @@ class Item extends Model
         'type',
         'SAT',
         'tax',
+        'item_category_id',
     ];
     public static $rules = [
-        'code' => 'numeric',
+        'code' => 'required|max:255',
         'description' => 'required|max:255',
         'type' => 'max:255',
         'SAT' => 'max:255',
         'price' => 'numeric|required|between:0,999999999.999',
-        'discounted_price' => 'numeric|required|between:0,999999999.999',
+        'discounted_price' => 'numeric|required|between:0,999999999.999|lte:price',
         'tax' => 'boolean',
     ];
     protected $casts = [
         'id' => 'integer',
-        'code' => 'integer',
+        'code' => 'string',
         'description' => 'string',
         'type' => 'string',
         'SAT' => 'string',
+        'price' => 'decimal:13',
         'discounted_price' => 'decimal:13',
         'tax' => 'boolean',
     ];
+
+    public function item_category()
+    {
+        return $this->belongsTo('App\ItemCategory');
+    }
 
     public function getPriceAttribute($value)
     {

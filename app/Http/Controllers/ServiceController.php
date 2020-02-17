@@ -79,9 +79,10 @@ class ServiceController extends Controller
     protected function validateService()
     {
         return request()->validate([
-            'code' => ['required', 'numeric'],
+            'code' => ['required', 'max:255'],
             'description' => ['required', 'max:255'],
-            'total' => ['required', 'between:0,999999999.999'],
+            'price' => ['required', 'between:0,999999999.999'],
+            'discounted_price' => ['required', 'between:0,999999999.999'],
         ]);
     }
 }

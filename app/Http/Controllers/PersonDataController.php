@@ -96,6 +96,7 @@ class PersonDataController extends Controller
             'postal_code' => ['digits:5'],
             'phone_number' => ['required', 'max:255'],
             'email' => ['email'],
+            'insured' => ['boolean'],
         ]);
     }
 

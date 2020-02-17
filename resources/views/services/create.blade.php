@@ -63,7 +63,7 @@
                                 <div class="form-group{{ $errors->has('discounted_price') ? ' has-danger' : '' }}">
                                     <label class="form-control-label" for="input-discounted_price">{{ __('Discounted price') }}</label>
                                     <input type="numeric" name="discounted_price" id="input-discounted_price" class="form-control form-control-alternative{{ $errors->has('discounted_price') ? ' is-invalid' : '' }}" 
-                                    placeholder="{{ __('Discounted price') }} value="{{ old('discounted_price') }}" required>
+                                    placeholder="{{ __('Discounted price') }}" value="{{ old('discounted_price') }}" required>
                                 
                                     @if ($errors->has('discounted_price'))
                                         <span class="invalid-feedback" role="alert">

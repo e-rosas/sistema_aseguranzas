@@ -8,7 +8,7 @@
             <div class="col-xl-12 order-xl-1">
                 <div class="card bg-secondary shadow">
                     <div class="card-header bg-white border-0">
-                        <div class="row align-items-center">
+                        <div class="row align-insurers-center">
                             <div class="col-8">
                                 <h3 class="mb-0">{{ __('Insuree Management') }}</h3>
                             </div>
@@ -26,12 +26,11 @@
                             @endcomponent
                         <div class="pl-lg-4">
                             <label for="insurer_id" class="col-4 col-form-label">{{ __('Insurer') }}</label>
-                                <select class="form-control{{ $errors->has('insurer_id') ? ' is-invalid' : '' }}" name="insurer_id">
-                                @foreach($insurers as $item)
-                                    <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                <select class="custom-select form-control{{ $errors->has('insurer_id') ? ' is-invalid' : '' }}" name="insurer_id">
+                                @foreach($insurers as $insurer)
+                                    <option value="{{ $insurer->id }}">{{ $insurer->name }}</option>
                                 @endforeach
-                                </select>
-                    
+                                </select>                  
                                 @if ($errors)
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('insurer_id') }}</strong>
