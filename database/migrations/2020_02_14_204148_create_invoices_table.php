@@ -17,11 +17,14 @@ class CreateInvoicesTable extends Migration
             $table->string('number')->unique();
             $table->date('date');
             $table->text('comments');
-            $table->string('state');
+            $table->string('status'); //change
             $table->decimal('total', 13, 4);
+            $table->decimal('sub_total', 13, 4); //add
+            $table->decimal('tax', 13, 4); //add
             $table->decimal('total_with_discounts', 13, 4);
             $table->decimal('amount_paid', 13, 4);
-            $table->foreign('person_data_id')->references('id')->on('person_data');
+            $table->decimal('amount_due', 13, 4); //add
+            $table->foreign('person_data_id')->references('id')->on('person_data')->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();
         });

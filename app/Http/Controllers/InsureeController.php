@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Insuree;
 use App\Insurer;
+use App\PersonData;
 use Illuminate\Http\Request;
 
 class InsureeController extends Controller
@@ -80,8 +81,21 @@ class InsureeController extends Controller
 
     public function search(Request $request)
     {
-        $insurees = Insuree::query()
-            ->whereLike(['name', 'last_name', 'maiden_name', 'email'], $request->search)
-            ->get()->take(10);
+        $search = $request->search;
+        $insurees = PersonData::query()
+            ->whereLike('name', $search)
+            ->whereLike('last_name', $search)
+            ->whereLike('maiden_name', $search)
+            ->get()->take(5)
+        ;
+        $response = [];
+        foreach ($insurees as $insuree) {
+            $response[] = [
+                'id' => $insuree->id,
+                'text' => $insuree->fullName(),
+            ];
+        }
+        echo json_encode($response);
+        exit;
     }
 }

@@ -35,7 +35,6 @@
                                 <tr>
                                     <th scope="col">{{ __('Number') }}</th>
                                     <th scope="col">{{ __('Patient') }}</th>
-                                    <th scope="col">{{ __('City') }}</th>
                                     <th scope="col">{{ __('Date') }}</th>
                                     <th scope="col">{{ __('Total') }}</th>
                                     <th scope="col">{{ __('Total with discounts') }}</th>
@@ -48,7 +47,6 @@
                                     <tr>
                                         <td>{{ $invoice->number}}</td>
                                         <td>{{ $invoice->person_data->fullName() }}</td>
-                                        <td>{{ $invoice->person_data->city }}</td>
                                         <td>{{ $invoice->date->format('m-d-Y') }}</td>
                                         <td>{{ $invoice->total }}</td>
                                         <td>{{ $invoice->total_with_discounts }}</td>

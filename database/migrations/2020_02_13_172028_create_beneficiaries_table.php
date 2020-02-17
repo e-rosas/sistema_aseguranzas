@@ -16,7 +16,7 @@ class CreateBeneficiariesTable extends Migration
             $table->unsignedBigInteger('person_data_id');
             $table->unsignedBigInteger('insuree_id');
 
-            $table->foreign('person_data_id')->references('id')->on('person_data');
+            $table->foreign('person_data_id')->references('id')->on('person_data')->onDelete('cascade');
             $table->foreign('insuree_id')->references('id')->on('insurees');
             $table->timestamps();
         });

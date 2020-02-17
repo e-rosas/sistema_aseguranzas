@@ -11,19 +11,25 @@ class Invoice extends Model
     public $fillable = [
         'number',
         'comments',
-        'state',
+        'status',
         'date',
         'total',
         'total_with_discounts',
         'amount_paid',
+        'amount_due',
+        'sub_total',
+        'tax',
     ];
     public static $rules = [
         'number' => 'required',
-        'state' => 'max:255',
+        'status' => 'max:255',
         'date' => 'date',
         'total' => 'numeric|required|between:0,999999999.999',
         'total_with_discounts' => 'numeric|required|between:0,999999999.999',
         'amount_paid' => 'numeric|between:0,999999999.999',
+        'amount_due' => 'numeric|between:0,999999999.999',
+        'sub_total' => 'numeric|between:0,999999999.999',
+        'tax' => 'numeric|between:0,999999999.999',
     ];
     protected $casts = [
         'id' => 'integer',
@@ -31,10 +37,13 @@ class Invoice extends Model
         'number' => 'string',
         'date' => 'date',
         'comments' => 'string',
-        'state' => 'string',
+        'status' => 'string',
         'total' => 'decimal:13',
         'total_with_discounts' => 'decimal:13',
         'amount_paid' => 'decimal:13',
+        'amount_due' => 'decimal:13',
+        'sub_total' => 'decimal:13',
+        'tax' => 'decimal:13',
     ];
 
     protected $dates = ['date'];
@@ -57,5 +66,10 @@ class Invoice extends Model
     public function person_data()
     {
         return $this->belongsTo('App\PersonData');
+    }
+
+    public function services()
+    {
+        return $this->hasMany('App\InvoiceService');
     }
 }

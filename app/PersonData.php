@@ -4,12 +4,10 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Facades\Log;
 
 class PersonData extends Model
 {
     use SoftDeletes;
-    public $email;
     public $fillable = [
         'last_name',
         'maiden_name',
@@ -72,9 +70,13 @@ class PersonData extends Model
         return $this->hasOne('App\Beneficiary');
     }
 
+    public function invoices()
+    {
+        return $this->hasMany('App\Invoice');
+    }
+
     public function person()
     {
-        Log::info('Showing user profile for user: '.$this->email);
         if ($this['insured']) {
             return $this->beneficiary();
         }

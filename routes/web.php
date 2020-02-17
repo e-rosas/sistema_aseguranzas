@@ -17,7 +17,7 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-
+Route::post('insurees/search', 'InsureeController@search')->name('insurees.search');
 Route::group(['middleware' => 'auth'], function () {
     Route::resource('insurers', 'InsurerController');
     Route::resource('services', 'ServiceController');
@@ -30,7 +30,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('user', 'UserController', ['except' => ['show']]);
     Route::post('insurees', ['as' => 'persondata.storeinsuree', 'uses' => 'PersonDataController@storeInsuree']);
     Route::post('beneficiaries', ['as' => 'persondata.storebeneficiary', 'uses' => 'PersonDataController@storeBeneficiary']);
-    Route::get('insurees/search', 'InsureeController@search')->name('insurees.search');
+
     Route::get('profile', ['as' => 'profile.edit', 'uses' => 'ProfileController@edit']);
     Route::put('profile', ['as' => 'profile.update', 'uses' => 'ProfileController@update']);
     Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'ProfileController@password']);

@@ -1,57 +1,47 @@
-<div class="pl-lg-4">
-    <div class="form-group">
-        <div class="input-group mb-4">
-            <div class="input-group-prepend">
-                <span class="input-group-text"><i class="ni ni-zoom-split-in"></i></span>
-            </div>
-            <input class="form-control" placeholder="Search" type="text" id="searchInsuree" name="search" value="">
-        </div>
-    </div>
-    {{--  Table  --}}
-    <div class="table-responsive">
-        <table class="table align-items-center table-flush">
-            <thead class="thead-light">
-                <tr>
-                    <th scope="col">{{ __('Name') }}</th>
-                    <th scope="col">{{ __('Email') }}</th>
-                    <th scope="col">{{ __('Phone') }}</th>
-                    <th scope="col">{{ __('City') }}</th>
-                    <th scope="col">{{ __('Insurance') }}</th>
-                    <th scope="col"></th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($insurees as $insuree)
-                    <tr>
-                        <td>{{ $insuree->fullName() }}</td>
-                        <td>
-                            <a href="mailto:{{ $insuree->person_data->email }}">{{ $insuree->person_data->email }}</a>
-                        </td>
-                        <td>{{ $insuree->person_data->phone_number }}</td>
-                        <td>{{ $insuree->person_data->city }}</td>
-                        <td>{{ $insuree->insurer->name }}</td>
-                        <td class="text-right">
-                            <div class="dropdown">
-                                <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <i class="fas fa-ellipsis-v"></i>
-                                </a>
-                                <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                        {{--  <form action="{{ route('insuree.destroy', $insuree) }}" method="post">
-                                            @csrf
-                                            @method('delete')
-                                            
-                                            <a class="dropdown-item" href="{{ route('insuree.edit', $insuree) }}">{{ __('Edit') }}</a>
-                                            <button type="button" class="dropdown-item" onclick="confirm('{{ __("Are you sure you want to delete this insuree?") }}') ? this.parentElement.submit() : ''">
-                                                {{ __('Delete') }}
-                                            </button>
-                                        </form>    --}}  
-                                        <a class="dropdown-item" href="{{ route('profile.edit') }}">{{ __('Edit') }}</a>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
-    </div>
-</div>
+<!-- For defining autocomplete -->
+<select id='insuree_id' class=" col-md-4 col-auto custom-select form-control{{ $errors->has('insuree_id') ? ' is-invalid' : '' }}" name="insuree_id"> 
+  <option value='0'>{{ __('Select') }}</option>
+</select>
+
+@push('js')
+<!-- Script -->
+<script type="text/javascript">
+
+// CSRF Token
+var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+$(document).ready(function(){
+
+    
+
+  $("#insuree_id").select2({
+    minimumInputLength: 3,
+    ajax: { 
+      url: "{{route('insurees.search')}}",
+        type:'post',
+      dataType: 'json',
+      delay: 250,
+      data: function (params) {
+        return {
+          _token: CSRF_TOKEN,
+          search: params.term // search term
+        };
+      },
+      processResults: function (response) {
+        return {
+          results: response
+        };
+      },
+      cache: true
+    }
+
+  });
+
+});
+</script>
+@endpush
+@push('headjs')
+
+
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+@endpush

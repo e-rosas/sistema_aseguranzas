@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Beneficiary;
 use App\Insuree;
 use App\PersonData;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class PersonDataController extends Controller
 {
@@ -44,6 +47,18 @@ class PersonDataController extends Controller
 
     public function storeBeneficiary(Request $request)
     {
+        $data = $this->validateData();
+        $beneficiary = $this->validateBeneficiary();
+        $data['insured'] = 0;
+        Log::info('Showing id for beneficiary: '.$beneficiary['insuree_id']);
+        $insuree = DB::table('insurees')->where('person_data_id', $beneficiary['insuree_id'])->value('id');
+        $beneficiary['insuree_id'] = $insuree;
+        $personData = PersonData::create($data);
+        $beneficiary['person_data_id'] = $personData->id;
+
+        Beneficiary::create($beneficiary);
+
+        return redirect()->route('beneficiaries.index')->withStatus(__('Beneficiary successfully created.'));
     }
 
     /**
@@ -104,6 +119,13 @@ class PersonDataController extends Controller
     {
         return request()->validate([
             'insurer_id' => ['required'],
+        ]);
+    }
+
+    protected function validateBeneficiary()
+    {
+        return request()->validate([
+            'insuree_id' => ['required'],
         ]);
     }
 }

@@ -47,7 +47,7 @@
                                     <tr>
                                         <td>{{ $beneficiary->fullName() }}</td>
                                         <td>
-                                            <a href="mailto:{{ $beneficiary->person_data->email }}">{{ $beneficiary->person_data->email }}</a>
+                                            <a href="mailto:{{$beneficiary->person_data->email}}">{{ $beneficiary->person_data->email }}</a>
                                         </td>
                                         <td>{{ $beneficiary->person_data->phone_number }}</td>
                                         <td>{{ $beneficiary->person_data->city }}</td>
