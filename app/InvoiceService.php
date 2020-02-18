@@ -11,12 +11,16 @@ class InvoiceService extends Model
         'service_id',
         'price',
         'discounted_price',
+        'description',
+        'quantity',
     ];
     public static $rules = [
         'invoice_id' => 'required',
         'service_id' => 'required',
         'price' => 'numeric|required|between:0,999999999.999',
         'discounted_price' => 'numeric|required|between:0,999999999.999',
+        'description' => 'max:255',
+        'quantity' => 'numeric|required',
     ];
     protected $casts = [
         'id' => 'integer',
@@ -24,6 +28,7 @@ class InvoiceService extends Model
         'service_id' => 'integer',
         'price' => 'decimal:13',
         'discounted_price' => 'decimal:13',
+        'quantity' => 'integer',
     ];
 
     public function getPriceAttribute($value)

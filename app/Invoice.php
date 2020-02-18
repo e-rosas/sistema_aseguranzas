@@ -19,17 +19,20 @@ class Invoice extends Model
         'amount_due',
         'sub_total',
         'tax',
+        'person_data_id',
     ];
     public static $rules = [
         'number' => 'required',
         'status' => 'max:255',
         'date' => 'date',
+        'comments' => 'max:1000',
         'total' => 'numeric|required|between:0,999999999.999',
         'total_with_discounts' => 'numeric|required|between:0,999999999.999',
         'amount_paid' => 'numeric|between:0,999999999.999',
         'amount_due' => 'numeric|between:0,999999999.999',
         'sub_total' => 'numeric|between:0,999999999.999',
         'tax' => 'numeric|between:0,999999999.999',
+        'person_data_id' => 'required',
     ];
     protected $casts = [
         'id' => 'integer',

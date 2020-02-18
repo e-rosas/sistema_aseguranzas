@@ -248,6 +248,7 @@
     // CSRF Token
     var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
     class Service {
+        quantity = 1;
         constructor(service_id, description, price, discounted_price, quantity) {
             this.service_id = service_id;
             this.description = description;
@@ -266,31 +267,40 @@
     function addServiceToCart(service_id, description, price, discounted_price, quantity) {
         for(var service in this.services) {
             if(this.services[service].service_id === service_id) {
-                this.services[service].quantity ++;
-                ;
+                this.services[service].quantity += Number(quantity);
+                displayCart();
                 return;
             }
         }
         var service = new Service(service_id, description, price, discounted_price, quantity);
-        this.services.push(service);     
+        this.services.push(service);   
+        console.log(services);
+        displayCart();  
     }
     // Remove service from cart
     function removeServiceFromCart(service_id) {
         for(var service in this.services) {
-            if(services[service].service_id === service_id) {
-                services[service].quantity --;
-                if(services[service].quantity === 0) {
-                services.splice(service, 1);
+            if(this.services[service].service_id === service_id) {
+                this.services[service].quantity --;
+                if(this.services[service].quantity === 0) {
+                    this.services.splice(service, 1);
                 }
                 break;
             }
+        };
+    }
+    function removeServiceFromCartAll(service_id) {
+        for(var service in this.services) {
+          if(this.services[service].service_id === service_id) {
+            services.splice(service, 1);
+            break;
+          }
         }
-        ;
+        displayCart();
     }
     // Clear cart
     function clearCart(){
-        services = [];
-        ;
+        this.services = [];
     }
     // Count cart 
     function totalCount() {
@@ -313,7 +323,7 @@
         return Number(this.total);
     }
 
-    function total_with_discounts() {
+    function totalDiscounts() {
         return Number(this.total_with_discounts);
     }
 
@@ -328,11 +338,38 @@
             },
         success: function (response) {
                 console.log(response);
+                
                 addServiceToCart(response.id, response.description, 
-                    response.price, response.discounted_price, quantity);
-                    document.getElementById("input-total").value = totalCart();
-                    document.getElementById("input-sub_total").value = 0;
-                             
+                    response.price, response.discounted_price, quantity);                                    
+            }
+        });
+            return false;
+    }
+
+    function sendCart(person_data_id, date, amount_due, amount_paid,
+         comments, number){
+        $.ajax({
+            url: "{{route('invoices.store')}}",
+            dataType: 'json',
+            type:"post",
+            data: {
+                "_token": "{{ csrf_token() }}",
+                "person_data_id" : person_data_id,
+                "date" : date,
+                "amount_due" : amount_due,
+                "amount_paid" : amount_paid,
+                "comments" : comments,
+                "number" : number,
+                "services" : this.services,
+                "total" : totalCart(),
+                "sub_total" : 0,
+                "total_with_discounts" : totalDiscounts(),
+                "tax" : 0,
+                "status": "due"
+            },
+        success: function (response) {
+                console.log(response);
+                                                   
             }
         });
             return false;
@@ -355,8 +392,10 @@
             +  "</tr>";
         }
         $('#services_table tbody').html(output);
-        $('#input-total').html(totalCart());
-        $('.total-count').html(totalCount());
+        document.getElementById("input-total").value = totalCart();
+        document.getElementById("input-total_with_discounts").value = totalDiscounts();
+        document.getElementById("input-sub_total").value = 0;
+        document.getElementById("input-tax").value = 0; 
       }
     $(document).ready(function(){
         $("#person_data_id").change(function(){
@@ -368,15 +407,23 @@
         });
 
         $("#add_service").click(function(){
-            var quantity = document.getElementById("input-quantity").value;
-            var service_id= $("#service_id").children("option:selected").val();
-            getService(service_id, quantity);
-            displayCart();
-            console.log(services);
+            var quantity = Number(document.getElementById("input-quantity").value);
+            if(quantity > 0){
+                var service_id= $("#service_id").children("option:selected").val();
+                getService(service_id, quantity);
+            }
+            
         });
 
         
         $("#save").click(function(){
+            var person_data_id= $("#person_data_id").children("option:selected").val();
+            var date = document.getElementById("input-date").value; 
+            var amount_due = document.getElementById("input-amount_due").value; 
+            var amount_paid = document.getElementById("input-amount_paid").value; 
+            var comments = document.getElementById("input-comments").value;
+            var number = document.getElementById("input-number").value;  
+            sendCart(person_data_id, date, amount_due, amount_paid, comments, number);
             
 
         });
@@ -385,9 +432,8 @@
             $("#services_table tbody").find('input[name="service"]').each(function(){
 
                 if($(this).is(":checked")){
-                    var id = $(this).parents("tr").attr('value');
-                    console.log(id);
-                    removeServiceFromCart(id);                 
+                    var id = Number($(this).parents("tr").attr('value'));
+                    removeServiceFromCartAll(id);                 
 
                     //$(this).parents("tr").remove();
 
@@ -398,6 +444,7 @@
 
         });
     });
+    displayCart();
 </script>
     
 @endpush
