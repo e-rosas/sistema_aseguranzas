@@ -109,6 +109,7 @@
 <script>
     // CSRF Token
 var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+var services = [];
     function getService(id, quantity){
         $.ajax({
             url: "{{route('services.find')}}",

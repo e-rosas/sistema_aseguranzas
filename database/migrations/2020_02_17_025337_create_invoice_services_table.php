@@ -18,6 +18,7 @@ class CreateInvoiceServicesTable extends Migration
             $table->string('description');
             $table->decimal('price', 13, 4);
             $table->decimal('discounted_price', 13, 4);
+            $table->integer('quantity');
             $table->foreign('invoice_id')->references('id')->on('invoices')->onDelete('cascade');
             $table->foreign('service_id')->references('id')->on('services')->onDelete('cascade');
             $table->timestamps();
