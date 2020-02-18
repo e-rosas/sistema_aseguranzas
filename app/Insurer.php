@@ -32,4 +32,9 @@ class Insurer extends Model
     {
         return $this->hasMany('App\Insuree');
     }
+
+    public function addressDetails()
+    {
+        return $this->city.', '.$this->state.'.  '.$this->postal_code;
+    }
 }

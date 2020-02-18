@@ -75,4 +75,30 @@ class Invoice extends Model
     {
         return $this->hasMany('App\InvoiceService');
     }
+
+    public function calls()
+    {
+        return $this->hasMany('App\Call');
+    }
+
+    public function discounts()
+    {
+        return $this->hasMany('App\Discount');
+    }
+
+    public function findInsuree()
+    {
+        $beneficiary = Beneficiary::find($this->person_data_id);
+        $insuree = Insuree::find($beneficiary->insuree_id);
+
+        return $insuree->person_data;
+    }
+
+    public function findInsurer()
+    {
+        $beneficiary = Beneficiary::find($this->person_data_id);
+        $insuree = Insuree::find($beneficiary->insuree_id);
+
+        return $insuree->insurer;
+    }
 }

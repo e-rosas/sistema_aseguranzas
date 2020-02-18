@@ -88,4 +88,9 @@ class PersonData extends Model
     {
         return $this->last_name.' '.$this->maiden_name.' '.$this->name;
     }
+
+    public function addressDetails()
+    {
+        return $this->city.', '.$this->state.'.  '.$this->postal_code;
+    }
 }

@@ -2,19 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Discount;
+use App\Call;
 use Illuminate\Http\Request;
 
-class DiscountController extends Controller
+class CallController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Discount $model)
+    public function index()
     {
-        return view('discounts.index', ['discounts' => $model->paginate(15)]);
+        $calls = \App\Call::with(['invoice.person_data'])->paginate(15);
+
+        return view('calls.index', compact('calls'));
     }
 
     /**
@@ -24,7 +26,6 @@ class DiscountController extends Controller
      */
     public function create()
     {
-        return view('discounts.create');
     }
 
     /**
@@ -34,10 +35,8 @@ class DiscountController extends Controller
      */
     public function store(Request $request)
     {
-        $validated = $this->validateDiscount();
-        Discount::create($validated);
-
-        return redirect()->route('discounts.index')->withStatus(__('Discount successfully created.'));
+        $validated = $this->validateCall();
+        Call::create($validated);
     }
 
     /**
@@ -45,7 +44,7 @@ class DiscountController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function show(Discount $discount)
+    public function show(Call $call)
     {
     }
 
@@ -54,7 +53,7 @@ class DiscountController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function edit(Discount $discount)
+    public function edit(Call $call)
     {
     }
 
@@ -63,7 +62,7 @@ class DiscountController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Discount $discount)
+    public function update(Request $request, Call $call)
     {
     }
 
@@ -72,12 +71,12 @@ class DiscountController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Discount $discount)
+    public function destroy(Call $call)
     {
     }
 
-    protected function validateDiscount()
+    public function validateCall()
     {
-        return request()->validate(Discount::$rules);
+        return request()->validate(Call::$rules);
     }
 }
