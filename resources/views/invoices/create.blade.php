@@ -9,7 +9,7 @@
             <div class="col-xl-12 order-xl-1">
                 <div class="card bg-secondary shadow">
                     <div class="card-header bg-white border-0">
-                        <div class="row align-items-center">
+                        <div class="row align-services-center">
                             <div class="col-8 col-auto">
                                 <h3 class="mb-0">{{ __('Patient') }}</h3>
                             </div>
@@ -35,7 +35,7 @@
             <div class="col-xl-12 order-xl-1">
                 <div class="card bg-secondary shadow">
                     <div class="card-header bg-white border-0">
-                        <div class="row align-items-center">
+                        <div class="row align-services-center">
                             <div class="col-8 col-auto">
                                 <h3 class="mb-0">{{ __('Invoice') }}</h3>
                             </div>
@@ -173,7 +173,7 @@
             <div class="col-xl-12 order-xl-1">
                 <div class="card bg-secondary shadow">
                     <div class="card-header bg-white border-0">
-                        <div class="row align-items-center">
+                        <div class="row align-services-center">
                             <div class="col-8 col-auto">
                                 <h3 class="mb-0">{{ __('Services') }}</h3>
                             </div>
@@ -191,9 +191,9 @@
                                 @endcomponent
                             </div>
                             {{--  quantity  --}}
-                            <div class="col-md-2 col-auto form-group{{ $errors->has('quantity') ? ' has-danger' : '' }}">
+                            <div class=" col-auto form-group{{ $errors->has('quantity') ? ' has-danger' : '' }}">
                                 <input type="numeric" min="1" name="quantity" id="input-quantity" class="form-control form-control-alternative{{ $errors->has('quantity') ? ' is-invalid' : '' }}" 
-                                placeholder="1" value="{{ old('quantity') }}" required>
+                                placeholder="1" value="1" required>
                             
                                 @if ($errors->has('quantity'))
                                     <span class="invalid-feedback" role="alert">
@@ -209,16 +209,14 @@
                         
                         {{-- Table of services --}}
                         <div  class="table-responsive">
-                            <table id="services_table" class="table align-items-center table-flush">
+                            <table id="services_table" class="table align-services-center table-flush">
                                 <thead class="thead-light">
                                     <tr>
                                         <th scope="col"></th>
-                                        <th scope="col">{{ __('Code') }}</th>
                                         <th scope="col">{{ __('Description') }}</th>
                                         <th scope="col">{{ __('Price') }}</th>
                                         <th scope="col">{{ __('Discounted Price') }}</th>
                                         <th scope="col">{{ __('Quantity') }}</th>
-                                        <th scope="col"></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -229,12 +227,12 @@
                         <br />
                         <div class="form-row">                            
                             {{-- Remove --}}
-                            <div class="text-right">
+                            <div class="text-right col-md-1 col-auto">
                                 <button type="button" id="remove_selected" class="btn btn-danger btn-sm">{{ __('Remove selected') }}</button>
                             </div>
                             {{-- Confirm --}}
-                            <div class="text-right">
-                                <button type="button" id="save" class="btn btn-success btn-sm text-right">{{ __('Save') }}</button>
+                            <div class="text-right col-md-11 col-auto">
+                                <button type="button" id="save" class="btn btn-success  text-right">{{ __('Save') }}</button>
                             </div>
                         </div>
                     </div>                    
@@ -249,65 +247,157 @@
 <script>
     // CSRF Token
     var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-    var services = [];
-        function getService(id, quantity){
-            $.ajax({
-                url: "{{route('services.find')}}",
-                dataType: 'json',
-                type:"post",
-                data: {
-                    "_token": "{{ csrf_token() }}",
-                    "service_id" : id
-                },
-            success: function (response) {
-                    console.log(response);
-                    var markup = 
-                    "<tr>"+
-                        "<td><input type='checkbox' name='service'></td>"
-                        +"<td>" + response.code + "</td>"
-                        +"<td>" + response.description + "</td>"
-                        +"<td>" + response.price + "</td>"
-                        +"<td>" + response.discounted_price + "</td>"
-                        +"<td>" + quantity + "</td>"
-                        +"<td>" + response.id + "</td>"
-                    +"</tr>";
-                    $("#services_table tbody").append(markup);
-
-                    
-                }
-            });
-                return false;
+    class Service {
+        constructor(service_id, description, price, discounted_price, quantity) {
+            this.service_id = service_id;
+            this.description = description;
+            this.price = price;
+            this.discounted_price = discounted_price;
+            this.quantity = quantity;
         }
-        $(document).ready(function(){
-            $("#person_data_id").change(function(){
+    }
 
-                var selectedService= $(this).children("option:selected").val();
-        
-                alert("You have selected the service - " + selectedService);
-        
-            });
+    services = [];
+    total = 0;
+    sub_total = 0;
+    total_with_discounts = 0;
+    tax = 0;
+    // Add to cart
+    function addServiceToCart(service_id, description, price, discounted_price, quantity) {
+        for(var service in this.services) {
+            if(this.services[service].service_id === service_id) {
+                this.services[service].quantity ++;
+                ;
+                return;
+            }
+        }
+        var service = new Service(service_id, description, price, discounted_price, quantity);
+        this.services.push(service);     
+    }
+    // Remove service from cart
+    function removeServiceFromCart(service_id) {
+        for(var service in this.services) {
+            if(services[service].service_id === service_id) {
+                services[service].quantity --;
+                if(services[service].quantity === 0) {
+                services.splice(service, 1);
+                }
+                break;
+            }
+        }
+        ;
+    }
+    // Clear cart
+    function clearCart(){
+        services = [];
+        ;
+    }
+    // Count cart 
+    function totalCount() {
+        var totalCount = 0;
+        for(var service in this.services) {
+            totalCount += this.services[service].quantity;
+        }
+        return totalCount;
+    }
+    // Total cart
+    function totalCart() {
+        this.total = 0;
+        this.sub_total = 0;
+        this.tax = 0;
+        this.total_with_discounts = 0;
+        for(var service in this.services) {
+            this.total += this.services[service].price * this.services[service].quantity;
+            this.total_with_discounts += this.services[service].discounted_price * this.services[service].quantity;
+        }
+        return Number(this.total);
+    }
 
-            $("#add_service").click(function(){
-                var quantity = document.getElementById("input-quantity").value;
-                var service_id= $("#service_id").children("option:selected").val();
+    function total_with_discounts() {
+        return Number(this.total_with_discounts);
+    }
 
-                getService(service_id, quantity);
-
-            });
-            $("#remove_selected").click(function(){
-
-                $("#services_table tbody").find('input[name="service"]').each(function(){
-
-                    if($(this).is(":checked")){
-
-                        $(this).parents("tr").remove();
-
-                    }
-
-                });
-
-            });
+    function getService(id, quantity){
+        $.ajax({
+            url: "{{route('services.find')}}",
+            dataType: 'json',
+            type:"post",
+            data: {
+                "_token": "{{ csrf_token() }}",
+                "service_id" : id
+            },
+        success: function (response) {
+                console.log(response);
+                addServiceToCart(response.id, response.description, 
+                    response.price, response.discounted_price, quantity);
+                    document.getElementById("input-total").value = totalCart();
+                    document.getElementById("input-sub_total").value = 0;
+                             
+            }
         });
+            return false;
+    }
+    
+
+    function addService(service_id, description, price, discounted_price, quantity){
+        invoiceCart.addServiceToCart(service_id, description, price, discounted_price, quantity);
+    }
+
+    function displayCart() {
+        var output = "";
+        for(var i in this.services) {
+          output += "<tr value="+this.services[i].service_id+">"
+            + "<td>  <input type='checkbox' name='service'>  </td>"
+            + "<td>" + this.services[i].description + "</td>"
+            + "<td>" + this.services[i].price + "</td>" 
+            + "<td>" + this.services[i].discounted_price + "</td>"
+            + "<td>" + this.services[i].quantity + "</td>"
+            +  "</tr>";
+        }
+        $('#services_table tbody').html(output);
+        $('#input-total').html(totalCart());
+        $('.total-count').html(totalCount());
+      }
+    $(document).ready(function(){
+        $("#person_data_id").change(function(){
+
+            var selectedService= $(this).children("option:selected").val();
+    
+            alert("You have selected the service - " + selectedService);
+    
+        });
+
+        $("#add_service").click(function(){
+            var quantity = document.getElementById("input-quantity").value;
+            var service_id= $("#service_id").children("option:selected").val();
+            getService(service_id, quantity);
+            displayCart();
+            console.log(services);
+        });
+
+        
+        $("#save").click(function(){
+            
+
+        });
+        $("#remove_selected").click(function(){
+
+            $("#services_table tbody").find('input[name="service"]').each(function(){
+
+                if($(this).is(":checked")){
+                    var id = $(this).parents("tr").attr('value');
+                    console.log(id);
+                    removeServiceFromCart(id);                 
+
+                    //$(this).parents("tr").remove();
+
+                }
+
+            });
+            displayCart();
+
+        });
+    });
 </script>
     
 @endpush
