@@ -17,7 +17,7 @@ class CreateInvoicesTable extends Migration
             $table->string('number')->unique();
             $table->date('date');
             $table->text('comments');
-            $table->string('status'); //change
+            $table->string('status')->default('due'); //change
             $table->decimal('total', 13, 4);
             $table->decimal('sub_total', 13, 4); //add
             $table->decimal('tax', 13, 4); //add

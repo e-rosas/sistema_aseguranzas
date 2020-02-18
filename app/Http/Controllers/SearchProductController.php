@@ -33,7 +33,7 @@ class SearchProductController extends Controller
         Log::info('message'.$request);
 
         $service_id = $request->service_id;
-        $service = Service::find($service_id)
+        $service = Service::find($service_id, ['id', 'code', 'description', 'price', 'discounted_price'])
         ;
 
         echo json_encode($service);
