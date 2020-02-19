@@ -22,6 +22,7 @@ class DiscountInvoice extends Model
         'discounted_total' => 'numeric|required|between:0,999999999.999',
         'status' => 'max:255',
     ];
+    protected $with = ['discount'];
     protected $casts = [
         'id' => 'integer',
         'invoice_id' => 'integer',

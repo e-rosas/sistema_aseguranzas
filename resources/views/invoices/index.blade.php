@@ -47,7 +47,7 @@
                                     <tr>
                                         <td>{{ $invoice->number}}</td>
                                         <td>{{ $invoice->person_data->fullName() }}</td>
-                                        <td>{{ $invoice->date->format('m-d-Y') }}</td>
+                                        <td>{{ $invoice->date->format('M-d-Y') }}</td>
                                         <td>{{ $invoice->total }}</td>
                                         <td>{{ $invoice->total_with_discounts }}</td>
                                         <td>{{ $invoice->amount_paid }}</td>

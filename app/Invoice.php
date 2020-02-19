@@ -85,7 +85,7 @@ class Invoice extends Model
 
     public function discounts()
     {
-        return $this->hasMany('App\Discount');
+        return $this->hasMany('App\DiscountInvoice');
     }
 
     public function findInsuree()
