@@ -13,7 +13,7 @@ class CreateDiscountInvoicesTable extends Migration
     {
         Schema::create('discount_invoices', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('discount_id');
+            $table->unsignedInteger('discount_id');
             $table->unsignedBigInteger('invoice_id');
             $table->dateTime('start_date');
             $table->dateTime('end_date');
@@ -21,7 +21,7 @@ class CreateDiscountInvoicesTable extends Migration
             $table->decimal('discounted_total', 13, 4);
 
             $table->foreign('invoice_id')->references('id')->on('invoices')->onDelete('cascade');
-            $table->foreign('discount_id')->references('id')->on('discounts')->onDelete('cascade');
+            $table->foreign('discount_id')->references('id')->on('discounts');
             $table->timestamps();
         });
     }

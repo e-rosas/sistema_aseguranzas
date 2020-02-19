@@ -4,10 +4,12 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\DB;
 
 class Invoice extends Model
 {
     use SoftDeletes;
+    public $insuree;
     public $fillable = [
         'number',
         'comments',
@@ -88,17 +90,25 @@ class Invoice extends Model
 
     public function findInsuree()
     {
-        $beneficiary = Beneficiary::find($this->person_data_id);
-        $insuree = Insuree::find($beneficiary->insuree_id);
+        $insureeid = DB::table('beneficiaries')->where('person_data_id', $this->person_data_id)->value('insuree_id');
+        $this->insuree = Insuree::find($insureeid);
 
-        return $insuree->person_data;
+        return $this->insuree->person_data;
     }
 
     public function findInsurer()
     {
-        $beneficiary = Beneficiary::find($this->person_data_id);
-        $insuree = Insuree::find($beneficiary->insuree_id);
+        if (0 == $this->person_data->insured) {
+            if (!isset($this->insuree)) {
+                $insureeid = DB::table('beneficiaries')->where('person_data_id', $this->person_data_id)->value('insuree_id');
+                $this->insuree = Insuree::find($insureeid);
+            }
 
-        return $insuree->insurer;
+            return $this->insuree->insurer;
+        }
+
+        $insurerid = DB::table('insurees')->where('person_data_id', $this->person_data_id)->value('insurer_id');
+
+        return Insurer::find($insurerid);
     }
 }
