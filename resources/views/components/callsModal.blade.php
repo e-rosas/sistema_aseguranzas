@@ -3,39 +3,89 @@
         <div class="modal-content">
             <div class="modal-body p-0">
                 <div class="card bg-secondary shadow border-0">
-                    <div class="card-header bg-transparent pb-5">
-                        <div class="text-muted text-center mt-2 mb-3"><small>{{ __('Call details') }}</small></div>
-                        
+                    <div class="card-header bg-transparent">
+                        <h6 class="heading-small text-muted mb-4">{{ __('Add call') }}</h6>                 
                     </div>
                     <div class="card-body px-lg-5 py-lg-5">
                         <div class="text-center text-muted mb-4">
                             <small>Or sign in with credentials</small>
                         </div>
-                        <form role="form">
-                            <div class="form-group mb-3">
-                                <div class="input-group input-group-alternative">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text"><i class="ni ni-email-83"></i></span>
-                                    </div>
-                                    <input class="form-control" placeholder="Email" type="email">
-                                </div>
-                            </div>
+                        <form role="form" method="post" action="{{ route('calls.store') }}"  autocomplete="off">
+                            @csrf                     
                             <div class="form-group">
-                                <div class="input-group input-group-alternative">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
+                                {{--  Invoice --}}
+                                <div class="form-group">
+                                    <div class="input-group input-group-alternative">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-key"></i></span>
+                                        </div>
+                                        <input readonly type="invoice_id" name="invoice_id" id="input-invoice_id" class="form-control"
+                                        value="{{ $invoice_id ?? '' }}" required>
                                     </div>
-                                    <input class="form-control" placeholder="Password" type="password">
                                 </div>
-                            </div>
-                            <div class="custom-control custom-control-alternative custom-checkbox">
-                                <input class="custom-control-input" id=" customCheckLogin" type="checkbox">
-                                <label class="custom-control-label" for=" customCheckLogin">
-                                    <span class="text-muted">Remember me</span>
-                                </label>
-                            </div>
-                            <div class="text-center">
-                                <button type="button" class="btn btn-primary my-4">Sign in</button>
+                                {{--  Number --}}
+                                <div class="form-group {{ $errors->has('number') ? ' has-danger' : '' }}">
+                                    <div class="input-group input-group-alternative">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-phone-square"></i></span>
+                                        </div>
+                                        <input type="number" name="number" id="input-number" class="form-control {{ $errors->has('number') ? ' is-invalid' : '' }}" 
+                                        value="{{ $number ?? '' }}" placeholder="Number" required>
+                                        @if ($errors->has('number'))
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('number') }}</strong>
+                                            </span>
+                                        @endif
+                                    </div>
+                                </div>
+                                {{--  Claim  --}}
+                                <div class="form-group {{ $errors->has('claim') ? ' has-danger' : '' }}">
+                                    <div class="input-group input-group-alternative">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-hashtag"></i></span>
+                                        </div>
+                                        <input type="text" name="claim" id="input-claim" class="form-control {{ $errors->has('claim') ? ' is-invalid' : '' }}" 
+                                        value="{{ old('claim') }}" placeholder="{{ __('Claim') }}" required>
+                                        @if ($errors->has('claim'))
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('claim') }}</strong>
+                                            </span>
+                                        @endif
+                                    </div>
+                                </div>
+                                {{--  Date  --}}
+                                <div class="form-group {{ $errors->has('date') ? ' has-danger' : '' }}">
+                                    <div class="input-group input-group-alternative">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-calendar"></i></span>
+                                        </div>
+                                        <input type="date" name="date" id="input-date" class="form-control {{ $errors->has('date') ? ' is-invalid' : '' }}" 
+                                        value="{{ old('date') }}" required>
+                                        @if ($errors->has('date'))
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('date') }}</strong>
+                                            </span>
+                                        @endif
+                                    </div>
+                                </div>
+                                {{--  comments  --}}
+                                <div class="form-group {{ $errors->has('comments') ? ' has-danger' : '' }}">
+                                    <div class="input-group input-group-alternative">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-align-justify"></i></span>
+                                        </div>
+                                        <textarea type="text" rows="3" name="comments" id="input-comments" class="form-control {{ $errors->has('comments') ? ' is-invalid' : '' }}" 
+                                        value="{{ old('comments') }}" placeholder="{{ __('Comments') }}"></textarea>
+                                        @if ($errors->has('comments'))
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('comments') }}</strong>
+                                            </span>
+                                        @endif
+                                    </div>
+                                </div>                   
+                                <div class="text-center">
+                                    <button type="submit" class="btn btn-success mt-4">{{ __('Save') }}</button>
+                                </div>
                             </div>
                         </form>
                     </div>

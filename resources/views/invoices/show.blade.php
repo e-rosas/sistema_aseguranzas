@@ -73,7 +73,7 @@
                         <div class="col-md-12 col-auto text-right">
                             <button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#modal-form">Add</i></button>
                             <br />
-                            @component('components.callsModal')
+                            @component('components.callsModal',['number'=>$invoice->callCount() + 1, 'invoice_id'=>$invoice->id])
                                 
                             @endcomponent
                         </div>

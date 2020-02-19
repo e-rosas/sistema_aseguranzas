@@ -22,7 +22,7 @@ class Call extends Model
     ];
     protected $casts = [
         'id' => 'integer',
-        'invoicenumber' => 'string',
+        'invoice_id' => 'integer',
         'comments' => 'string',
         'claim' => 'string',
     ];

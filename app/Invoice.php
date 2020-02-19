@@ -111,4 +111,12 @@ class Invoice extends Model
 
         return Insurer::find($insurerid);
     }
+
+    public function callCount()
+    {
+        return DB::table('calls')
+            ->where('invoice_id', $this->id)
+            ->count()
+        ;
+    }
 }
