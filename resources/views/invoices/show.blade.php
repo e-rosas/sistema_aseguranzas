@@ -58,12 +58,12 @@
                         @endcomponent
                     </div>
                     <div class="tab-pane fade" id="tabs-icons-text-2" role="tabpanel" aria-labelledby="tabs-icons-text-2-tab">
-                        <div class="row">
-                            <div class="col-md-12 col-auto text-right">
-                                <button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#modal-form">Add</i></button>
-                                <br />
+                        <div class="col-md-12 col-auto text-right">
+                            <button type="button" class="btn btn-sm btn-secondary" data-toggle="modal" data-target="#modal-form">Add</i></button>
+                            <br />
+                            @component('components.discountsModal',['invoice_id'=>$invoice->id])
                                 
-                            </div>
+                            @endcomponent
                         </div>
                         @component('components.discountsTable', ['discounts'=>$invoice->discounts])
                             
@@ -73,7 +73,7 @@
                         <div class="col-md-12 col-auto text-right">
                             <button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#modal-form">Add</i></button>
                             <br />
-                            @component('components.callsModal',['number'=>$invoice->callCount() + 1, 'invoice_id'=>$invoice->id])
+                            @component('components.callsModal',['number'=>$invoice->calls->count() + 1, 'invoice_id'=>$invoice->id])
                                 
                             @endcomponent
                         </div>

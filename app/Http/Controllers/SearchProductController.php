@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Item;
 use App\Service;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 
 class SearchProductController extends Controller
 {
@@ -30,8 +29,6 @@ class SearchProductController extends Controller
 
     public function findService(Request $request)
     {
-        Log::info('message'.$request);
-
         $service_id = $request->service_id;
         $service = Service::find($service_id, ['id', 'code', 'description', 'price', 'discounted_price'])
         ;
