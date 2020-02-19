@@ -60,7 +60,7 @@ class Invoice extends Model
 
     public function getTotalWithDiscountsAttribute($value)
     {
-        return number_format($value, 3);
+        return number_format($value, 3, '.', '');
     }
 
     public function getAmountPaidAttribute($value)

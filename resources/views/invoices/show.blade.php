@@ -61,7 +61,7 @@
                         <div class="col-md-12 col-auto text-right">
                             <button type="button" class="btn btn-sm btn-secondary" data-toggle="modal" data-target="#modal-form">Add</i></button>
                             <br />
-                            @component('components.discountsModal',['invoice_id'=>$invoice->id])
+                            @component('components.discountsModal',['invoice_id'=>$invoice->id, 'discounted_total'=>$invoice->total_with_discounts])
                                 
                             @endcomponent
                         </div>
