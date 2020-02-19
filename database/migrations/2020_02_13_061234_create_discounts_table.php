@@ -13,7 +13,7 @@ class CreateDiscountsTable extends Migration
     {
         Schema::create('discounts', function (Blueprint $table) {
             $table->increments('id');
-            $table->decimal('percentage_increase', 5, 2);
+            $table->decimal('percentage', 5, 2);
             $table->string('range_of_days');
             $table->integer('amount_of_days');
             $table->timestamps();

@@ -9,12 +9,12 @@ class Discount extends Model
 {
     use SoftDeletes;
     public $fillable = [
-        'percentage_increase',
+        'percentage',
         'range_of_days',
         'amount_of_days',
     ];
     public static $rules = [
-        'percentage_increase' => 'required|between:0,99.99',
+        'percentage' => 'required|between:0,99.99',
         'range_of_days' => 'required',
         'amount_of_days' => 'numeric|required',
     ];

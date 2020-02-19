@@ -30,18 +30,8 @@
                     </div>
                     <div class="card-body">
                         <div class="row">
-                            <label class="h3" for="i_number">Number</label>
-                            <label id="i_number" class="h4">
-                                {{ $invoice->number }}
-                            </label>
-                        </div>
-                        <div class="h3">
-                            {{ $invoice->number }}
-                        </div>
-                        <div class="h4 font-weight-300">
-                            <span> {{ $invoice->birth_date }} </span>
-                        </div>
 
+                        </div>
                     </div>                    
                 </div>               
             </div>
@@ -63,7 +53,9 @@
             <div class="card-body">
                 <div class="tab-content" id="myTabContent">
                     <div class="tab-pane fade show active" id="tabs-icons-text-1" role="tabpanel" aria-labelledby="tabs-icons-text-1-tab">
-                        
+                        @component('components.servicesTable', ['services'=>$invoice->services])
+                            
+                        @endcomponent
                     </div>
                     <div class="tab-pane fade" id="tabs-icons-text-2" role="tabpanel" aria-labelledby="tabs-icons-text-2-tab">
                         
@@ -72,46 +64,6 @@
                         
                     </div>
                 </div>
-            </div>
-        </div>
-        
-        
-        <div class="row">
-            {{-- Services --}}
-            <div class="col-xl-12 order-xl-1">
-                <div class="card bg-secondary shadow">
-                    <div class="card-header bg-white border-0">
-                        <div class="row align-services-center">
-                            <div class="col-8 col-auto">
-                                <h3 class="mb-0">{{ __('Services') }}</h3>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        {{-- Selecting service --}}
-                        <div class="row">
-                            
-                        </div>
-                        
-                        {{-- Table of services --}}
-                        <div  class="table-responsive">
-                            <table id="services_table" class="table align-services-center table-flush">
-                                <thead class="thead-light">
-                                    <tr>
-                                        <th scope="col"></th>
-                                        <th scope="col">{{ __('Description') }}</th>
-                                        <th scope="col">{{ __('Price') }}</th>
-                                        <th scope="col">{{ __('Discounted Price') }}</th>
-                                        <th scope="col">{{ __('Quantity') }}</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>                    
-                </div>               
             </div>
         </div>
         

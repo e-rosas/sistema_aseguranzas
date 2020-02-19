@@ -6,7 +6,7 @@ use Faker\Generator as Faker;
 
 $factory->define(Discount::class, function (Faker $faker) {
     return [
-        'percentage_increase' => $faker->numberBetween(0, 50),
+        'percentage' => $faker->numberBetween(0, 50),
         'range_of_days' => $faker->randomElement([
             '0 - 30',
             '31 - 90',

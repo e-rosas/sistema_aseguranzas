@@ -43,7 +43,7 @@
                                 @foreach ($discounts as $discount)
                                     <tr>
                                         <td>{{ $discount->range_of_days }}</td>
-                                        <td>{{ $discount->percentage_increase }}</td>
+                                        <td>{{ $discount->percentage}}</td>
                                         <td>{{ $discount->amount_of_days }}</td>
                                         <td class="text-right">
                                             <div class="dropdown">

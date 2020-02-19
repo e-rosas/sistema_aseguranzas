@@ -36,14 +36,14 @@
                                     @endif
                                 </div>
                                 {{--  Percentage  --}}
-                                <div class="form-group{{ $errors->has('percentage_increase') ? ' has-danger' : '' }} col-md-4 col-auto">
-                                    <label class="form-control-label" for="input-percentage_increase">{{ __('Percentage') }}</label>
-                                    <input type="number" step="0.1" min="0" max="100" name="percentage_increase" id="input-percentage_increase" class="form-control form-control-alternative{{ $errors->has('percentage_increase') ? ' is-invalid' : '' }}" 
-                                    placeholder="{{ __('Percentage') }}" value="{{ old('percentage_increase') }}" required>
+                                <div class="form-group{{ $errors->has('percentage') ? ' has-danger' : '' }} col-md-4 col-auto">
+                                    <label class="form-control-label" for="input-percentage">{{ __('Percentage') }}</label>
+                                    <input type="number" step="0.1" min="0" max="100" name="percentage" id="input-percentage" class="form-control form-control-alternative{{ $errors->has('percentage') ? ' is-invalid' : '' }}" 
+                                    placeholder="{{ __('Percentage') }}" value="{{ old('percentage') }}" required>
                                 
-                                    @if ($errors->has('percentage_increase'))
+                                    @if ($errors->has('percentage'))
                                         <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $errors->first('percentage_increase') }}</strong>
+                                            <strong>{{ $errors->first('percentage') }}</strong>
                                         </span>
                                     @endif
                                 </div>
