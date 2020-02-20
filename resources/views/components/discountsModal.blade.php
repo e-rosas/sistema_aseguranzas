@@ -4,7 +4,7 @@
             <div class="modal-body p-0">
                 <div class="card bg-secondary shadow border-0">
                     <div class="card-header bg-transparent">
-                        <h6 class="heading-small text-muted mb-4">{{ __('Add discount') }}</h6>
+                        <h5 class="heading-small text-muted mb-4">{{ __('Select discounts') }}</h5>
                         {{--  Available discounts  --}}
                         <div class="table-responsive">
                             <table id="discounts_table" class="table align-items-center table-flush">
@@ -44,6 +44,13 @@
                                 </tbody> 
                             </table>
                         </div> 
+                        {{--  Select discount  --}}
+                        <div class="row">
+                            <div class="col text-center">
+                                <button id="select" type="button" class="btn btn-outline-success btn-sm btn-block">{{ __('Select') }}</button>
+                            </div>
+                        </div>  
+
                     </div>
                     <div class="card-body px-lg-5 py-lg-5">
                         <form role="form" method="post" action="{{ route('calls.store') }}"  autocomplete="off">
@@ -118,13 +125,14 @@
     var appliedDiscounts = [];
     class AppliedDiscount {
         status = 'ACTIVE';
-
+        end_date = new Date();
+        discounted_total = 0;
         constructor(invoice_id, discount_id, discount_percentage, 
-                    discounted_total, start_date, days, id){
+                    invoice_total, start_date, days, id){
             this.invoice_id = invoice_id;
             this.discount_id = discount_id;
             this.discount_percentage = discount_percentage;
-            this.discounted_total = discounted_total;
+            this.invoice_total = invoice_total;
             this.start_date = start_date;
             this.days = days;
             this.id = id;
@@ -135,8 +143,10 @@
         }
 
         calcDiscountedTotal(){
-            return this.discount_percentage * this.discounted_total / 100;
+            this.discounted_total = this.discount_percentage * this.invoice_total / 100;
+            return this.discounted_total;
         }
+
 
         get endDate(){
             return this.calcEndDate();
@@ -144,10 +154,27 @@
 
         calcEndDate(){
             var result = new Date(this.start_date);
-            result.setDate(result.getDate() + this.days);
-            return result;
+            this.end_date.setDate(result.getDate() + this.days);
+            return this.end_date;
         }
 
+    }
+
+    function sendAppliedDiscounts(){
+        $.ajax({
+            url: "{{route('invoices.discounts')}}",
+            dataType: 'json',
+            type:"post",
+            data: {
+                "_token": "{{ csrf_token() }}",
+                "appliedDiscounts" : appliedDiscounts,
+            },
+        success: function (response) {
+                
+
+            }
+        });
+            return false;
     }
 
 
@@ -184,15 +211,27 @@
     $(document).ready(function(){
         $('#modal-form').on('shown.bs.modal', function (e) {
              getDiscounts();
-          })
+        })
+        var today = new Date();
+        var dd = String(today.getDate()).padStart(2, '0');
+        var mm = String(today.getMonth() + 1).padStart(2, '0');
+        var yyyy = today.getFullYear();
+
+        today = yyyy + '-' + mm + '-' + dd;
+        document.getElementById("input-start_date").value = today;
+
+        $("#select").click(function(){
+            sendAppliedDiscounts();
+
+
+        });
           
           $("#generate").click(function(){
             appliedDiscounts = [];
             const invoice_id = Number(document.getElementById("input-invoice_id").value); 
-            const discounted_total = Number(document.getElementById("input-discounted_total").value);
+            const invoice_total = Number(document.getElementById("input-discounted_total").value);
             var date = document.getElementById("input-start_date").value; 
             const start_date = new Date(date);
-            console.log(start_date);
 
             $("#discounts_table tbody").find('input[name="discount"]').each(function(){
 
@@ -205,7 +244,7 @@
                     console.log(days);
 
                     appliedDiscounts.push(new AppliedDiscount(invoice_id, discount_id, discount_percentage, 
-                                                discounted_total, start_date, days, appliedDiscounts.length));
+                                                invoice_total, start_date, days, appliedDiscounts.length));
 
                     
 
@@ -213,18 +252,17 @@
 
             });
 
-            console.log(appliedDiscounts);
 
             var output = "";
 
             for(var i = 0; i < appliedDiscounts.length; i++){
                 console.log(appliedDiscounts[i])
                 output += "<tr value="+appliedDiscounts[i].id+">"
-                    + "<td>  <input type='checkbox' name='applied_discount'>  </td>"
+                    + "<td>  <input type='radio'  name='custom-radio-2'></td>"
                     + "<td id=percentage"+appliedDiscounts[i].id+">" + appliedDiscounts[i].discount_percentage + "</td>"
                     + "<td>" + appliedDiscounts[i].discountedTotal + "</td>" 
-                    + "<td>" + appliedDiscounts[i].start_date + "</td>" 
-                    + "<td>" + appliedDiscounts[i].endDate + "</td>" 
+                    + "<td>" + appliedDiscounts[i].start_date.toDateString() + "</td>" 
+                    + "<td>" + appliedDiscounts[i].endDate.toDateString() + "</td>" 
                     + "<td id=days"+appliedDiscounts[i].id+">" + appliedDiscounts[i].days + "</td>"
                     +  "</tr>";
             }

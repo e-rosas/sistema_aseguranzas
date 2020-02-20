@@ -38,6 +38,8 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::post('discounts/get', 'DiscountsInvoiceController@discounts')->name('discounts.get');
 
+    Route::post('invoices/adddiscounts', 'DiscountsInvoiceController@addAppliedDiscounts')->name('invoices.discounts');
+
     Route::get('profile', ['as' => 'profile.edit', 'uses' => 'ProfileController@edit']);
     Route::put('profile', ['as' => 'profile.update', 'uses' => 'ProfileController@update']);
     Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'ProfileController@password']);

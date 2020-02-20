@@ -71,7 +71,7 @@
                     </div>
                     <div class="tab-pane fade" id="tabs-icons-text-3" role="tabpanel" aria-labelledby="tabs-icons-text-3-tab">
                         <div class="col-md-12 col-auto text-right">
-                            <button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#modal-form">Add</i></button>
+                            <button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#modal-call">Add</i></button>
                             <br />
                             @component('components.callsModal',['number'=>$invoice->calls->count() + 1, 'invoice_id'=>$invoice->id])
                                 
