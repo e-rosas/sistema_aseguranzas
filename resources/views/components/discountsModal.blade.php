@@ -133,7 +133,8 @@
             this.discount_id = discount_id;
             this.discount_percentage = discount_percentage;
             this.invoice_total = invoice_total;
-            this.start_date = start_date.toJSON();
+            this.start_date = start_date.toISOString().split('T')[0]+' '+start_date.toTimeString().split(' ')[0];
+            this.start = start_date;
             this.days = days;
             this.id = id;
         }
@@ -147,16 +148,21 @@
             return this.discounted_total;
         }
 
+        get startDate(){
+            return this.start.toLocaleString();
+        }
+
 
         get endDate(){
-            return this.calcEndDate();
+            return this.calcEndDate().toLocaleDateString();
         }
 
         calcEndDate(){
-            var result = new Date(this.start_date);
+            var result = new Date(this.start);
             this.end_date.setDate(result.getDate() + this.days);
-            this.end_date = this.end_date.toJSON();
-            return this.end_date;
+            result = this.end_date;
+            this.end_date = this.end_date.toISOString().split('T')[0]+' '+this.end_date.toTimeString().split(' ')[0];
+            return result;
         }
 
     }
@@ -213,7 +219,9 @@
         $('#modal-form').on('shown.bs.modal', function (e) {
              getDiscounts();
         })
+        
         var today = new Date();
+
         var dd = String(today.getDate()).padStart(2, '0');
         var mm = String(today.getMonth() + 1).padStart(2, '0');
         var yyyy = today.getFullYear();
@@ -231,8 +239,14 @@
             appliedDiscounts = [];
             const invoice_id = Number(document.getElementById("input-invoice_id").value); 
             const invoice_total = Number(document.getElementById("input-discounted_total").value);
+
+            var today2 = new Date();
+            var time = today2.toTimeString().split(' ')[0]; 
+
             var date = document.getElementById("input-start_date").value; 
-            const start_date = new Date(date);
+            var dateTime = date+' '+time;
+            const start_date = new Date(dateTime);
+
 
             $("#discounts_table tbody").find('input[name="discount"]').each(function(){
 
@@ -242,12 +256,10 @@
                     var discount_percentage = Number(document.getElementById("percentage"+discount_id).innerHTML);
                     
                     var days = Number(document.getElementById("days"+discount_id).innerHTML);
-                    console.log(days);
+                    
 
                     appliedDiscounts.push(new AppliedDiscount(invoice_id, discount_id, discount_percentage, 
-                                                invoice_total, start_date, days, appliedDiscounts.length));
-
-                    
+                                                invoice_total, start_date, days, appliedDiscounts.length));    
 
                 }
 
@@ -257,12 +269,11 @@
             var output = "";
 
             for(var i = 0; i < appliedDiscounts.length; i++){
-                console.log(appliedDiscounts[i])
                 output += "<tr value="+appliedDiscounts[i].id+">"
                     + "<td>  <input type='radio'  name='custom-radio-2'></td>"
                     + "<td id=percentage"+appliedDiscounts[i].id+">" + appliedDiscounts[i].discount_percentage + "</td>"
                     + "<td>" + appliedDiscounts[i].discountedTotal + "</td>" 
-                    + "<td>" + appliedDiscounts[i].start_date + "</td>" 
+                    + "<td>" + appliedDiscounts[i].startDate + "</td>" 
                     + "<td>" + appliedDiscounts[i].endDate + "</td>" 
                     + "<td id=days"+appliedDiscounts[i].id+">" + appliedDiscounts[i].days + "</td>"
                     +  "</tr>";

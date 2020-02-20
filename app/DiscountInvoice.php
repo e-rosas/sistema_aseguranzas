@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon as Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class DiscountInvoice extends Model
@@ -36,6 +37,16 @@ class DiscountInvoice extends Model
     public function getDiscountedTotalAttribute($value)
     {
         return number_format($value, 3);
+    }
+
+    public function setStartDateAttribute($value)
+    {
+        $this->attributes['start_date'] = Carbon::parse($value)->toDateTimeString();
+    }
+
+    public function setEndDateAttribute($value)
+    {
+        $this->attributes['end_date'] = Carbon::parse($value)->toDateTimeString();
     }
 
     public function invoice()
