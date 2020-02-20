@@ -3,16 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Discount;
+use App\DiscountInvoice;
 use App\Http\Resources\DiscountResource;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 
 class DiscountsInvoiceController extends Controller
 {
     public function addAppliedDiscounts(Request $request)
     {
-        foreach ($request as $r) {
-            Log::info('request: '.$r->appliedDiscounts);
+        foreach ($request->appliedDiscounts as $applied_discount) {
+            DiscountInvoice::create($applied_discount);
         }
     }
 

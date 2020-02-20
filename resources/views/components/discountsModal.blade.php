@@ -133,7 +133,7 @@
             this.discount_id = discount_id;
             this.discount_percentage = discount_percentage;
             this.invoice_total = invoice_total;
-            this.start_date = start_date;
+            this.start_date = start_date.toJSON();
             this.days = days;
             this.id = id;
         }
@@ -155,6 +155,7 @@
         calcEndDate(){
             var result = new Date(this.start_date);
             this.end_date.setDate(result.getDate() + this.days);
+            this.end_date = this.end_date.toJSON();
             return this.end_date;
         }
 
@@ -261,8 +262,8 @@
                     + "<td>  <input type='radio'  name='custom-radio-2'></td>"
                     + "<td id=percentage"+appliedDiscounts[i].id+">" + appliedDiscounts[i].discount_percentage + "</td>"
                     + "<td>" + appliedDiscounts[i].discountedTotal + "</td>" 
-                    + "<td>" + appliedDiscounts[i].start_date.toDateString() + "</td>" 
-                    + "<td>" + appliedDiscounts[i].endDate.toDateString() + "</td>" 
+                    + "<td>" + appliedDiscounts[i].start_date + "</td>" 
+                    + "<td>" + appliedDiscounts[i].endDate + "</td>" 
                     + "<td id=days"+appliedDiscounts[i].id+">" + appliedDiscounts[i].days + "</td>"
                     +  "</tr>";
             }
