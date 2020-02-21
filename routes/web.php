@@ -32,12 +32,13 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('item_categories', 'ItemCategoryController');
     Route::resource('items', 'ItemController');
     Route::resource('calls', 'CallController');
+    Route::resource('payments', 'PaymentController');
     Route::resource('user', 'UserController', ['except' => ['show']]);
     Route::post('insurees', ['as' => 'persondata.storeinsuree', 'uses' => 'PersonDataController@storeInsuree']);
     Route::post('beneficiaries', ['as' => 'persondata.storebeneficiary', 'uses' => 'PersonDataController@storeBeneficiary']);
 
     Route::post('discounts/get', 'DiscountsInvoiceController@discounts')->name('discounts.get');
-
+    Route::post('invoices/payments', 'PaymentController@getInvoicePayments')->name('invoices.payments');
     Route::post('invoices/adddiscounts', 'DiscountsInvoiceController@addAppliedDiscounts')->name('invoices.discounts');
 
     Route::get('profile', ['as' => 'profile.edit', 'uses' => 'ProfileController@edit']);

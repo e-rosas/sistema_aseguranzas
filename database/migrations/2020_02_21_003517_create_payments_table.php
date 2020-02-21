@@ -14,6 +14,7 @@ class CreatePaymentsTable extends Migration
         Schema::create('payments', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('invoice_id');
+            $table->string('number');
             $table->text('comments')->nullable();
             $table->dateTime('date');
             $table->decimal('amount', 13, 4);

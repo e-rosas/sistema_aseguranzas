@@ -1,6 +1,6 @@
 {{-- Table of calls --}}
 <div  class="table-responsive">
-    <table id="services_table" class="table align-services-center table-flush">
+    <table id="calls_table" class="table align-services-center table-flush">
         <thead class="thead-light">
             <tr>
                 <th scope="col">{{ __('Number') }}</th>

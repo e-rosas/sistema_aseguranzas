@@ -103,6 +103,11 @@ class Invoice extends Model
         return $this->hasMany('App\DiscountInvoice');
     }
 
+    public function payments()
+    {
+        return $this->hasMany('App\Payment');
+    }
+
     public function findInsuree()
     {
         $insureeid = DB::table('beneficiaries')->where('person_data_id', $this->person_data_id)->value('insuree_id');

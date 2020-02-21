@@ -8,6 +8,7 @@ class Payment extends Model
 {
     public $fillable = [
         'amount',
+        'number',
         'comments',
         'date',
         'invoice_id',
@@ -15,6 +16,7 @@ class Payment extends Model
     public static $rules = [
         'amount' => 'required|numeric|between:0,999999999.999',
         'comments' => 'max:1000',
+        'number' => 'required',
         'date' => 'date',
         'invoice_id' => 'required',
     ];
@@ -23,6 +25,7 @@ class Payment extends Model
         'invoice_id' => 'integer',
         'comments' => 'string',
         'amount' => 'decimal:13',
+        'number' => 'string',
     ];
 
     protected $dates = ['date'];

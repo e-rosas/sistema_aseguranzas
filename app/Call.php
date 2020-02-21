@@ -25,6 +25,7 @@ class Call extends Model
         'invoice_id' => 'integer',
         'comments' => 'string',
         'claim' => 'string',
+        'number' => 'string',
     ];
 
     protected $dates = ['date'];
