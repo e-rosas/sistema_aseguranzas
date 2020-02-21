@@ -59,7 +59,7 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fas fa-calendar"></i></span>
                                         </div>
-                                        <input type="date" name="date" id="input-date" class="form-control {{ $errors->has('date') ? ' is-invalid' : '' }}" 
+                                        <input onchange="handler(event);" type="date" name="date" id="input-date" class="form-control {{ $errors->has('date') ? ' is-invalid' : '' }}" 
                                         value="{{ old('date') }}" required>
                                         @if ($errors->has('date'))
                                             <span class="invalid-feedback" role="alert">
@@ -84,7 +84,7 @@
                                     </div>
                                 </div>                   
                                 <div class="text-center">
-                                    <button type="submit" class="btn btn-success mt-4">{{ __('Save') }}</button>
+                                    <button id="save_call" type="submit" class="btn btn-success mt-4">{{ __('Save') }}</button>
                                 </div>
                             </div>
                         </form>
@@ -94,3 +94,35 @@
         </div>
     </div>
 </div>
+
+@push('js')
+
+<script>
+    function sendCall(){
+        $.ajax({
+            url: "{{route('calls.store')}}",
+            dataType: 'json',
+            type:"post",
+            data: {
+                "_token": "{{ csrf_token() }}",
+                "invoice_id": "{{ $invoice_id }}",
+
+
+            },
+        success: function (response) {
+                
+
+            }
+        });
+            return false;
+    }
+
+    $("#save_call").click(function(){
+            
+        
+
+
+    });
+</script>
+    
+@endpush

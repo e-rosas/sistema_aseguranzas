@@ -19,22 +19,7 @@
         </div>
         <div class="row">
             {{--  Details  --}}
-            <div class="col-xl-12 order-xl-1">
-                <div class="card bg-secondary shadow">
-                    <div class="card-header bg-white border-0">
-                        <div class="row align-services-center">
-                            <div class="col-8 col-auto">
-                                <h3 class="mb-0">{{ __('Invoice') }}</h3>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <div class="row">
-
-                        </div>
-                    </div>                    
-                </div>               
-            </div>
+            @include('invoices.partials.details', ['invoice' => $invoice])
         </div>
         <div class="nav-wrapper">
             <ul class="nav nav-pills nav-fill flex-column flex-md-row" id="tabs-icons-text" role="tablist">

@@ -21,14 +21,14 @@ class DiscountInvoice extends Model
         'start_date' => 'date|required',
         'end_date' => 'date|required',
         'discounted_total' => 'numeric|required|between:0,999999999.999',
-        'status' => 'max:255',
+        'status' => 'boolean',
     ];
     protected $with = ['discount'];
     protected $casts = [
         'id' => 'integer',
         'invoice_id' => 'integer',
         'discount_id' => 'integer',
-        'status' => 'string',
+        'status' => 'boolean',
         'discounted_total' => 'decimal:13',
     ];
 

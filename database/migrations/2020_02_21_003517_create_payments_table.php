@@ -4,24 +4,20 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDiscountInvoicesTable extends Migration
+class CreatePaymentsTable extends Migration
 {
     /**
      * Run the migrations.
      */
     public function up()
     {
-        Schema::create('discount_invoices', function (Blueprint $table) {
+        Schema::create('payments', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedInteger('discount_id');
             $table->unsignedBigInteger('invoice_id');
-            $table->dateTime('start_date');
-            $table->dateTime('end_date');
-            $table->boolean('active');
-            $table->decimal('discounted_total', 13, 4);
-
+            $table->text('comments')->nullable();
+            $table->dateTime('date');
+            $table->decimal('amount', 13, 4);
             $table->foreign('invoice_id')->references('id')->on('invoices')->onDelete('cascade');
-            $table->foreign('discount_id')->references('id')->on('discounts');
             $table->timestamps();
         });
     }
@@ -31,6 +27,6 @@ class CreateDiscountInvoicesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('discount_invoices');
+        Schema::dropIfExists('payments');
     }
 }

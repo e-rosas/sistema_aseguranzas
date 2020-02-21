@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Call;
-use App\Invoice;
+use App\Payment;
 use Illuminate\Http\Request;
 
-class CallController extends Controller
+class PaymentController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,9 +14,6 @@ class CallController extends Controller
      */
     public function index()
     {
-        $calls = \App\Call::with(['invoice.person_data'])->paginate(15);
-
-        return view('calls.index', compact('calls'));
     }
 
     /**
@@ -36,15 +32,6 @@ class CallController extends Controller
      */
     public function store(Request $request)
     {
-        $validated = $this->validateCall();
-        Call::create($validated);
-
-        $invoice = Invoice::find($request->invoice_id)->load('person_data');
-
-        return redirect()->action(
-            'InvoiceController@show',
-            ['invoice' => $invoice]
-        );
     }
 
     /**
@@ -52,7 +39,7 @@ class CallController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function show(Call $call)
+    public function show(Payment $payment)
     {
     }
 
@@ -61,7 +48,7 @@ class CallController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function edit(Call $call)
+    public function edit(Payment $payment)
     {
     }
 
@@ -70,7 +57,7 @@ class CallController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Call $call)
+    public function update(Request $request, Payment $payment)
     {
     }
 
@@ -79,12 +66,12 @@ class CallController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Call $call)
+    public function destroy(Payment $payment)
     {
     }
 
-    public function validateCall()
+    public function validatePayment()
     {
-        return request()->validate(Call::$rules);
+        return request()->validate(Payment::$rules);
     }
 }

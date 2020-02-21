@@ -15,7 +15,7 @@ class CreateCallsTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('invoice_id');
             $table->string('number');
-            $table->text('comments');
+            $table->text('comments')->nullable();
             $table->dateTime('date');
             $table->string('claim');
             $table->foreign('invoice_id')->references('id')->on('invoices')->onDelete('cascade');

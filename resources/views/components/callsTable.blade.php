@@ -13,7 +13,7 @@
             @foreach ($calls as $call)
                 <tr>
                     <td>{{ $call->number}}</td>
-                    <td>{{ $call->date->format('M-d-Y H:i')}}</td>
+                    <td>{{ $call->date->format('M-d-Y')}}</td>
                     <td>{{ $call->claim}}</td>
                     <td>{{ $call->comments}}</td>
                 </tr>

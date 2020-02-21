@@ -19,13 +19,38 @@
                                 <tbody>  
                                 </tbody> 
                             </table>
-                        </div>   
+                        </div>  
+                        {{--  start_date  --}}
+                        <div class="form-group {{ $errors->has('start_date') ? ' has-danger' : '' }}">
+                            <div class="input-group input-group-alternative">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-calendar"></i></span>
+                                </div>
+                                <input type="date" name="start_date" id="input-start_date" class="form-control {{ $errors->has('start_date') ? ' is-invalid' : '' }}" 
+                                value="{{ old('start_date') }}" required>
+                                @if ($errors->has('start_date'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('start_date') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div> 
                         {{--  Generate  --}}
                         <div class="row">
                             <div class="col text-center">
-                                <button id="generate" type="button" class="btn btn-outline-primary btn-sm">{{ __('Generate') }}</button>
+                                <button id="generate" type="button" class="btn btn-outline-primary btn-sm btn-block">{{ __('Generate') }}</button>
                             </div>
                         </div>  
+                        
+
+                    </div>
+                    <div class="card-body px-lg-5 py-lg-5">
+                        {{--  Invoice --}}
+                        <input type="hidden"  readonly  name="invoice_id" id="input-invoice_id" class="form-control"
+                        value="{{ $invoice_id ?? '' }}" required>
+                        <input  type="text" name="discounted_total" id="input-discounted_total" class="form-control"
+                        value="{{ $discounted_total ?? '' }}" required>
+
                         {{--  Applied Discounts  --}}
                         <h6 class="heading-small text-muted mb-4">{{ __('Applied discounts') }}</h6>
                         <div class="table-responsive">
@@ -50,68 +75,6 @@
                                 <button id="select" type="button" class="btn btn-outline-success btn-sm btn-block">{{ __('Select') }}</button>
                             </div>
                         </div>  
-
-                    </div>
-                    <div class="card-body px-lg-5 py-lg-5">
-                        <form role="form" method="post" action="{{ route('calls.store') }}"  autocomplete="off">
-                            @csrf                     
-                            <div class="form-group">
-                                {{--  Invoice --}}
-                                <input type="hidden"  readonly  name="invoice_id" id="input-invoice_id" class="form-control"
-                                value="{{ $invoice_id ?? '' }}" required>
-                                <input  type="text" name="discounted_total" id="input-discounted_total" class="form-control"
-                                value="{{ $discounted_total ?? '' }}" required>
-                                
-                                {{--  start_date  --}}
-                                <div class="form-group {{ $errors->has('start_date') ? ' has-danger' : '' }}">
-                                    <div class="input-group input-group-alternative">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text"><i class="fas fa-calendar"></i></span>
-                                        </div>
-                                        <input type="date" name="start_date" id="input-start_date" class="form-control {{ $errors->has('start_date') ? ' is-invalid' : '' }}" 
-                                        value="{{ old('start_date') }}" required>
-                                        @if ($errors->has('start_date'))
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $errors->first('start_date') }}</strong>
-                                            </span>
-                                        @endif
-                                    </div>
-                                </div>
-                                {{--  end_date  --}}
-                                <div class="form-group {{ $errors->has('end_date') ? ' has-danger' : '' }}">
-                                    <div class="input-group input-group-alternative">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text"><i class="fas fa-calendar"></i></span>
-                                        </div>
-                                        <input type="date" name="end_date" id="input-end_date" class="form-control {{ $errors->has('end_date') ? ' is-invalid' : '' }}" 
-                                        value="{{ old('end_date') }}" required>
-                                        @if ($errors->has('end_date'))
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $errors->first('end_date') }}</strong>
-                                            </span>
-                                        @endif
-                                    </div>
-                                </div>
-                                {{--  discounted_total --}}
-                                <div class="form-group {{ $errors->has('discounted_total') ? ' has-danger' : '' }}">
-                                    <div class="input-group input-group-alternative">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text"><i class="fas fa-phone-square"></i></span>
-                                        </div>
-                                        <input type="numeric" name="discounted_total" id="input-discounted_total" class="form-control {{ $errors->has('discounted_total') ? ' is-invalid' : '' }}" 
-                                        value="{{ $discounted_total ?? '' }}" placeholder="discounted_total" required>
-                                        @if ($errors->has('discounted_total'))
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $errors->first('discounted_total') }}</strong>
-                                            </span>
-                                        @endif
-                                    </div>
-                                </div>         
-                                <div class="text-center">
-                                    <button type="submit" class="btn btn-success mt-4">{{ __('Save') }}</button>
-                                </div>
-                            </div>
-                        </form>
                     </div>
                 </div>
             </div>
@@ -154,7 +117,7 @@
 
 
         get endDate(){
-            return this.calcEndDate().toLocaleDateString();
+            return this.calcEndDate().toLocaleString();
         }
 
         calcEndDate(){
@@ -177,6 +140,29 @@
                 "appliedDiscounts" : appliedDiscounts,
             },
         success: function (response) {
+
+            discounts_invoice = response['data'];
+
+            var output = "";
+
+            for(var i = 0; i < discounts_invoice.length; i++){
+                output += "<tr value="+discounts_invoice[i].id+">"
+                    + "<td>  <input type='radio'  name='custom-radio-2'></td>"
+                    + "<td id=percentage"+discounts_invoice[i].id+">" + discounts_invoice[i].discount_percentage + "</td>"
+                    + "<td>" + discounts_invoice[i].discountedTotal + "</td>" 
+                    + "<td>" + discounts_invoice[i].startDate + "</td>" 
+                    + "<td>" + discounts_invoice[i].endDate + "</td>" 
+                    + "<td id=days"+discounts_invoice[i].id+">" + discounts_invoice[i].days + "</td>"
+                    +  "</tr>";
+            }
+
+            $('#diiscounts_invoice_table tbody').html(output);
+
+            appliedDiscounts = [];
+            displayAppliedDiscounts();
+
+            $('#modal-form').modal('hide')
+            
                 
 
             }
@@ -184,6 +170,12 @@
             return false;
     }
 
+    const current_date = new Date();
+    var dd = String(current_date.getDate()).padStart(2, '0');
+    var mm = String(current_date.getMonth() + 1).padStart(2, '0');
+    var yyyy = current_date.getFullYear();
+
+    var today = yyyy + '-' + mm + '-' + dd;
 
     function getDiscounts(){
         $.ajax({
@@ -215,25 +207,40 @@
             return false;
     }
 
+    function displayAppliedDiscounts(){
+        var output = "";
+
+        for(var i = 0; i < appliedDiscounts.length; i++){
+            output += "<tr value="+appliedDiscounts[i].id+">"
+                + "<td>  <input type='radio'  name='custom-radio-2'></td>"
+                + "<td id=percentage"+appliedDiscounts[i].id+">" + appliedDiscounts[i].discount_percentage + "</td>"
+                + "<td>" + appliedDiscounts[i].discountedTotal + "</td>" 
+                + "<td>" + appliedDiscounts[i].startDate + "</td>" 
+                + "<td>" + appliedDiscounts[i].endDate + "</td>" 
+                + "<td id=days"+appliedDiscounts[i].id+">" + appliedDiscounts[i].days + "</td>"
+                +  "</tr>";
+        }
+
+        $('#applied_discounts_table tbody').html(output);
+    }
+
+
     $(document).ready(function(){
         $('#modal-form').on('shown.bs.modal', function (e) {
              getDiscounts();
         })
+
         
-        var today = new Date();
-
-        var dd = String(today.getDate()).padStart(2, '0');
-        var mm = String(today.getMonth() + 1).padStart(2, '0');
-        var yyyy = today.getFullYear();
-
-        today = yyyy + '-' + mm + '-' + dd;
         document.getElementById("input-start_date").value = today;
+        document.getElementById("input-date").value = today;
+
 
         $("#select").click(function(){
             sendAppliedDiscounts();
 
-
         });
+
+        
           
           $("#generate").click(function(){
             appliedDiscounts = [];
@@ -266,20 +273,8 @@
             });
 
 
-            var output = "";
-
-            for(var i = 0; i < appliedDiscounts.length; i++){
-                output += "<tr value="+appliedDiscounts[i].id+">"
-                    + "<td>  <input type='radio'  name='custom-radio-2'></td>"
-                    + "<td id=percentage"+appliedDiscounts[i].id+">" + appliedDiscounts[i].discount_percentage + "</td>"
-                    + "<td>" + appliedDiscounts[i].discountedTotal + "</td>" 
-                    + "<td>" + appliedDiscounts[i].startDate + "</td>" 
-                    + "<td>" + appliedDiscounts[i].endDate + "</td>" 
-                    + "<td id=days"+appliedDiscounts[i].id+">" + appliedDiscounts[i].days + "</td>"
-                    +  "</tr>";
-            }
-
-            $('#applied_discounts_table tbody').html(output);
+            displayAppliedDiscounts();
+            
 
 
         });
