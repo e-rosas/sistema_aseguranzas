@@ -62,8 +62,8 @@
                                                             <button type="button" class="dropdown-item" onclick="confirm('{{ __("Are you sure you want to delete this service?") }}') ? this.parentElement.submit() : ''">
                                                                 {{ __('Delete') }}
                                                             </button>
-                                                        </form>    --}}  
-                                                        <a class="dropdown-item" href="{{ route('profile.edit') }}">{{ __('Edit') }}</a>
+                                                        </form>    
+                                                        <a class="dropdown-item" href="{{ route('profile.edit') }}">{{ __('Edit') }}</a> --}}  
                                                 </div>
                                             </div>
                                         </td>

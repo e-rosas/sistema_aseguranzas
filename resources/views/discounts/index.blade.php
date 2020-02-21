@@ -36,7 +36,6 @@
                                     <th scope="col">{{ __('Range of days') }}</th>
                                     <th scope="col">{{ __('Percentage') }}</th>
                                     <th scope="col">{{ __('Amount of days') }}</th>
-                                    <th scope="col"></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -45,25 +44,6 @@
                                         <td>{{ $discount->range_of_days }}</td>
                                         <td>{{ $discount->percentage}}</td>
                                         <td>{{ $discount->amount_of_days }}</td>
-                                        <td class="text-right">
-                                            <div class="dropdown">
-                                                <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                    <i class="fas fa-ellipsis-v"></i>
-                                                </a>
-                                                <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                                        {{--  <form action="{{ route('discount.destroy', $discount) }}" method="post">
-                                                            @csrf
-                                                            @method('delete')
-                                                            
-                                                            <a class="dropdown-item" href="{{ route('discount.edit', $discount) }}">{{ __('Edit') }}</a>
-                                                            <button type="button" class="dropdown-item" onclick="confirm('{{ __("Are you sure you want to delete this discount?") }}') ? this.parentElement.submit() : ''">
-                                                                {{ __('Delete') }}
-                                                            </button>
-                                                        </form>    --}}  
-                                                        <a class="dropdown-item" href="{{ route('profile.edit') }}">{{ __('Edit') }}</a>
-                                                </div>
-                                            </div>
-                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>

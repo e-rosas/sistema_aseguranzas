@@ -7,19 +7,13 @@
                         <h6 class="heading-small text-muted mb-4">{{ __('Add call') }}</h6>                 
                     </div>
                     <div class="card-body px-lg-5 py-lg-5">
-                        <div class="text-center text-muted mb-4">
-                            <small>Or sign in with credentials</small>
-                        </div>
                         <form role="form" method="post" action="{{ route('calls.store') }}"  autocomplete="off">
                             @csrf                     
                             <div class="form-group">
                                 {{--  Invoice --}}
                                 <div class="form-group">
                                     <div class="input-group input-group-alternative">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text"><i class="fas fa-key"></i></span>
-                                        </div>
-                                        <input readonly type="invoice_id" name="invoice_id" id="input-invoice_id" class="form-control"
+                                        <input readonly type="hidden" name="invoice_id" id="input-invoice_id" class="form-control"
                                         value="{{ $invoice_id ?? '' }}" required>
                                     </div>
                                 </div>

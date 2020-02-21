@@ -143,7 +143,6 @@
         success: function (response) {
 
             var discounts_invoice = response['data'];
-            console.log(discounts_invoice);
             var output = "";
 
             for(var i = 0; i < discounts_invoice.length; i++){

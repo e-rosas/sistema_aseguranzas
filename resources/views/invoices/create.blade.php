@@ -217,6 +217,8 @@
                                         <th scope="col">{{ __('Price') }}</th>
                                         <th scope="col">{{ __('Discounted Price') }}</th>
                                         <th scope="col">{{ __('Quantity') }}</th>
+                                        <th scope="col">{{ __('Total Price') }}</th>
+                                        <th scope="col">{{ __('Total Discounted Price') }}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -255,6 +257,8 @@
             this.price = price;
             this.discounted_price = discounted_price;
             this.quantity = quantity;
+            this.total_price = quantity * price;
+            this.total_discounted_price = quantity * discounted_price;
         }
     }
 
@@ -317,8 +321,8 @@
         this.tax = 0;
         this.total_with_discounts = 0;
         for(var service in this.services) {
-            this.total += this.services[service].price * this.services[service].quantity;
-            this.total_with_discounts += this.services[service].discounted_price * this.services[service].quantity;
+            this.total += this.services[service].total_price;
+            this.total_with_discounts += this.services[service].total_discounted_price;
         }
         return Number(this.total);
     }
@@ -336,9 +340,7 @@
                 "_token": "{{ csrf_token() }}",
                 "service_id" : id
             },
-        success: function (response) {
-                console.log(response);
-                
+        success: function (response) {                
                 addServiceToCart(response.id, response.description, 
                     response.price, response.discounted_price, quantity);                                    
             }
@@ -390,15 +392,27 @@
             + "<td>" + this.services[i].price + "</td>" 
             + "<td>" + this.services[i].discounted_price + "</td>"
             + "<td>" + this.services[i].quantity + "</td>"
+            + "<td>" + this.services[i].total_price + "</td>"
+            + "<td>" + this.services[i].total_discounted_price + "</td>"
             +  "</tr>";
         }
         $('#services_table tbody').html(output);
         document.getElementById("input-total").value = totalCart();
         document.getElementById("input-total_with_discounts").value = totalDiscounts();
+        document.getElementById("input-amount_due").value = totalDiscounts();
         document.getElementById("input-sub_total").value = 0;
         document.getElementById("input-tax").value = 0; 
+        document.getElementById("input-amount_paid").value = 0; 
       }
+        const current_date = new Date();
+        var dd = String(current_date.getDate()).padStart(2, '0');
+        var mm = String(current_date.getMonth() + 1).padStart(2, '0');
+        var yyyy = current_date.getFullYear();
+
+        var today = yyyy + '-' + mm + '-' + dd;
     $(document).ready(function(){
+        document.getElementById("input-date").value = today;
+
         $("#person_data_id").change(function(){
 
             var selectedService= $(this).children("option:selected").val();
@@ -418,8 +432,8 @@
         $("#save").click(function(){
             var person_data_id= $("#person_data_id").children("option:selected").val();
             var date = document.getElementById("input-date").value; 
-            var amount_due = document.getElementById("input-amount_due").value; 
-            var amount_paid = document.getElementById("input-amount_paid").value; 
+            var amount_due = Number(document.getElementById("input-amount_due").value); 
+            var amount_paid = Number(document.getElementById("input-amount_paid").value); 
             var comments = document.getElementById("input-comments").value;
             var number = document.getElementById("input-number").value;  
             sendCart(person_data_id, date, amount_due, amount_paid, comments, number);
@@ -433,9 +447,6 @@
                 if($(this).is(":checked")){
                     var id = Number($(this).parents("tr").attr('value'));
                     removeServiceFromCartAll(id);                 
-
-                    //$(this).parents("tr").remove();
-
                 }
 
             });

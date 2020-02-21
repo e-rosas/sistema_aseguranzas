@@ -47,7 +47,7 @@
                     </div>
                     <div class="tab-pane fade" id="tabs-icons-text-2" role="tabpanel" aria-labelledby="tabs-icons-text-2-tab">
                         <div class="col-md-12 col-auto text-right">
-                            <button type="button" class="btn btn-sm btn-secondary" data-toggle="modal" data-target="#modal-form">Add</i></button>
+                            <button type="button" class="btn btn-sm btn-succes" data-toggle="modal" data-target="#modal-form">{{ __('Add') }}</i></button>
                             <br />
                             @component('components.discountsModal',['invoice_id'=>$invoice->id, 'discounted_total'=>$invoice->total_with_discounts])
                                 
@@ -59,7 +59,7 @@
                     </div>
                     <div class="tab-pane fade" id="tabs-icons-text-3" role="tabpanel" aria-labelledby="tabs-icons-text-3-tab">
                         <div class="col-md-12 col-auto text-right">
-                            <button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#modal-call">Add</i></button>
+                            <button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#modal-call">{{ __('Add') }}</i></button>
                             <br />
                             @component('components.callsModal',['number'=>$invoice->calls->count() + 1, 'invoice_id'=>$invoice->id])
                                 
@@ -71,7 +71,7 @@
                     </div>
                     <div class="tab-pane fade" id="tabs-icons-text-4" role="tabpanel" aria-labelledby="tabs-icons-text-3-tab">
                         <div class="col-md-12 col-auto text-right">
-                            <button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#modal-payment">Add</i></button>
+                            <button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#modal-payment">{{ __('Add') }}</i></button>
                             <br />
                             @include('payments.partials.addModal',['number'=>$invoice->payments->count() + 1, 'invoice_id'=>$invoice->id])
                         </div>

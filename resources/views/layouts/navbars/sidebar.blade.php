@@ -6,38 +6,15 @@
         </button>
         <!-- Brand -->
         <a class="navbar-brand pt-0" href="{{ route('home') }}">
-            <img src="{{ asset('argon') }}/img/brand/blue.png" class="navbar-brand-img" alt="...">
+            <img src={{url('/img/Hm-logo-02.png')}} class="navbar-brand-img" alt="...">
         </a>
         <!-- User -->
         <ul class="nav align-items-center d-md-none">
             <li class="nav-item dropdown">
-                <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <div class="media align-items-center">
-                        <span class="avatar avatar-sm rounded-circle">
-                        <img alt="Image placeholder" src="{{ asset('argon') }}/img/theme/bootstrap.jpg">
-                        </span>
-                    </div>
-                </a>
                 <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right">
                     <div class=" dropdown-header noti-title">
                         <h6 class="text-overflow m-0">{{ __('Welcome!') }}</h6>
                     </div>
-                    <a href="{{ route('profile.edit') }}" class="dropdown-item">
-                        <i class="ni ni-single-02"></i>
-                        <span>{{ __('My profile') }}</span>
-                    </a>
-                    <a href="#" class="dropdown-item">
-                        <i class="ni ni-settings-gear-65"></i>
-                        <span>{{ __('Settings') }}</span>
-                    </a>
-                    <a href="#" class="dropdown-item">
-                        <i class="ni ni-calendar-grid-58"></i>
-                        <span>{{ __('Activity') }}</span>
-                    </a>
-                    <a href="#" class="dropdown-item">
-                        <i class="ni ni-support-16"></i>
-                        <span>{{ __('Support') }}</span>
-                    </a>
                     <div class="dropdown-divider"></div>
                     <a href="{{ route('logout') }}" class="dropdown-item" onclick="event.preventDefault();
                     document.getElementById('logout-form').submit();">
@@ -74,86 +51,50 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="#navbar-examples" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
-                        <i class="fab fa-laravel" style="color: #f4645f;"></i>
-                        <span class="nav-link-text" style="color: #f4645f;">{{ __('Register') }}</span>
+                    <a class="nav-link" href="{{ route('beneficiaries.index') }}">
+                        <i class="ni ni-tv-2 text-primary"></i> {{ __('Beneficiaries') }}
                     </a>
-
-                    <div class="collapse show" id="navbar-examples">
-                        <ul class="nav nav-sm flex-column">
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('insurers.index') }}">
-                                    {{ __('Insurers') }}
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('services.index') }}">
-                                    {{ __('Services') }}
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('discounts.index') }}">
-                                    {{ __('Discounts') }}
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('invoices.index') }}">
-                                    {{ __('Invoices') }}
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('items.index') }}">
-                                    {{ __('Items') }}
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('item_categories.index') }}">
-                                    {{ __('Item categories') }}
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('user.index') }}">
-                                    {{ __('User Management') }}
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="#navbar-examples" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
-                        <i class="fab fa-laravel" style="color: #f4645f;"></i>
-                        <span class="nav-link-text" style="color: #f4645f;">{{ __('Patients') }}</span>
+                    <a class="nav-link" href="{{ route('insurees.index') }}">
+                        <i class="ni ni-tv-2 text-primary"></i> {{ __('Insurees') }}
                     </a>
-
-                    <div class="collapse show" id="navbar-examples">
-                        <ul class="nav nav-sm flex-column">
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('beneficiaries.index') }}">
-                                    {{ __('Beneficiaries') }}
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('insurees.index') }}">
-                                    {{ __('Insurees') }}
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
                 </li>
-
-                
-            </ul>
-            <!-- Divider -->
-            <hr class="my-3">
-            <!-- Heading -->
-            <h6 class="navbar-heading text-muted">Documentation</h6>
-            <!-- Navigation -->
-            <ul class="navbar-nav mb-md-3">
                 <li class="nav-item">
-                    <a class="nav-link" href="https://demos.creative-tim.com/argon-dashboard/docs/getting-started/overview.html">
-                        <i class="ni ni-spaceship"></i> Getting started
+                    <a class="nav-link" href="{{ route('insurers.index') }}">
+                        <i class="ni ni-tv-2 text-primary"></i> {{ __('Insurers') }}
                     </a>
-                </li>              
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('services.index') }}">
+                        <i class="ni ni-tv-2 text-primary"></i> {{ __('Services') }}
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('discounts.index') }}">
+                        <i class="ni ni-tv-2 text-primary"></i> {{ __('Discounts') }}
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('invoices.index') }}">
+                        <i class="ni ni-tv-2 text-primary"></i> {{ __('Invoices') }}
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('items.index') }}">
+                        <i class="ni ni-tv-2 text-primary"></i> {{ __('Items') }}
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('item_categories.index') }}">
+                        <i class="ni ni-tv-2 text-primary"></i> {{ __('Item categories') }}
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('user.index') }}">
+                        <i class="ni ni-tv-2 text-primary"></i> {{ __('User Management') }}
+                    </a>
+                </li>               
             </ul>
         </div>
     </div>

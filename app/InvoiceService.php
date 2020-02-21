@@ -11,6 +11,8 @@ class InvoiceService extends Model
         'service_id',
         'price',
         'discounted_price',
+        'total_price',
+        'total_discounted_price',
         'description',
         'quantity',
     ];
@@ -19,6 +21,8 @@ class InvoiceService extends Model
         'service_id' => 'required',
         'price' => 'numeric|required|between:0,999999999.999',
         'discounted_price' => 'numeric|required|between:0,999999999.999',
+        'total_price' => 'numeric|required|between:0,999999999.999',
+        'total_discounted_price' => 'numeric|required|between:0,999999999.999',
         'description' => 'max:255',
         'quantity' => 'numeric|required',
     ];
@@ -28,6 +32,8 @@ class InvoiceService extends Model
         'service_id' => 'integer',
         'price' => 'decimal:13',
         'discounted_price' => 'decimal:13',
+        'total_price' => 'decimal:13',
+        'total_discounted_price' => 'decimal:13',
         'quantity' => 'integer',
     ];
 

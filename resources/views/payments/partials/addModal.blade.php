@@ -12,7 +12,7 @@
                             <div class="form-group {{ $errors->has('number') ? ' has-danger' : '' }}">
                                 <div class="input-group input-group-alternative">
                                     <div class="input-group-prepend">
-                                        <span class="input-group-text"><i class="fas fa-phone-square"></i></span>
+                                        <span class="input-group-text"><i class="fas fa-hashtag"></i></span>
                                     </div>
                                     <input type="number" name="number" id="payment-number" class="form-control {{ $errors->has('number') ? ' is-invalid' : '' }}" 
                                     value="{{ $number ?? '' }}" placeholder="Number" required>
@@ -27,7 +27,7 @@
                             <div class="form-group{{ $errors->has('amount') ? ' has-danger' : '' }}">
                                 <label class="form-control-label" for="payment-amount">{{ __('Amount paid') }}</label>
                                 <input type="numeric" name="amount" id="payment-amount" class="form-control form-control-alternative{{ $errors->has('amount') ? ' is-invalid' : '' }}" 
-                                placeholder="{{ __('Amount') }}" value="{{ old('amount') }}">
+                                placeholder="{{ __('Amount') }}" value=0>
 
                                 @if ($errors->has('amount'))
                                     <span class="invalid-feedback" role="alert">
