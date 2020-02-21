@@ -12,7 +12,7 @@ class DiscountInvoice extends Model
         'discount_id',
         'start_date',
         'end_date',
-        'status',
+        'active',
         'discounted_total',
     ];
     public static $rules = [
@@ -21,14 +21,14 @@ class DiscountInvoice extends Model
         'start_date' => 'date|required',
         'end_date' => 'date|required',
         'discounted_total' => 'numeric|required|between:0,999999999.999',
-        'status' => 'boolean',
+        'active' => 'boolean',
     ];
     protected $with = ['discount'];
     protected $casts = [
         'id' => 'integer',
         'invoice_id' => 'integer',
         'discount_id' => 'integer',
-        'status' => 'boolean',
+        'active' => 'boolean',
         'discounted_total' => 'decimal:13',
     ];
 

@@ -86,8 +86,9 @@
     // CSRF Token
     var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
     var appliedDiscounts = [];
+    
     class AppliedDiscount {
-        status = 'ACTIVE';
+        active = 0;
         end_date = new Date();
         discounted_total = 0;
         constructor(invoice_id, discount_id, discount_percentage, 
@@ -141,22 +142,22 @@
             },
         success: function (response) {
 
-            discounts_invoice = response['data'];
-
+            var discounts_invoice = response['data'];
+            console.log(discounts_invoice);
             var output = "";
 
             for(var i = 0; i < discounts_invoice.length; i++){
                 output += "<tr value="+discounts_invoice[i].id+">"
-                    + "<td>  <input type='radio'  name='custom-radio-2'></td>"
-                    + "<td id=percentage"+discounts_invoice[i].id+">" + discounts_invoice[i].discount_percentage + "</td>"
-                    + "<td>" + discounts_invoice[i].discountedTotal + "</td>" 
-                    + "<td>" + discounts_invoice[i].startDate + "</td>" 
-                    + "<td>" + discounts_invoice[i].endDate + "</td>" 
-                    + "<td id=days"+discounts_invoice[i].id+">" + discounts_invoice[i].days + "</td>"
+                    + "<td>" + discounts_invoice[i].discount.percentage + "</td>"
+                    + "<td>" + discounts_invoice[i].discounted_total + "</td>" 
+                    + "<td>" + discounts_invoice[i].start_date + "</td>" 
+                    + "<td>" + discounts_invoice[i].end_date + "</td>" 
+                    + "<td>" + discounts_invoice[i].discount.amount_of_days + "</td>"
+                    + "<td>" + discounts_invoice[i].active  + "</td>"
                     +  "</tr>";
             }
 
-            $('#diiscounts_invoice_table tbody').html(output);
+            $('#discounts_invoice_table tbody').html(output);
 
             appliedDiscounts = [];
             displayAppliedDiscounts();
@@ -211,8 +212,8 @@
         var output = "";
 
         for(var i = 0; i < appliedDiscounts.length; i++){
-            output += "<tr value="+appliedDiscounts[i].id+">"
-                + "<td>  <input type='radio'  name='custom-radio-2'></td>"
+            output += "<tr value="+appliedDiscounts[i].id+">" 
+                + "<td>  <input type='radio'  name='active' checked></td>"
                 + "<td id=percentage"+appliedDiscounts[i].id+">" + appliedDiscounts[i].discount_percentage + "</td>"
                 + "<td>" + appliedDiscounts[i].discountedTotal + "</td>" 
                 + "<td>" + appliedDiscounts[i].startDate + "</td>" 
@@ -236,6 +237,30 @@
 
 
         $("#select").click(function(){
+
+            var i = 0;
+
+
+
+            $("#applied_discounts_table tbody").find('input[name="active"]').each(function(){
+                console.log("start: "+ i);
+
+                if($(this).is(":checked")){
+                    
+                    index = i;
+                    
+                    return false;                       
+
+                }
+
+                i++;
+
+            });
+
+            console.log("array index of checked: " + i);
+
+            appliedDiscounts[i]['active'] = 1;
+
             sendAppliedDiscounts();
 
         });

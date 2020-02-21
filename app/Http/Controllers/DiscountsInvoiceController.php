@@ -6,7 +6,6 @@ use App\Discount;
 use App\DiscountInvoice;
 use App\Http\Resources\DiscountResource;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class DiscountsInvoiceController extends Controller
 {
@@ -15,9 +14,7 @@ class DiscountsInvoiceController extends Controller
         foreach ($request->appliedDiscounts as $applied_discount) {
             DiscountInvoice::create($applied_discount);
         }
-        $discounts = DB::table('discount_invoices')
-            ->where('invoice_id', $request->appliedDiscounts[0]['invoice_id'])
-        ;
+        $discounts = DiscountInvoice::where('invoice_id', $request->appliedDiscounts[0]['invoice_id'])->paginate(5);
 
         return response()->json($discounts);
     }

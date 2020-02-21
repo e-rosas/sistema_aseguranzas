@@ -350,7 +350,6 @@
          comments, number){
         $.ajax({
             url: "{{route('invoices.store')}}",
-            dataType: 'json',
             type:"post",
             data: {
                 "_token": "{{ csrf_token() }}",
@@ -368,7 +367,9 @@
                 "status": "due"
             },
         success: function (response) {
-                console.log(response);
+            setTimeout(function() {
+                window.location.href = response;
+              }, 1000);
                                                    
             }
         });
@@ -401,8 +402,6 @@
         $("#person_data_id").change(function(){
 
             var selectedService= $(this).children("option:selected").val();
-    
-            alert("You have selected the service - " + selectedService);
     
         });
 

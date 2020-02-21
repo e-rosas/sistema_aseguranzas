@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\PaymentResource;
 use App\Payment;
 use Illuminate\Http\Request;
 
@@ -33,6 +32,10 @@ class PaymentController extends Controller
      */
     public function store(Request $request)
     {
+        $validated = $this->validatePayment();
+        Payment::create($validated);
+
+        return ['success' => 'Payment added.'];
     }
 
     /**
@@ -69,13 +72,6 @@ class PaymentController extends Controller
      */
     public function destroy(Payment $payment)
     {
-    }
-
-    public function getInvoicePayments($invoice_id)
-    {
-        $payments = PaymentResource::collection(Payment::where('invoice_id', $invoice_id)->paginate(4));
-
-        return view('payments.partials.table', ['payments' => $payments])->render();
     }
 
     public function validatePayment()

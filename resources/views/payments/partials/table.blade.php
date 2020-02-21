@@ -22,34 +22,4 @@
     </table>
     {{ $payments->links() }}
 </div>
-@push('js')
-<script>
-    $(document).ready(function(){
-    
-     $(document).on('click', '.page-link', function(event){
-        event.preventDefault(); 
-        var page = $(this).attr('href');
-        fetch_data(page);
-     });
-    
-     function fetch_data(page)
-     {
-      var _token = $("input[name=_token]").val();
-      $.ajax({
-            url: "{{route('invoices.payments')}}",
-            dataType: 'json',
-            type:"post",
-            data: {
-                "_token": "{{ csrf_token() }}",
-                "invoice_id": {{ $invoice_id }}
-            },
-          done:function(data)
-          {
-           $('#payments_table').html(data);
-          }
-        });
-     }
-    
-    });
-    </script>
-@endpush
+

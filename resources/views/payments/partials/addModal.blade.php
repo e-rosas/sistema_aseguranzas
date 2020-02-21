@@ -79,19 +79,22 @@
 @push('js')
 
 <script>
-    function sendCall(){
+    function sendPayment(number, amount, date, comments){
         $.ajax({
-            url: "{{route('calls.store')}}",
+            url: "{{route('payments.store')}}",
             dataType: 'json',
             type:"post",
             data: {
                 "_token": "{{ csrf_token() }}",
-                "invoice_id": "{{ $invoice_id }}",
-
-
+                "invoice_id": {{ $invoice_id }},
+                "number": number,
+                "amount": amount,
+                "date": date,
+                "comments": comments,
             },
         success: function (response) {
-                
+            alert(response['success']);
+            setTimeout(function () { document.location.reload(true); }, 500);
 
             }
         });
@@ -99,7 +102,18 @@
     }
 
     $("#save_payment").click(function(){
+
+        var number = document.getElementById("payment-number").value;
+
+        var amount = Number(document.getElementById("payment-amount").value);
+
+        var date = document.getElementById("payment-date").value;
+
+        var comments = document.getElementById("payment-comments").value;
             
+        if(amount > 0){
+            sendPayment(number, amount, date, comments);
+        }
         
 
 

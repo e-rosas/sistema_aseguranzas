@@ -17,9 +17,9 @@ class CreateInsurersTable extends Migration
             $table->string('address');
             $table->string('city');
             $table->string('state');
-            $table->string('postal_code');
-            $table->string('phone_number');
-            $table->string('email');
+            $table->string('postal_code')->nullable();
+            $table->string('phone_number')->nullable();
+            $table->string('email')->nullable();
             $table->string('code');
             $table->softDeletes();
             $table->timestamps();

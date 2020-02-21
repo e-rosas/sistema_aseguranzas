@@ -14,18 +14,17 @@ class CreatePersonDataTable extends Migration
         Schema::create('person_data', function (Blueprint $table) {
             $table->Bigincrements('id');
             $table->string('last_name');
-            $table->string('maiden_name');
+            $table->string('maiden_name')->nullable();
             $table->string('name');
             $table->date('birth_date');
             $table->string('address');
             $table->string('city');
             $table->string('state');
-            $table->integer('postal_code');
+            $table->integer('postal_code')->nullable();
             $table->string('phone_number');
-            $table->string('email');
+            $table->string('email')->nullable();
             $table->boolean('insured');
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 

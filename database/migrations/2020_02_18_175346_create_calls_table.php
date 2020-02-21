@@ -17,7 +17,7 @@ class CreateCallsTable extends Migration
             $table->string('number');
             $table->text('comments')->nullable();
             $table->dateTime('date');
-            $table->string('claim');
+            $table->string('claim')->nullable();
             $table->foreign('invoice_id')->references('id')->on('invoices')->onDelete('cascade');
             $table->timestamps();
         });

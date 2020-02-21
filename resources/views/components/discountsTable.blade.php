@@ -8,7 +8,7 @@
                 <th scope="col">{{ __('Start') }}</th>
                 <th scope="col">{{ __('End') }}</th>
                 <th scope="col">{{ __('Days') }}</th>
-                <th scope="col">{{ __('Status') }}</th>
+                <th scope="col">{{ __('Active') }}</th>
             </tr>
         </thead>
         <tbody>
@@ -19,7 +19,7 @@
                     <td>{{ $discount->start_date}}</td>
                     <td>{{ $discount->end_date}}</td>
                     <td>{{ $discount->discount->amount_of_days}}</td>
-                    <td>{{ $discount->status}}</td>
+                    <td>{{ ($discount->active) ? 'Active' : 'Not active'}}</td>
                 </tr>
             @endforeach
         </tbody>

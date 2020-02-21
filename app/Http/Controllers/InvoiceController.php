@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Invoice;
 use App\InvoiceService;
+use App\Payment;
 use Illuminate\Http\Request;
 
 class InvoiceController extends Controller
@@ -45,7 +46,8 @@ class InvoiceController extends Controller
             $service['invoice_id'] = $invoice->id;
             InvoiceService::create($service);
         }
-        echo 'Cart stored successfully';
+
+        return route('invoices.show', [$invoice]);
     }
 
     /**
@@ -83,6 +85,15 @@ class InvoiceController extends Controller
      */
     public function destroy(Invoice $invoice)
     {
+    }
+
+    public function getInvoicePayments($invoice_id)
+    {
+        $payments = Payment::where('invoice_id', $invoice_id)->paginate(4);
+
+        $payments->withPath('payments/url');
+
+        return view('payments.partials.table', ['payments' => $payments])->render();
     }
 
     protected function validateInvoice()

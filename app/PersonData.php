@@ -3,11 +3,9 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class PersonData extends Model
 {
-    use SoftDeletes;
     public $fillable = [
         'last_name',
         'maiden_name',
