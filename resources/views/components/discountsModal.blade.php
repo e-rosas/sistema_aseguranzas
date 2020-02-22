@@ -90,6 +90,7 @@
     class AppliedDiscount {
         active = 0;
         end_date = new Date();
+        end = new Date();
         discounted_total = 0;
         constructor(invoice_id, discount_id, discount_percentage, 
                     invoice_total, start_date, days, id){
@@ -100,6 +101,9 @@
             this.start_date = start_date.toISOString().split('T')[0]+' '+start_date.toTimeString().split(' ')[0];
             this.start = start_date;
             this.days = days;
+            this.end_date.setDate(this.start.getDate() + this.days);
+            this.end = this.end_date;
+            this.end_date = this.end_date.toISOString().split('T')[0]+' '+this.end_date.toTimeString().split(' ')[0];
             this.id = id;
         }
 
@@ -118,15 +122,7 @@
 
 
         get endDate(){
-            return this.calcEndDate().toLocaleString();
-        }
-
-        calcEndDate(){
-            var result = new Date(this.start);
-            this.end_date.setDate(result.getDate() + this.days);
-            result = this.end_date;
-            this.end_date = this.end_date.toISOString().split('T')[0]+' '+this.end_date.toTimeString().split(' ')[0];
-            return result;
+            return this.end.toLocaleString();
         }
 
     }
@@ -256,7 +252,6 @@
 
             });
 
-            console.log("array index of checked: " + i);
 
             appliedDiscounts[i]['active'] = 1;
 
@@ -276,7 +271,7 @@
 
             var date = document.getElementById("input-start_date").value; 
             var dateTime = date+' '+time;
-            const start_date = new Date(dateTime);
+            var start_date = new Date(dateTime);
 
 
             $("#discounts_table tbody").find('input[name="discount"]').each(function(){
@@ -287,10 +282,27 @@
                     var discount_percentage = Number(document.getElementById("percentage"+discount_id).innerHTML);
                     
                     var days = Number(document.getElementById("days"+discount_id).innerHTML);
-                    
 
-                    appliedDiscounts.push(new AppliedDiscount(invoice_id, discount_id, discount_percentage, 
-                                                invoice_total, start_date, days, appliedDiscounts.length));    
+                    var start2 = new Date();
+
+                    if(appliedDiscounts.length > 0){
+                        
+                        start2= appliedDiscounts[appliedDiscounts.length-1]['end'];
+
+                        console.log("start2: " + start2);
+                        
+                    } 
+                    else {
+                        start2 = start_date;
+                    }
+
+                    var ad = new AppliedDiscount(invoice_id, discount_id, discount_percentage, 
+                    invoice_total, start2, days, appliedDiscounts.length);
+
+                    console.log("new ad: " + ad);
+
+
+                    appliedDiscounts.push(ad);                    
 
                 }
 
