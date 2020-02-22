@@ -10,6 +10,7 @@ class Invoice extends Model
 {
     use SoftDeletes;
     public $insuree;
+
     public $fillable = [
         'number',
         'comments',
