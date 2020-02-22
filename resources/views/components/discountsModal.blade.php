@@ -86,6 +86,12 @@
     // CSRF Token
     var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
     var appliedDiscounts = [];
+
+    function addDays(date, days) {
+        var result = new Date(date);
+        result.setDate(result.getDate() + days);
+        return result;
+      }
     
     class AppliedDiscount {
         active = 0;
@@ -101,8 +107,8 @@
             this.start_date = start_date.toISOString().split('T')[0]+' '+start_date.toTimeString().split(' ')[0];
             this.start = start_date;
             this.days = days;
-            this.end_date.setDate(this.start.getDate() + this.days);
-            this.end = this.end_date;
+            this.end_date = addDays(this.start, this.days);
+            this.end = new Date(this.end_date);
             this.end_date = this.end_date.toISOString().split('T')[0]+' '+this.end_date.toTimeString().split(' ')[0];
             this.id = id;
         }
@@ -234,27 +240,15 @@
         $("#select").click(function(){
 
             var i = 0;
-
-
-
             $("#applied_discounts_table tbody").find('input[name="active"]').each(function(){
-                console.log("start: "+ i);
-
-                if($(this).is(":checked")){
-                    
-                    index = i;
-                    
+                if($(this).is(":checked")){                  
+                    index = i;                 
                     return false;                       
-
                 }
-
                 i++;
 
             });
-
-
             appliedDiscounts[i]['active'] = 1;
-
             sendAppliedDiscounts();
 
         });
@@ -287,20 +281,14 @@
 
                     if(appliedDiscounts.length > 0){
                         
-                        start2= appliedDiscounts[appliedDiscounts.length-1]['end'];
-
-                        console.log("start2: " + start2);
-                        
+                        start2= new Date(appliedDiscounts[appliedDiscounts.length-1].end);                     
                     } 
                     else {
-                        start2 = start_date;
+                        start2 = new Date(start_date);
                     }
 
                     var ad = new AppliedDiscount(invoice_id, discount_id, discount_percentage, 
                     invoice_total, start2, days, appliedDiscounts.length);
-
-                    console.log("new ad: " + ad);
-
 
                     appliedDiscounts.push(ad);                    
 
