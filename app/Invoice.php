@@ -133,6 +133,20 @@ class Invoice extends Model
         return Insurer::find($insurerid);
     }
 
+    public function getAmountDue()
+    {
+        if (0 == strcmp($this->status, 'with benefits')) {
+            $applied_discount = DB::table('discount_invoices')
+                ->where('invoice_id', $this->id)
+                ->where('active', true)
+            ;
+
+            return $applied_discount->discounted_total;
+        }
+
+        return $this->amount_due;
+    }
+
     public function callCount()
     {
         return DB::table('calls')

@@ -22,6 +22,12 @@
                     <label id="label-num">{{ $invoice->date->format('l jS \\of F Y') }}</label>
 
                 </div>
+                {{--  status --}}
+                <div class="col-md-4 col-auto form-group">
+                    <label class="form-control-label" for="label-status">{{ __('Status') }}</label>
+                    <label id="label-status">{{ $invoice->status }}</label>
+
+                </div>
             </div>
             <div class="form-row">
                 {{--  amount_paid  --}}
@@ -33,7 +39,7 @@
                 {{--  amount_due  --}}
                 <div class="col-md-4 col-auto form-group">
                     <label class="form-control-label" for="label-amount_due">{{ __('Amount due') }}</label>
-                    <label id="label-num">{{ $invoice->amount_due }}</label>
+                    <label id="label-num">{{ $invoice->getAmountDue() }}</label>
 
                 </div>
             </div>

@@ -39,7 +39,7 @@
                                             <span class="input-group-text"><i class="fas fa-hashtag"></i></span>
                                         </div>
                                         <input type="text" name="claim" id="input-claim" class="form-control {{ $errors->has('claim') ? ' is-invalid' : '' }}" 
-                                        value="{{ old('claim') }}" placeholder="{{ __('Claim') }}" required>
+                                        value="{{ old('claim') }}" placeholder="{{ __('Claim') }}">
                                         @if ($errors->has('claim'))
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $errors->first('claim') }}</strong>

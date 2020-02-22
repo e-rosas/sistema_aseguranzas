@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Invoice;
 use App\Payment;
 use Illuminate\Http\Request;
 
@@ -33,7 +34,21 @@ class PaymentController extends Controller
     public function store(Request $request)
     {
         $validated = $this->validatePayment();
+
+        //New action: Verify that paid amount does not exceed it's respective invoice due amount
+        $invoice = Invoice::find($validated['invoice_id']);
+
+        $invoice->amount_paid += (float) $validated['amount'];
+
+        if ($invoice->getAmountDue() < ($invoice->amount_paid)) {
+            return ['error' => 'Amount paid of invoice exceeds amount due with this payment.'];
+        }
+
         Payment::create($validated);
+
+        //new action: Add paid amount, calculate amount due
+        $invoice->amount_due = $invoice->total_with_discounts - $invoice->amount_paid;
+        $invoice->save();
 
         return ['success' => 'Payment added.'];
     }
