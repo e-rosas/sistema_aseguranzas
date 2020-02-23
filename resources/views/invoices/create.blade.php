@@ -114,48 +114,64 @@
                                 </div>
                             </div>
                             <div class="form-row">
-                                {{--  total  --}}
-                                <div class="col-md-3 col-auto form-group{{ $errors->has('total') ? ' has-danger' : '' }}">
-                                    <label class="form-control-label" for="input-total">{{ __('Total') }}</label>
-                                    <input type="numeric" name="total" id="input-total" class="form-control form-control-alternative{{ $errors->has('total') ? ' is-invalid' : '' }}" 
-                                    placeholder="{{ __('Total') }}" value="{{ old('total') }}" readonly>
-
-                                    @if ($errors->has('total'))
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $errors->first('total') }}</strong>
-                                        </span>
-                                    @endif
-                                </div>
-                                {{--  sub_total  --}}
-                                <div class="col-md-3 col-auto form-group{{ $errors->has('sub_total') ? ' has-danger' : '' }}">
-                                    <label class="form-control-label" for="input-sub_total">{{ __('Subtotal') }}</label>
-                                    <input type="numeric" name="sub_total" id="input-sub_total" class="form-control form-control-alternative{{ $errors->has('sub_total') ? ' is-invalid' : '' }}" 
-                                    placeholder="{{ __('Subtotal') }}" value="{{ old('sub_total') }}" readonly>
-
-                                    @if ($errors->has('sub_total'))
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $errors->first('sub_total') }}</strong>
-                                        </span>
-                                    @endif
-                                </div>
                                 {{--  tax  --}}
-                                <div class="col-md-3 col-auto form-group{{ $errors->has('tax') ? ' has-danger' : '' }}">
+                                <div class="col-md-2 col-auto form-group{{ $errors->has('tax') ? ' has-danger' : '' }}">
                                     <label class="form-control-label" for="input-tax">{{ __('Tax') }}</label>
                                     <input type="numeric" name="tax" id="input-tax" class="form-control form-control-alternative{{ $errors->has('tax') ? ' is-invalid' : '' }}" 
                                     placeholder="{{ __('Tax') }}" value="{{ old('tax') }}" readonly>
-
+                            
                                     @if ($errors->has('tax'))
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $errors->first('tax') }}</strong>
                                         </span>
                                     @endif
                                 </div>
+                                {{--  dtax  --}}
+                                <div class="col-md-2 col-auto form-group">
+                                    <label class="form-control-label" for="input-dtax">{{ __('Tax with discounts') }}</label>
+                                    <input type="numeric" name="dtax" id="input-dtax" class="form-control form-control-alternative" 
+                                    placeholder="0" value="0" readonly>
+                                </div>
+                                
+                                {{--  sub_total  --}}
+                                <div class="col-md-2 col-auto form-group{{ $errors->has('sub_total') ? ' has-danger' : '' }}">
+                                    <label class="form-control-label" for="input-sub_total">{{ __('Subtotal') }}</label>
+                                    <input type="numeric" name="sub_total" id="input-sub_total" class="form-control form-control-alternative{{ $errors->has('sub_total') ? ' is-invalid' : '' }}" 
+                                    placeholder="{{ __('Subtotal') }}" value="{{ old('sub_total') }}" readonly>
+                            
+                                    @if ($errors->has('sub_total'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('sub_total') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+                            
+                                {{--  sub_total_discounts  --}}
+                                <div class="col-md-2 col-auto form-group">
+                                    <label class="form-control-label" for="input-sub_total_discounts">{{ __('Subtotal with discounts') }}</label>
+                                    <input type="numeric" name="sub_total_discounts" id="input-sub_total_discounts" class="form-control form-control-alternative" 
+                                    placeholder="0" value="0" readonly>
+                                </div>
+                            
+                                {{--  total  --}}
+                                <div class="col-md-2 col-auto form-group{{ $errors->has('total') ? ' has-danger' : '' }}">
+                                    <label class="form-control-label" for="input-total">{{ __('Total') }}</label>
+                                    <input type="numeric" name="total" id="input-total" class="form-control form-control-alternative{{ $errors->has('total') ? ' is-invalid' : '' }}" 
+                                    placeholder="{{ __('Total') }}" value="{{ old('total') }}" readonly>
+                            
+                                    @if ($errors->has('total'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('total') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+                                
                                 {{--  total_with_discounts  --}}
-                                <div class="col-md-3 col-auto form-group{{ $errors->has('total_with_discounts') ? ' has-danger' : '' }}">
+                                <div class="col-md-2 col-auto form-group{{ $errors->has('total_with_discounts') ? ' has-danger' : '' }}">
                                     <label class="form-control-label" for="input-total_with_discounts">{{ __('Total with discounts') }}</label>
                                     <input type="numeric" name="total_with_discounts" id="input-total_with_discounts" class="form-control form-control-alternative{{ $errors->has('total_with_discounts') ? ' is-invalid' : '' }}" 
                                     placeholder="{{ __('Total with discounts') }}" value="{{ old('total_with_discounts') }}" readonly>
-
+                            
                                     @if ($errors->has('total_with_discounts'))
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $errors->first('total_with_discounts') }}</strong>
@@ -286,10 +302,8 @@
                 itax = price * TAX;
                 idtax = discounted_price * TAX;
             }
-            console.log(idtax);
             var item = new Item(item_id, description, price, discounted_price, quantity, id, itax, idtax);
             this.items.push(item);   
-            console.log(this.items);
             displayItems(this);  
         }
 
@@ -318,14 +332,20 @@
 
         // Total cart
         totalItemsCart() {
-            this.tax = 0;
-            this.dtax = 0;
-            this.sub_total = 0;
-            this.sub_total_discounted = 0;
-            this.total_price = 0;
-            this.total_discounted_price = 0;
+
+            if(this.items.length > 0){
+                this.tax = 0;
+                this.dtax = 0;
+                this.sub_total = 0;
+                this.sub_total_discounted = 0;
+                this.total_price = 0;
+                this.total_discounted_price = 0;
+            }
+            
 
             for(var item in this.items) {
+                console.log("items in cart: ");
+                console.log(this.items[item]);
                 this.tax += this.items[item].tax;
                 this.dtax += this.items[item].dtax;
                 this.sub_total += this.items[item].sub_total_price;
@@ -353,6 +373,17 @@
             this.total_price = this.sub_total_price + this.tax;
             this.total_discounted_price = this.sub_total_discounted_price + this.dtax;
         }
+
+        calcTotals() {
+            this.sub_total_price = this.quantity * this.price;
+            this.sub_total_discounted_price = this.quantity * this.discounted_price;
+            if(this.tax){
+                itax = price * TAX;
+                idtax = discounted_price * TAX;
+            }
+            this.total_price = this.sub_total_price + this.tax;
+            this.total_discounted_price = this.sub_total_discounted_price + this.dtax;
+        }
     }
 
     const TAX = 0.08;
@@ -374,9 +405,9 @@
                 return;
             }
         }
+        
         var service = new Service(service_id, description, price, discounted_price, quantity, id);
         this.services.push(service);   
-        console.log(services);
         displayCart();  
     }
     // Remove service from cart
@@ -422,11 +453,13 @@
         this.total = 0;
         this.total_with_discounts = 0;
         for(var service in this.services) {
-            service.totalItemsCart();
+            this.services[service].totalItemsCart();
+            console.log("total cart");
+            console.log(this.services[service]);
             this.tax += this.services[service].tax;
             this.dtax += this.services[service].dtax;
-            this.sub_total += this.services[service].total_price;
-            this.sub_total_discounted += this.services[service].total_discounted_price;
+            this.sub_total += this.services[service].sub_total;
+            this.sub_total_discounted += this.services[service].sub_total_discounted;
             this.total += this.services[service].total_price;
             this.total_with_discounts += this.services[service].total_discounted_price;
         }
@@ -474,7 +507,7 @@
 
         //Find service in array
         var service = this.services.find(s => s.id == service_id);
-        
+
         service.addItemToCart(item_id, description, price, 
                 discounted_price, quantity, services.length, tax);
     }
@@ -517,7 +550,7 @@
         selectedServiceId = id;
         //Find service in array
         var service = services.find(s => s.id == id);
-        service.totalItemsCart();
+        
         displayItems(service);
         $('#modal-items').modal('show')
 
@@ -526,23 +559,28 @@
     function displayItems(service) {
         service.totalItemsCart();
         var output = "";
-        for(var i in service.products) {
-          output += "<tr value="+service.products[i].id+">"
-            + "<td>" + service.products[i].description + "</td>"
-            + "<td>" + service.products[i].price + "</td>" 
-            + "<td>" + service.products[i].discounted_price + "</td>"
-            + "<td>" + service.products[i].quantity + "</td>"
-            + "<td>" + service.products[i].total_price + "</td>"
-            + "<td>" + service.products[i].total_discounted_price +"</td></tr>";
+        for(var i in service.items) {
+          output += "<tr value="+service.items[i].id+">"
+            + "<td>" + service.items[i].description + "</td>"
+            + "<td>" + service.items[i].price + "</td>" 
+            + "<td>" + service.items[i].discounted_price + "</td>"
+            + "<td>" + service.items[i].quantity + "</td>"
+            + "<td>" + service.items[i].total_price + "</td>"
+            + "<td>" + service.items[i].total_discounted_price +"</td></tr>";
         }
         $('#items_table tbody').html(output);
+
+        
          
     }
    
 
     function displayCart() {
+        totalCart();
         var output = "";
         for(var i in this.services) {
+            console.log("display cart: ");
+            console.log(this.services[0]);
           output += "<tr value="+this.services[i].id+">"
             + "<td>  <input type='checkbox' name='service'>  </td>"
             + "<td>" + this.services[i].description + "</td>"
@@ -555,11 +593,11 @@
             +'</td> </tr>';
         }
         $('#services_table tbody').html(output);
-        document.getElementById("input-total").value = totalCart();
-        document.getElementById("input-total_with_discounts").value = totalDiscounts();
-        document.getElementById("input-amount_due").value = totalDiscounts();
-        document.getElementById("input-sub_total").value = 0;
-        document.getElementById("input-tax").value = 0; 
+        document.getElementById("input-total").value = this.total;
+        document.getElementById("input-total_with_discounts").value = this.total_with_discounts;
+        document.getElementById("input-amount_due").value = this.total_with_discounts;
+        document.getElementById("input-sub_total").value = this.sub_total;
+        document.getElementById("input-tax").value = this.tax; 
         document.getElementById("input-amount_paid").value = 0; 
     }
     const current_date = new Date();
