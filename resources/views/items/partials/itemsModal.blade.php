@@ -8,7 +8,7 @@
                         {{--  Items --}}
                         {{-- Selecting item --}}
                         <div class="row">
-                            <div class="col-md-6 col-auto">
+                            <div class="col-auto">
                                 @include('items.partials.searchItems')
                             </div>
                             {{--  quantity  --}}
@@ -17,7 +17,7 @@
                                 placeholder="1" value="1" required>                          
                             </div>
                             {{-- Add --}}
-                            <div class="col-md-4 col-auto">
+                            <div class="col-auto">
                                 <button type="button" id="add_item" class="btn btn-outline-success">{{ __('Add') }}</button>
                             </div>
                         </div>

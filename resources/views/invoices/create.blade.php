@@ -274,22 +274,23 @@
         // Add to cart
         addItemToCart(item_id, description, price, discounted_price, quantity, id, tax) {
             for(var item in this.items) {
-                if(this.items[item].id === id) {
+                if(this.items[item].item_id === item_id) {
                     this.items[item].quantity += Number(quantity);
-                    displayItems(this.items);
+                    displayItems(this);
                     return;
                 }
             }
-            var tax = 0;
-            var dtax = 0;
+            var itax = 0;
+            var idtax = 0;
             if(tax){
-                this.tax = price * TAX;
-                this.dtax = discounted_price * TAX;
+                itax = price * TAX;
+                idtax = discounted_price * TAX;
             }
-            var item = new Item(item_id, description, price, discounted_price, id, tax, dtax);
+            console.log(idtax);
+            var item = new Item(item_id, description, price, discounted_price, quantity, id, itax, idtax);
             this.items.push(item);   
             console.log(this.items);
-            displayItems(this.items);  
+            displayItems(this);  
         }
 
         // Remove item from cart
@@ -312,7 +313,7 @@
                 break;
               }
             }
-            displayItems(this.items);  
+            displayItems(this);  
         }
 
         // Total cart
@@ -421,6 +422,7 @@
         this.total = 0;
         this.total_with_discounts = 0;
         for(var service in this.services) {
+            service.totalItemsCart();
             this.tax += this.services[service].tax;
             this.dtax += this.services[service].dtax;
             this.sub_total += this.services[service].total_price;
@@ -516,21 +518,22 @@
         //Find service in array
         var service = services.find(s => s.id == id);
         service.totalItemsCart();
-        displayItems(service.items);
+        displayItems(service);
         $('#modal-items').modal('show')
 
     }
 
-    function displayItems(products) {
+    function displayItems(service) {
+        service.totalItemsCart();
         var output = "";
-        for(var i in products) {
-          output += "<tr value="+products[i].id+">"
-            + "<td>" + products[i].description + "</td>"
-            + "<td>" + products[i].price + "</td>" 
-            + "<td>" + products[i].discounted_price + "</td>"
-            + "<td>" + products[i].quantity + "</td>"
-            + "<td>" + products[i].total_price + "</td>"
-            + "<td>" + products[i].total_discounted_price +"</td></tr>";
+        for(var i in service.products) {
+          output += "<tr value="+service.products[i].id+">"
+            + "<td>" + service.products[i].description + "</td>"
+            + "<td>" + service.products[i].price + "</td>" 
+            + "<td>" + service.products[i].discounted_price + "</td>"
+            + "<td>" + service.products[i].quantity + "</td>"
+            + "<td>" + service.products[i].total_price + "</td>"
+            + "<td>" + service.products[i].total_discounted_price +"</td></tr>";
         }
         $('#items_table tbody').html(output);
          
