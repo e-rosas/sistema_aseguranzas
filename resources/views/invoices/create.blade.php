@@ -126,12 +126,7 @@
                                         </span>
                                     @endif
                                 </div>
-                                {{--  dtax  --}}
-                                <div class="col-md-2 col-auto form-group">
-                                    <label class="form-control-label" for="input-dtax">{{ __('Tax with discounts') }}</label>
-                                    <input type="numeric" name="dtax" id="input-dtax" class="form-control form-control-alternative" 
-                                    placeholder="0" value="0" readonly>
-                                </div>
+                                
                                 
                                 {{--  sub_total  --}}
                                 <div class="col-md-2 col-auto form-group{{ $errors->has('sub_total') ? ' has-danger' : '' }}">
@@ -146,12 +141,7 @@
                                     @endif
                                 </div>
                             
-                                {{--  sub_total_discounts  --}}
-                                <div class="col-md-2 col-auto form-group">
-                                    <label class="form-control-label" for="input-sub_total_discounts">{{ __('Subtotal with discounts') }}</label>
-                                    <input type="numeric" name="sub_total_discounts" id="input-sub_total_discounts" class="form-control form-control-alternative" 
-                                    placeholder="0" value="0" readonly>
-                                </div>
+                                
                             
                                 {{--  total  --}}
                                 <div class="col-md-2 col-auto form-group{{ $errors->has('total') ? ' has-danger' : '' }}">
@@ -166,6 +156,21 @@
                                     @endif
                                 </div>
                                 
+                                
+                            </div>
+                            <div class="form-row">
+                                {{--  dtax  --}}
+                                <div class="col-md-2 col-auto form-group">
+                                    <label class="form-control-label" for="input-dtax">{{ __('Tax with discounts') }}</label>
+                                    <input type="numeric" name="dtax" id="input-dtax" class="form-control form-control-alternative" 
+                                    placeholder="0" value="0" readonly>
+                                </div>
+                                {{--  sub_total_discounts  --}}
+                                <div class="col-md-2 col-auto form-group">
+                                    <label class="form-control-label" for="input-sub_total_discounts">{{ __('Subtotal with discounts') }}</label>
+                                    <input type="numeric" name="sub_total_discounts" id="input-sub_total_discounts" class="form-control form-control-alternative" 
+                                    placeholder="0" value="0" readonly>
+                                </div>
                                 {{--  total_with_discounts  --}}
                                 <div class="col-md-2 col-auto form-group{{ $errors->has('total_with_discounts') ? ' has-danger' : '' }}">
                                     <label class="form-control-label" for="input-total_with_discounts">{{ __('Total with discounts') }}</label>
@@ -235,6 +240,8 @@
                                         <th scope="col">{{ __('Quantity') }}</th>
                                         <th scope="col">{{ __('Total Price') }}</th>
                                         <th scope="col">{{ __('Total Discounted Price') }}</th>
+                                        <th scope="col">{{ __('Items') }}</th>
+                                        <th scope="col"></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -279,6 +286,8 @@
         constructor(service_id, description, price, discounted_price, quantity, id) {
             this.service_id = service_id;
             this.description = description;
+            this.base_price = price;
+            this.base_discounted_price = discounted_price;
             this.price = price;
             this.discounted_price = discounted_price;
             this.quantity = quantity;
@@ -288,7 +297,7 @@
         }
 
         // Add to cart
-        addItemToCart(item_id, description, price, discounted_price, quantity, id, tax) {
+        addItemToCart(item_id, description, price, discounted_price, quantity, id, taxable) {
             for(var item in this.items) {
                 if(this.items[item].item_id === item_id) {
                     this.items[item].quantity += Number(quantity);
@@ -296,13 +305,8 @@
                     return;
                 }
             }
-            var itax = 0;
-            var idtax = 0;
-            if(tax){
-                itax = price * TAX;
-                idtax = discounted_price * TAX;
-            }
-            var item = new Item(item_id, description, price, discounted_price, quantity, id, itax, idtax);
+            
+            var item = new Item(item_id, description, price, discounted_price, quantity, id, taxable);
             this.items.push(item);   
             displayItems(this);  
         }
@@ -322,8 +326,8 @@
 
         removeItemFromCartAll(id) {
             for(var item in this.items) {
-              if(this.items[item].service_id === service_id) {
-                items.splice(item, 1);
+              if(this.items[item].id === id) {
+                this.items.splice(item, 1);
                 break;
               }
             }
@@ -333,21 +337,21 @@
         // Total cart
         totalItemsCart() {
 
-            if(this.items.length > 0){
-                this.tax = 0;
-                this.dtax = 0;
-                this.sub_total = 0;
-                this.sub_total_discounted = 0;
-                this.total_price = 0;
-                this.total_discounted_price = 0;
-            }
-            
+            console.log("4 total items cart");
+
+            this.tax = 0;
+            this.dtax = 0;
+            this.sub_total = this.base_price * this.quantity;
+            this.sub_total_discounted = this.base_discounted_price * this.quantity;
+            this.total_price = this.sub_total;
+            this.total_discounted_price = this.sub_total_discounted;
 
             for(var item in this.items) {
+                this.items[item].calcTotals();
                 console.log("items in cart: ");
                 console.log(this.items[item]);
-                this.tax += this.items[item].tax;
-                this.dtax += this.items[item].dtax;
+                this.tax += this.items[item].itax;
+                this.dtax += this.items[item].idtax;
                 this.sub_total += this.items[item].sub_total_price;
                 this.sub_total_discounted += this.items[item].sub_total_discounted_price;
                 this.total_price += this.items[item].total_price;
@@ -359,7 +363,9 @@
 
     class Item {
         quantity = 1;
-        constructor(item_id, description, price, discounted_price, quantity, id, tax, dtax) {
+        itax = 0;
+        idtax = 0;
+        constructor(item_id, description, price, discounted_price, quantity, id, taxable) {
             this.item_id = item_id;
             this.description = description;
             this.price = price;
@@ -368,21 +374,19 @@
             this.sub_total_price = quantity * price;
             this.sub_total_discounted_price = quantity * discounted_price;
             this.id = id;
-            this.tax = tax;
-            this.dtax = dtax;
-            this.total_price = this.sub_total_price + this.tax;
-            this.total_discounted_price = this.sub_total_discounted_price + this.dtax;
+            this.taxable = taxable
+            this.calcTotals();          
         }
 
         calcTotals() {
             this.sub_total_price = this.quantity * this.price;
             this.sub_total_discounted_price = this.quantity * this.discounted_price;
-            if(this.tax){
-                itax = price * TAX;
-                idtax = discounted_price * TAX;
+            if(this.taxable){
+                this.itax = this.sub_total_price * TAX;
+                this.idtax = this.sub_total_discounted_price * TAX;
             }
-            this.total_price = this.sub_total_price + this.tax;
-            this.total_discounted_price = this.sub_total_discounted_price + this.dtax;
+            this.total_price = this.sub_total_price + this.itax;
+            this.total_discounted_price = this.sub_total_discounted_price + this.idtax;
         }
     }
 
@@ -425,7 +429,7 @@
 
     function removeServiceFromCartAll(service_id) {
         for(var service in this.services) {
-          if(this.services[service].service_id === service_id) {
+          if(this.services[service].id=== service_id) {
             services.splice(service, 1);
             break;
           }
@@ -446,6 +450,7 @@
     }
     // Total cart
     function totalCart() {
+        console.log("3 total cart");
         this.tax = 0;
         this.dtax = 0;
         this.sub_total = 0;
@@ -557,7 +562,8 @@
     }
 
     function displayItems(service) {
-        service.totalItemsCart();
+        console.log(" 1 display items");
+        displayCart(); //displayCart -> totalCart -> totalItemsCart
         var output = "";
         for(var i in service.items) {
           output += "<tr value="+service.items[i].id+">"
@@ -566,7 +572,9 @@
             + "<td>" + service.items[i].discounted_price + "</td>"
             + "<td>" + service.items[i].quantity + "</td>"
             + "<td>" + service.items[i].total_price + "</td>"
-            + "<td>" + service.items[i].total_discounted_price +"</td></tr>";
+            + "<td>" + service.items[i].total_discounted_price +"</td>"
+            + "<td><button class='delete-item btn btn-sm btn-danger' data-service=" + service.id + " data-id=" + service.items[i].id + ">X</button></td>"
+        +"</tr>";
         }
         $('#items_table tbody').html(output);
 
@@ -576,10 +584,11 @@
    
 
     function displayCart() {
+        console.log(" 2 display cart");
         totalCart();
         var output = "";
         for(var i in this.services) {
-            console.log("display cart: ");
+            console.log("services in display cart: ");
             console.log(this.services[0]);
           output += "<tr value="+this.services[i].id+">"
             + "<td>  <input type='checkbox' name='service'>  </td>"
@@ -589,7 +598,8 @@
             + "<td>" + this.services[i].quantity + "</td>"
             + "<td>" + this.services[i].total_price + "</td>"
             + "<td>" + this.services[i].total_discounted_price + '</td>'
-            +'<td><button type="button" onClick="showProductsModal(\'' + this.services[i].id + '\')">Add</button>'
+            + "<td>" + this.services[i].items.length + '</td>'
+            +'<td><button class="btn btn-icon btn-outline-success btn-sm"  type="button" onClick="showProductsModal(\'' + this.services[i].id + '\')"><span class="btn-inner--icon"><i class="ni ni-atom"></i></span></button>'
             +'</td> </tr>';
         }
         $('#services_table tbody').html(output);
@@ -597,7 +607,9 @@
         document.getElementById("input-total_with_discounts").value = this.total_with_discounts;
         document.getElementById("input-amount_due").value = this.total_with_discounts;
         document.getElementById("input-sub_total").value = this.sub_total;
+        document.getElementById("input-sub_total_discounts").value = this.sub_total_discounted;
         document.getElementById("input-tax").value = this.tax; 
+        document.getElementById("input-dtax").value = this.dtax; 
         document.getElementById("input-amount_paid").value = 0; 
     }
     const current_date = new Date();
@@ -632,6 +644,19 @@
             }
             
         });
+
+        // Delete item button
+        $('#items_table').on("click", ".delete-item", function(event) {
+            var id = $(this).data('id');
+            var service_id = $(this).data('service');
+            //Find service in array
+            var service = services.find(s => s.id == service_id);
+            
+            service.removeItemFromCartAll(id);
+            console.log("service of deleted item: ");
+            console.log(service);
+
+        })
 
         
         $("#save").click(function(){

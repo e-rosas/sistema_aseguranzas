@@ -8,7 +8,7 @@
                 <th scope="col">{{ __('Discounted Price') }}</th>
                 <th scope="col">{{ __('Quantity') }}</th>
                 <th scope="col">{{ __('Total') }}</th>
-                <th scope="col">{{ __('Discounted Total') }}</th>
+                <th scope="col">{{ __('Discounted Total') }}</th>                
             </tr>
         </thead>
         <tbody>
