@@ -41,20 +41,28 @@ class SearchProductController extends Controller
     {
         $search = $request->search;
         $items = Item::query()
-            ->whereLike('name', $search)
-            ->whereLike('last_name', $search)
-            ->whereLike('maiden_name', $search)
-            ->where('insured', 1)
+            ->whereLike('code', $search)
+            ->whereLike('description', $search)
             ->get()->take(5)
         ;
         $response = [];
         foreach ($items as $item) {
             $response[] = [
                 'id' => $item->id,
-                'text' => $item->fullName(),
+                'text' => $item->description,
             ];
         }
         echo json_encode($response);
+        exit;
+    }
+
+    public function findItem(Request $request)
+    {
+        $item_id = $request->item_id;
+        $item = Item::find($item_id, ['id', 'code', 'description', 'price', 'discounted_price', 'tax'])
+        ;
+
+        echo json_encode($item);
         exit;
     }
 }

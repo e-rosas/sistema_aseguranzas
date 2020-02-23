@@ -27,7 +27,7 @@ class PersonData extends Model
     public static $rules = [
         'last_name' => 'max:255',
         'maiden_name' => 'max:255',
-        'name' => 'required|max:255',
+        'name' => 'required|min:2|max:255',
         'birth_date' => 'date',
         'address' => 'max:255',
         'city' => 'max:255',

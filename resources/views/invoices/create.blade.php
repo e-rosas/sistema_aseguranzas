@@ -241,6 +241,8 @@
                 </div>               
             </div>
         </div>
+
+        @include('items.partials.itemsModal')
         
         @include('layouts.footers.auth')
     </div>
@@ -251,7 +253,14 @@
     var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
     class Service {
         quantity = 1;
-        constructor(service_id, description, price, discounted_price, quantity) {
+        items = [];
+        tax = 0;
+        dtax = 0;
+        sub_total = 0;
+        sub_total_discounted = 0;
+        total_price = 0;
+        total_discounted_price = 0;
+        constructor(service_id, description, price, discounted_price, quantity, id) {
             this.service_id = service_id;
             this.description = description;
             this.price = price;
@@ -259,24 +268,112 @@
             this.quantity = quantity;
             this.total_price = quantity * price;
             this.total_discounted_price = quantity * discounted_price;
+            this.id = id;
+        }
+
+        // Add to cart
+        addItemToCart(item_id, description, price, discounted_price, quantity, id, tax) {
+            for(var item in this.items) {
+                if(this.items[item].id === id) {
+                    this.items[item].quantity += Number(quantity);
+                    displayItems(this.items);
+                    return;
+                }
+            }
+            var tax = 0;
+            var dtax = 0;
+            if(tax){
+                this.tax = price * TAX;
+                this.dtax = discounted_price * TAX;
+            }
+            var item = new Item(item_id, description, price, discounted_price, id, tax, dtax);
+            this.items.push(item);   
+            console.log(this.items);
+            displayItems(this.items);  
+        }
+
+        // Remove item from cart
+        removeItemFromCart(id) {
+            for(var item in this.items) {
+                if(this.items[item].service_id === service_id) {
+                    this.items[item].quantity --;
+                    if(this.items[item].quantity === 0) {
+                        this.items.splice(item, 1);
+                    }
+                    break;
+                }
+            };
+        }
+
+        removeItemFromCartAll(id) {
+            for(var item in this.items) {
+              if(this.items[item].service_id === service_id) {
+                items.splice(item, 1);
+                break;
+              }
+            }
+            displayItems(this.items);  
+        }
+
+        // Total cart
+        totalItemsCart() {
+            this.tax = 0;
+            this.dtax = 0;
+            this.sub_total = 0;
+            this.sub_total_discounted = 0;
+            this.total_price = 0;
+            this.total_discounted_price = 0;
+
+            for(var item in this.items) {
+                this.tax += this.items[item].tax;
+                this.dtax += this.items[item].dtax;
+                this.sub_total += this.items[item].sub_total_price;
+                this.sub_total_discounted += this.items[item].sub_total_discounted_price;
+                this.total_price += this.items[item].total_price;
+                this.total_discounted_price += this.items[item].total_discounted_price;
+            }
+        }
+        
+    }
+
+    class Item {
+        quantity = 1;
+        constructor(item_id, description, price, discounted_price, quantity, id, tax, dtax) {
+            this.item_id = item_id;
+            this.description = description;
+            this.price = price;
+            this.discounted_price = discounted_price;
+            this.quantity = quantity;
+            this.sub_total_price = quantity * price;
+            this.sub_total_discounted_price = quantity * discounted_price;
+            this.id = id;
+            this.tax = tax;
+            this.dtax = dtax;
+            this.total_price = this.sub_total_price + this.tax;
+            this.total_discounted_price = this.sub_total_discounted_price + this.dtax;
         }
     }
 
+    const TAX = 0.08;
+
     services = [];
-    total = 0;
-    sub_total = 0;
-    total_with_discounts = 0;
     tax = 0;
+    dtax = 0;
+    sub_total = 0;
+    sub_total_discounted = 0;
+    total = 0;
+    total_with_discounts = 0;
+
     // Add to cart
-    function addServiceToCart(service_id, description, price, discounted_price, quantity) {
+    function addServiceToCart(service_id, description, price, discounted_price, quantity, id) {
         for(var service in this.services) {
-            if(this.services[service].service_id === service_id) {
+            if(this.services[service].id === id) {
                 this.services[service].quantity += Number(quantity);
                 displayCart();
                 return;
             }
         }
-        var service = new Service(service_id, description, price, discounted_price, quantity);
+        var service = new Service(service_id, description, price, discounted_price, quantity, id);
         this.services.push(service);   
         console.log(services);
         displayCart();  
@@ -293,6 +390,7 @@
             }
         };
     }
+
     function removeServiceFromCartAll(service_id) {
         for(var service in this.services) {
           if(this.services[service].service_id === service_id) {
@@ -316,15 +414,20 @@
     }
     // Total cart
     function totalCart() {
-        this.total = 0;
-        this.sub_total = 0;
         this.tax = 0;
+        this.dtax = 0;
+        this.sub_total = 0;
+        this.sub_total_discounted = 0;
+        this.total = 0;
         this.total_with_discounts = 0;
         for(var service in this.services) {
+            this.tax += this.services[service].tax;
+            this.dtax += this.services[service].dtax;
+            this.sub_total += this.services[service].total_price;
+            this.sub_total_discounted += this.services[service].total_discounted_price;
             this.total += this.services[service].total_price;
             this.total_with_discounts += this.services[service].total_discounted_price;
         }
-        return Number(this.total);
     }
 
     function totalDiscounts() {
@@ -342,10 +445,36 @@
             },
         success: function (response) {                
                 addServiceToCart(response.id, response.description, 
-                    response.price, response.discounted_price, quantity);                                    
+                    response.price, response.discounted_price, quantity, services.length);                                    
             }
         });
             return false;
+    }
+
+    function getItem(service_id, item_id, quantity){
+        $.ajax({
+            url: "{{route('items.find')}}",
+            dataType: 'json',
+            type:"post",
+            data: {
+                "_token": "{{ csrf_token() }}",
+                "item_id" : item_id
+            },
+        success: function (response) {                
+                addItemToService(service_id, response.id, response.description, 
+                    response.price, response.discounted_price, response.tax, quantity, services.length);                                    
+            }
+        });
+            return false;
+    }
+
+    function addItemToService(service_id, item_id, description, price, discounted_price, tax, quantity, id){
+
+        //Find service in array
+        var service = this.services.find(s => s.id == service_id);
+        
+        service.addItemToCart(item_id, description, price, 
+                discounted_price, quantity, services.length, tax);
     }
 
     function sendCart(person_data_id, date, amount_due, amount_paid,
@@ -362,10 +491,12 @@
                 "comments" : comments,
                 "number" : number,
                 "services" : this.services,
-                "total" : totalCart(),
-                "sub_total" : 0,
-                "total_with_discounts" : totalDiscounts(),
-                "tax" : 0,
+                "total" : this.services.total,
+                "sub_total" : this.services.sub_total,
+                "sub_total_with_discounts" : this.services.sub_total_with_discounts,
+                "total_with_discounts" : this.services.total_with_discounts,
+                "tax" : this.services.tax,
+                "tax_with_discounts" : this.services.dtax,
                 "status": "due"
             },
         success: function (response) {
@@ -377,24 +508,48 @@
         });
             return false;
     }
-    
 
-    function addService(service_id, description, price, discounted_price, quantity){
-        invoiceCart.addServiceToCart(service_id, description, price, discounted_price, quantity);
+    var selectedServiceId;
+
+    function showProductsModal(id){
+        selectedServiceId = id;
+        //Find service in array
+        var service = services.find(s => s.id == id);
+        service.totalItemsCart();
+        displayItems(service.items);
+        $('#modal-items').modal('show')
+
     }
+
+    function displayItems(products) {
+        var output = "";
+        for(var i in products) {
+          output += "<tr value="+products[i].id+">"
+            + "<td>" + products[i].description + "</td>"
+            + "<td>" + products[i].price + "</td>" 
+            + "<td>" + products[i].discounted_price + "</td>"
+            + "<td>" + products[i].quantity + "</td>"
+            + "<td>" + products[i].total_price + "</td>"
+            + "<td>" + products[i].total_discounted_price +"</td></tr>";
+        }
+        $('#items_table tbody').html(output);
+         
+    }
+   
 
     function displayCart() {
         var output = "";
         for(var i in this.services) {
-          output += "<tr value="+this.services[i].service_id+">"
+          output += "<tr value="+this.services[i].id+">"
             + "<td>  <input type='checkbox' name='service'>  </td>"
             + "<td>" + this.services[i].description + "</td>"
             + "<td>" + this.services[i].price + "</td>" 
             + "<td>" + this.services[i].discounted_price + "</td>"
             + "<td>" + this.services[i].quantity + "</td>"
             + "<td>" + this.services[i].total_price + "</td>"
-            + "<td>" + this.services[i].total_discounted_price + "</td>"
-            +  "</tr>";
+            + "<td>" + this.services[i].total_discounted_price + '</td>'
+            +'<td><button type="button" onClick="showProductsModal(\'' + this.services[i].id + '\')">Add</button>'
+            +'</td> </tr>';
         }
         $('#services_table tbody').html(output);
         document.getElementById("input-total").value = totalCart();
@@ -403,13 +558,13 @@
         document.getElementById("input-sub_total").value = 0;
         document.getElementById("input-tax").value = 0; 
         document.getElementById("input-amount_paid").value = 0; 
-      }
-        const current_date = new Date();
-        var dd = String(current_date.getDate()).padStart(2, '0');
-        var mm = String(current_date.getMonth() + 1).padStart(2, '0');
-        var yyyy = current_date.getFullYear();
+    }
+    const current_date = new Date();
+    var dd = String(current_date.getDate()).padStart(2, '0');
+    var mm = String(current_date.getMonth() + 1).padStart(2, '0');
+    var yyyy = current_date.getFullYear();
 
-        var today = yyyy + '-' + mm + '-' + dd;
+    var today = yyyy + '-' + mm + '-' + dd;
     $(document).ready(function(){
         document.getElementById("input-date").value = today;
 
@@ -424,6 +579,15 @@
             if(quantity > 0){
                 var service_id= $("#service_id").children("option:selected").val();
                 getService(service_id, quantity);
+            }
+            
+        });
+
+        $("#add_item").click(function(){
+            var quantity = Number(document.getElementById("input-product-quantity").value);
+            if(quantity > 0){
+                var item_id= $("#item_id").children("option:selected").val();
+                getItem(selectedServiceId, item_id, quantity);
             }
             
         });

@@ -18,7 +18,7 @@ class CreatePersonDataTable extends Migration
             $table->string('name');
             $table->date('birth_date');
             $table->string('address');
-            $table->string('city');
+            $table->string('city')->nullable();
             $table->string('state');
             $table->integer('postal_code')->nullable();
             $table->string('phone_number');

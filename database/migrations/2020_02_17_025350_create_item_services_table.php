@@ -19,6 +19,8 @@ class CreateItemServicesTable extends Migration
             $table->decimal('price', 13, 4);
             $table->decimal('discounted_price', 13, 4);
             $table->integer('quantity')->default(1);
+            $table->decimal('total_price', 13, 4);
+            $table->decimal('total_discounted_price', 13, 4);
 
             $table->foreign('invoice_service_id')->references('id')->on('invoice_services')->onDelete('cascade');
             $table->foreign('item_id')->references('id')->on('items')->onDelete('cascade');

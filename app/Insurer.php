@@ -18,12 +18,12 @@ class Insurer extends Model
     ];
 
     public static $rules = [
-        'name' => 'required|min:10|max:255',
+        'name' => 'required|min:5|max:255',
         'address' => 'max:255',
         'city' => 'max:255',
         'state' => 'max:255',
         'postal_code' => 'digits:5',
-        'phone_number' => 'required|max:255',
+        'phone_number' => 'max:255',
         'email' => 'email',
         'code' => 'max:255',
     ];

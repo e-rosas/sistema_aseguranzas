@@ -41,6 +41,9 @@ Route::group(['middleware' => 'auth'], function () {
     //Route::post('payments', 'PaymentController@getInvoicePayments')->name('invoices.payments');
     Route::post('invoices/adddiscounts', 'DiscountsInvoiceController@addAppliedDiscounts')->name('invoices.discounts');
 
+    Route::post('items/search', 'SearchProductController@searchItem')->name('items.search');
+    Route::post('items/find', 'SearchProductController@findItem')->name('items.find');
+
     Route::get('profile', ['as' => 'profile.edit', 'uses' => 'ProfileController@edit']);
     Route::put('profile', ['as' => 'profile.update', 'uses' => 'ProfileController@update']);
     Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'ProfileController@password']);
