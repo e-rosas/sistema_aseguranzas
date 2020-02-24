@@ -99,15 +99,15 @@
                                     </div>
                                     {{--  Category  --}}
                                     <div class="form-group col-auto col-md-4">
-                                        <label for="item_category_id" class="col-form-label">{{ __('Category') }}</label>
-                                        <select class="custom-select form-control{{ $errors->has('item_category_id') ? ' is-invalid' : '' }}" name="item_category_id">
-                                        @foreach($item_categories as $item_category)
-                                            <option value="{{ $item_category->id }}">{{ $item_category->name }}</option>
+                                        <label for="category_id" class="col-form-label">{{ __('Category') }}</label>
+                                        <select class="custom-select form-control{{ $errors->has('category_id') ? ' is-invalid' : '' }}" name="category_id">
+                                        @foreach($categories as $category)
+                                            <option value="{{ $category->id }}">{{ $category->name }}</option>
                                         @endforeach
                                         </select>                  
                                         @if ($errors)
                                             <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $errors->first('item_category_id') }}</strong>
+                                                <strong>{{ $errors->first('category_id') }}</strong>
                                             </span>
                                         @endif
                                     </div>

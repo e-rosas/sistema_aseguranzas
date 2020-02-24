@@ -25,7 +25,6 @@ class Insurer extends Model
         'postal_code' => 'digits:5',
         'phone_number' => 'max:255',
         'email' => 'email',
-        'code' => 'max:255',
     ];
 
     public function insurees()

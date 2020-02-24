@@ -16,12 +16,14 @@ class Invoice extends Model
         'comments',
         'status',
         'date',
+        'tax',
+        'dtax',
+        'sub_total',
+        'sub_total_discounted',
         'total',
         'total_with_discounts',
         'amount_paid',
         'amount_due',
-        'sub_total',
-        'tax',
         'person_data_id',
     ];
     public static $rules = [
@@ -29,6 +31,10 @@ class Invoice extends Model
         'status' => 'max:255',
         'date' => 'date',
         'comments' => 'max:1000',
+        'tax' => 'numeric|required|between:0,999999999.999',
+        'dtax' => 'numeric|required|between:0,999999999.999',
+        'sub_total' => 'numeric|required|between:0,999999999.999',
+        'sub_total_discounted' => 'numeric|required|between:0,999999999.999',
         'total' => 'numeric|required|between:0,999999999.999',
         'total_with_discounts' => 'numeric|required|between:0,999999999.999',
         'amount_paid' => 'numeric|between:0,999999999.999',
@@ -44,15 +50,37 @@ class Invoice extends Model
         'date' => 'date',
         'comments' => 'string',
         'status' => 'string',
+        'tax' => 'decimal:13',
+        'dtax' => 'decimal:13',
+        'sub_total' => 'decimal:13',
+        'sub_total_discounted' => 'decimal:13',
         'total' => 'decimal:13',
         'total_with_discounts' => 'decimal:13',
         'amount_paid' => 'decimal:13',
         'amount_due' => 'decimal:13',
-        'sub_total' => 'decimal:13',
-        'tax' => 'decimal:13',
     ];
 
     protected $dates = ['date'];
+
+    public function getTaxAttribute($value)
+    {
+        return number_format($value, 3);
+    }
+
+    public function getDtaxAttribute($value)
+    {
+        return number_format($value, 3);
+    }
+
+    public function getSubTotalAttribute($value)
+    {
+        return number_format($value, 3);
+    }
+
+    public function getSubTotalDiscountedAttribute($value)
+    {
+        return number_format($value, 3);
+    }
 
     public function getTotalAttribute($value)
     {
@@ -67,16 +95,6 @@ class Invoice extends Model
     public function getAmountPaidAttribute($value)
     {
         return number_format($value, 3);
-    }
-
-    public function getSubTotalAttribute($value)
-    {
-        return number_format($value, 3);
-    }
-
-    public function getTaxAttribute($value)
-    {
-        return number_format($value, 3, '.', '');
     }
 
     public function getAmountDueAttribute($value)

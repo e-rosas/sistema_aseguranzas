@@ -9,14 +9,17 @@ class Insuree extends Model
     public $fillable = [
         'person_data_id',
         'insurer_id',
+        'insurance_id',
     ];
     public static $rules = [
         'person_data_id' => 'required',
         'insurer_id' => 'required',
+        'insurance_id' => 'required|max:255',
     ];
     protected $casts = [
         'person_data_id' => 'integer',
         'insurer_id' => 'integer',
+        'insurance_id' => 'string',
     ];
 
     public function person_data()

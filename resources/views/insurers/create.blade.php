@@ -113,19 +113,6 @@
                                         </span>
                                     @endif
                                 </div>
-                                {{--  code  --}}
-                                <div class="form-group{{ $errors->has('code') ? ' has-danger' : '' }}">
-                                    <label class="form-control-label" for="input-code">ID</label>
-                                    <input type="text" name="code" id="input-code" class="form-control form-control-alternative{{ $errors->has('code') ? ' is-invalid' : '' }}" 
-                                    placeholder="ID" value="{{ old('code') }}" required>
-                                
-                                    @if ($errors->has('code'))
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $errors->first('code') }}</strong>
-                                        </span>
-                                    @endif
-                                </div>
-
                                 <div class="text-center">
                                     <button type="submit" class="btn btn-success mt-4">{{ __('Save') }}</button>
                                 </div>

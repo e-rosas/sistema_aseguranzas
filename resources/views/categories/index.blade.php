@@ -38,9 +38,9 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($item_categories as $item_category)
+                                @foreach ($categories as $category)
                                     <tr>
-                                        <td>{{ $item_category->name }}</td>
+                                        <td>{{ $category->name }}</td>
                                         <td class="text-right">
                                             <div class="dropdown">
                                                 <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -67,7 +67,7 @@
                     </div>
                     <div class="card-footer py-4">
                         <nav class="d-flex justify-content-end" aria-label="...">
-                            {{ $item_categories->links() }}
+                            {{ $categories->links() }}
                         </nav>
                     </div>
                 </div>

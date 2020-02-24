@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Category;
 use App\Item;
-use App\ItemCategory;
 use Illuminate\Http\Request;
 
 class ItemController extends Controller
@@ -15,7 +15,7 @@ class ItemController extends Controller
      */
     public function index()
     {
-        $items = \App\Item::with('item_category')->paginate(15);
+        $items = \App\Item::with('category')->paginate(15);
 
         return view('items.index', compact('items'));
     }
@@ -27,9 +27,9 @@ class ItemController extends Controller
      */
     public function create()
     {
-        $item_categories = ItemCategory::take(10)->get();
+        $categories = Category::take(10)->get();
 
-        return view('items.create', compact('item_categories'));
+        return view('items.create', compact('categories'));
     }
 
     /**

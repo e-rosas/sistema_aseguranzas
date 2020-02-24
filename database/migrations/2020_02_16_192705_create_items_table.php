@@ -20,9 +20,9 @@ class CreateItemsTable extends Migration
             $table->string('type');
             $table->string('SAT')->default('NOT SET');
             $table->boolean('tax')->default(0);
-            $table->unsignedBigInteger('item_category_id');
+            $table->unsignedBigInteger('category_id');
 
-            $table->foreign('item_category_id')->references('id')->on('item_categories');
+            $table->foreign('category_id')->references('id')->on('categories');
             $table->timestamps();
         });
     }

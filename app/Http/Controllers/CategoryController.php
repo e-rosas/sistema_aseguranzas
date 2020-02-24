@@ -2,19 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\ItemCategory;
+use App\Category;
 use Illuminate\Http\Request;
 
-class ItemCategoryController extends Controller
+class CategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(ItemCategory $model)
+    public function index(Category $model)
     {
-        return view('item_categories.index', ['item_categories' => $model->paginate(15)]);
+        return view('categories.index', ['categories' => $model->paginate(15)]);
     }
 
     /**
@@ -35,9 +35,9 @@ class ItemCategoryController extends Controller
     public function store(Request $request)
     {
         $validated = $this->validateItemCategory();
-        ItemCategory::create($validated);
+        Category::create($validated);
 
-        return redirect()->route('item_categories.index')->withStatus(__('Item category successfully created.'));
+        return redirect()->route('categories.index')->withStatus(__('Category successfully created.'));
     }
 
     /**
@@ -45,7 +45,7 @@ class ItemCategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function show(ItemCategory $itemCategory)
+    public function show(Category $Category)
     {
     }
 
@@ -54,7 +54,7 @@ class ItemCategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function edit(ItemCategory $itemCategory)
+    public function edit(Category $itemCategory)
     {
     }
 
@@ -63,7 +63,7 @@ class ItemCategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ItemCategory $itemCategory)
+    public function update(Request $request, Category $itemCategory)
     {
     }
 
@@ -72,7 +72,7 @@ class ItemCategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ItemCategory $itemCategory)
+    public function destroy(Category $itemCategory)
     {
     }
 

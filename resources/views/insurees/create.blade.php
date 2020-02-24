@@ -38,6 +38,15 @@
                                     </span>
                                 @endif
                             </div>
+                            <div class="form-group col-md-6 col-auto">
+                                <label for="insurance_id" class="col-auto col-form-label">{{ __('Insurance ID') }}</label>
+                                <input type="text" name="insurance_id" id="input-insurance_id" class="form-control form-control-alternative{{ $errors->has('insurance_id') ? ' is-invalid' : '' }}" placeholder="{{ __('Insurance ID') }}" value="{{ old('insurance_id') }}" required>                 
+                                @if ($errors)
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('insurance_id') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
                             <div class="form-group col-auto text-right">
                                 <a href="{{ route('insurers.create') }}" class="btn btn-sm btn-primary">{{ __('Add Insurer') }}</a>
                             </div>

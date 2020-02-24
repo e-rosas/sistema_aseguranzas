@@ -37,7 +37,8 @@
                                     <th scope="col">{{ __('Email') }}</th>
                                     <th scope="col">{{ __('Phone') }}</th>
                                     <th scope="col">{{ __('City') }}</th>
-                                    <th scope="col">{{ __('Insurance') }}</th>
+                                    <th scope="col">{{ __('Insurance ID') }}</th>
+                                    <th scope="col">{{ __('Insurer') }}</th>
                                     <th scope="col"></th>
                                 </tr>
                             </thead>
@@ -50,6 +51,7 @@
                                         </td>
                                         <td>{{ $insuree->person_data->phone_number }}</td>
                                         <td>{{ $insuree->person_data->city }}</td>
+                                        <td>{{ $insuree->insurance_id }}</td>
                                         <td>{{ $insuree->insurer->name }}</td>
                                         <td class="text-right">
                                             <div class="dropdown">

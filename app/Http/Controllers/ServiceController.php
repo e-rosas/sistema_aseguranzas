@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Category;
 use App\Service;
 use Illuminate\Http\Request;
 
@@ -24,7 +25,9 @@ class ServiceController extends Controller
      */
     public function create()
     {
-        return view('services.create');
+        $categories = Category::take(10)->get();
+
+        return view('services.create', compact('categories'));
     }
 
     /**

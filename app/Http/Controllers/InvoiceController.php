@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Invoice;
 use App\InvoiceService;
+use App\ItemService;
 use App\Payment;
 use Illuminate\Http\Request;
 
@@ -44,7 +45,11 @@ class InvoiceController extends Controller
         $services = $request->services;
         foreach ($services as $service) {
             $service['invoice_id'] = $invoice->id;
-            InvoiceService::create($service);
+            $invoice_service = InvoiceService::create($service);
+            foreach ($services['items'] as $item) {
+                $item['invoice_service_id'] = $invoice_service->id;
+                ItemService::create($item);
+            }
         }
 
         return route('invoices.show', [$invoice]);

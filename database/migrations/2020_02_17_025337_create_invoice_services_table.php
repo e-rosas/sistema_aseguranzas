@@ -19,6 +19,10 @@ class CreateInvoiceServicesTable extends Migration
             $table->decimal('price', 13, 4);
             $table->decimal('discounted_price', 13, 4);
             $table->integer('quantity');
+            $table->decimal('tax', 13, 4);
+            $table->decimal('dtax', 13, 4);
+            $table->decimal('sub_total', 13, 4);
+            $table->decimal('sub_total_discounted', 13, 4);
             $table->decimal('total_price', 13, 4);
             $table->decimal('total_discounted_price', 13, 4);
             $table->foreign('invoice_id')->references('id')->on('invoices')->onDelete('cascade');

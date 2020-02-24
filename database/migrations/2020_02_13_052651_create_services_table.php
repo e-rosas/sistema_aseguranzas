@@ -19,6 +19,9 @@ class CreateServicesTable extends Migration
             $table->decimal('discounted_price', 13, 4);
             $table->timestamps();
             $table->softDeletes();
+            $table->unsignedBigInteger('category_id');
+
+            $table->foreign('category_id')->references('id')->on('categories');
         });
     }
 

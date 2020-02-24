@@ -13,12 +13,14 @@ class Service extends Model
         'description',
         'price',
         'discounted_price',
+        'category_id',
     ];
     public static $rules = [
         'code' => 'required|max:255',
         'description' => 'required|max:255',
         'price' => 'numeric|required|between:0,999999999.999',
         'discounted_price' => 'numeric|required|between:0,999999999.999',
+        'category_id' => 'required|numeric',
     ];
     protected $casts = [
         'id' => 'integer',
@@ -26,6 +28,7 @@ class Service extends Model
         'description' => 'string',
         'price' => 'decimal:13',
         'discounted_price' => 'decimal:13',
+        'category_id' => 'integer',
     ];
 
     public function getPriceAttribute($value)

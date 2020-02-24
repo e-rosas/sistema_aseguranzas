@@ -50,6 +50,20 @@
                                     </div>
                                 </div>
                                 <div class="form-row">
+                                    {{--  Category  --}}
+                                    <div class="form-group col-auto col-md-4">
+                                        <label for="category_id" class="col-form-label">{{ __('Category') }}</label>
+                                        <select class="custom-select form-control{{ $errors->has('category_id') ? ' is-invalid' : '' }}" name="category_id">
+                                        @foreach($categories as $category)
+                                            <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                        @endforeach
+                                        </select>                  
+                                        @if ($errors)
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('category_id') }}</strong>
+                                            </span>
+                                        @endif
+                                    </div>
                                     {{--  total_price  --}}
                                     <div class="col-md-4 col-auto form-group{{ $errors->has('total_price') ? ' has-danger' : '' }}">
                                         <label class="form-control-label" for="input-total_price">{{ __('Total price') }}</label>

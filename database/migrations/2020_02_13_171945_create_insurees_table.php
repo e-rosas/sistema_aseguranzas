@@ -15,7 +15,7 @@ class CreateInsureesTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('person_data_id');
             $table->unsignedInteger('insurer_id');
-
+            $table->string('insurance_id')->unique();
             $table->foreign('person_data_id')->references('id')->on('person_data');
             $table->foreign('insurer_id')->references('id')->on('insurers');
             $table->timestamps();

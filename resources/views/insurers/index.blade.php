@@ -37,7 +37,7 @@
                                     <th scope="col">{{ __('Email') }}</th>
                                     <th scope="col">{{ __('Phone') }}</th>
                                     <th scope="col">{{ __('City') }}</th>
-                                    <th scope="col">{{ __('ID') }}</th>
+                                    
                                     <th scope="col"></th>
                                 </tr>
                             </thead>
@@ -50,7 +50,7 @@
                                         </td>
                                         <td>{{ $insurer->phone_number }}</td>
                                         <td>{{ $insurer->city }}</td>
-                                        <td>{{ $insurer->code }}</td>
+                                        
                                         <td class="text-right">
                                             <div class="dropdown">
                                                 <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

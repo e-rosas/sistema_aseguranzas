@@ -20,7 +20,6 @@ class CreateInsurersTable extends Migration
             $table->string('postal_code')->nullable();
             $table->string('phone_number')->nullable();
             $table->string('email')->nullable();
-            $table->string('code');
             $table->softDeletes();
             $table->timestamps();
         });
