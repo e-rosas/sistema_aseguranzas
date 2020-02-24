@@ -1,7 +1,7 @@
 @extends('layouts.app', ['title' => __('Item Category Management')])
 
 @section('content')
-    @include('item_categories.partials.header', ['title' => __('Add Item Category')])   
+    @include('categories.partials.header', ['title' => __('Add Category')])   
 
     <div class="container-fluid mt--7">
         <div class="row">
@@ -10,18 +10,18 @@
                     <div class="card-header bg-white border-0">
                         <div class="row align-items-center">
                             <div class="col-8 col-auto">
-                                <h3 class="mb-0">{{ __('Item Category Management') }}</h3>
+                                <h3 class="mb-0">{{ __('Category Management') }}</h3>
                             </div>
                             <div class="col-4 col-auto text-right">
-                                <a href="{{ route('item_categories.index') }}" class="btn btn-sm btn-primary">{{ __('Back to list') }}</a>
+                                <a href="{{ route('categories.index') }}" class="btn btn-sm btn-primary">{{ __('Back to list') }}</a>
                             </div>
                         </div>
                     </div>
                     <div class="card-body">
-                        <form method="post" action="{{ route('item_categories.store') }}"  autocomplete="off">
+                        <form method="post" action="{{ route('categories.store') }}"  autocomplete="off">
                             @csrf
                             
-                            <h6 class="heading-small text-muted mb-4">{{ __('Item Category information') }}</h6>
+                            <h6 class="heading-small text-muted mb-4">{{ __('Category information') }}</h6>
                             <div class="pl-lg-4">
                                 {{--  Name --}}
                                 <div class="form-group{{ $errors->has('name') ? ' has-danger' : '' }}">

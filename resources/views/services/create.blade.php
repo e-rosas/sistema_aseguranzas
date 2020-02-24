@@ -28,7 +28,7 @@
                                     <div class="col-md-4 col-auto form-group{{ $errors->has('code') ? ' has-danger' : '' }}">
                                         <label class="form-control-label" for="input-code">{{ __('Code') }}</label>
                                         <input type="text" name="code" id="input-code" class="form-control form-control-alternative{{ $errors->has('code') ? ' is-invalid' : '' }}" 
-                                        placeholder="{{ __('Code') }}" value="{{ old('code') }}" required>
+                                        placeholder="{{ __('Code') }}" value="{{ old('code') }}">
                                     
                                         @if ($errors->has('code'))
                                             <span class="invalid-feedback" role="alert">

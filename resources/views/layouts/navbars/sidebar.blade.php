@@ -86,8 +86,8 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('item_categories.index') }}">
-                        <i class="ni ni-tv-2 text-primary"></i> {{ __('Item categories') }}
+                    <a class="nav-link" href="{{ route('categories.index') }}">
+                        <i class="ni ni-tv-2 text-primary"></i> {{ __('Categories') }}
                     </a>
                 </li>
                 <li class="nav-item">

@@ -27,7 +27,7 @@
                                     <div class="col-md-4 col-auto form-group{{ $errors->has('code') ? ' has-danger' : '' }}">
                                         <label class="form-control-label" for="input-code">{{ __('Code') }}</label>
                                         <input type="text" name="code" id="input-code" class="form-control form-control-alternative{{ $errors->has('code') ? ' is-invalid' : '' }}" 
-                                        placeholder="{{ __('Code') }}" value="{{ old('code') }}" required>
+                                        placeholder="{{ __('Code') }}" value="{{ old('code') }}">
                                     
                                         @if ($errors->has('code'))
                                             <span class="invalid-feedback" role="alert">
@@ -91,10 +91,10 @@
                                     <div class="form-group col-md-4 col-auto">
                                         <label for="type" class="col-form-label">{{ __('Type') }}</label>
                                         <select class="custom-select form-control{{ $errors->has('type') ? ' is-invalid' : '' }}" name="type">
-                                            <option value="Material">{{ __('Material') }}</option>
-                                            <option value="Pharmacy">{{ __('Material') }}</option>
-                                            <option value="Solution">{{ __('Solution') }}</option>
-                                            <option value="Laboratory">{{ __('Laboratory') }}</option>
+                                            <option value="Material">{{ __('MATERIAL') }}</option>
+                                            <option value="Pharmacy">{{ __('PHARMACY') }}</option>
+                                            <option value="Solution">{{ __('SOLUTION') }}</option>
+                                            <option value="Laboratory">{{ __('LABORATORY') }}</option>
                                         </select>
                                     </div>
                                     {{--  Category  --}}

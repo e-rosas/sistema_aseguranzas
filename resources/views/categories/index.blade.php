@@ -13,7 +13,7 @@
                                 <h3 class="mb-0">{{ __('Item Categories') }}</h3>
                             </div>
                             <div class="col-4 text-right">
-                                <a href="{{ route('item_categories.create') }}" class="btn btn-sm btn-primary">{{ __('Add Item Category') }}</a>
+                                <a href="{{ route('categories.create') }}" class="btn btn-sm btn-primary">{{ __('Add Item Category') }}</a>
                             </div>
                         </div>
                     </div>

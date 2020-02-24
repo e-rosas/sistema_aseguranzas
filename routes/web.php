@@ -29,7 +29,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('beneficiaries', 'BeneficiaryController');
     Route::resource('insurees', 'InsureeController');
     Route::resource('invoices', 'InvoiceController');
-    Route::resource('item_categories', 'ItemCategoryController');
+    Route::resource('categories', 'CategoryController');
     Route::resource('items', 'ItemController');
     Route::resource('calls', 'CallController');
     Route::resource('payments', 'PaymentController');
