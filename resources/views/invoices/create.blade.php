@@ -531,12 +531,12 @@
                 "comments" : comments,
                 "number" : number,
                 "services" : this.services,
-                "total" : this.services.total,
-                "sub_total" : this.services.sub_total,
-                "sub_total_with_discounts" : this.services.sub_total_with_discounts,
-                "total_with_discounts" : this.services.total_with_discounts,
-                "tax" : this.services.tax,
-                "tax_with_discounts" : this.services.dtax,
+                "total" : total,
+                "sub_total" : sub_total,
+                "sub_total_discounted" : sub_total_discounted,
+                "total_with_discounts" : total_with_discounts,
+                "tax" : tax,
+                "dtax" : dtax,
                 "status": "due"
             },
         success: function (response) {

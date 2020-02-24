@@ -65,14 +65,14 @@
                                         @endif
                                     </div>
                                     {{--  total_price  --}}
-                                    <div class="col-md-4 col-auto form-group{{ $errors->has('total_price') ? ' has-danger' : '' }}">
+                                    <div class="col-md-4 col-auto form-group{{ $errors->has('price') ? ' has-danger' : '' }}">
                                         <label class="form-control-label" for="input-total_price">{{ __('Total price') }}</label>
-                                        <input type="numeric" name="total_price" id="input-total_price" class="form-control form-control-alternative{{ $errors->has('total_price') ? ' is-invalid' : '' }}" 
-                                        placeholder="{{ __('Total price') }}" value="{{ old('total_price') }}" required>
+                                        <input type="numeric" name="price" id="input-price" class="form-control form-control-alternative{{ $errors->has('price') ? ' is-invalid' : '' }}" 
+                                        placeholder="{{ __('Total price') }}" value="{{ old('price') }}" required>
                                     
-                                        @if ($errors->has('total_price'))
+                                        @if ($errors->has('price'))
                                             <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $errors->first('total_price') }}</strong>
+                                                <strong>{{ $errors->first('price') }}</strong>
                                             </span>
                                         @endif
                                     </div>

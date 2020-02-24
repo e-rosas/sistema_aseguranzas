@@ -20,7 +20,7 @@ class CreateItemServicesTable extends Migration
             $table->decimal('discounted_price', 13, 4);
             $table->integer('quantity')->default(1);
             $table->decimal('itax', 13, 4);
-            $table->decimal('dtax', 13, 4);
+            $table->decimal('idtax', 13, 4);
             $table->decimal('sub_total_price', 13, 4);
             $table->decimal('sub_total_discounted_price', 13, 4);
             $table->decimal('total_price', 13, 4);

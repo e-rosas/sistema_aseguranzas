@@ -32,6 +32,17 @@ class InvoiceController extends Controller
         return view('invoices.create');
     }
 
+    public function search(Request $request)
+    {
+        $search = $request->search;
+        $invoices = Invoice::query()
+            ->whereLike('number', $search)
+            ->paginate(5)
+        ;
+
+        return view('invoices.index', compact('invoices'));
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -46,9 +57,12 @@ class InvoiceController extends Controller
         foreach ($services as $service) {
             $service['invoice_id'] = $invoice->id;
             $invoice_service = InvoiceService::create($service);
-            foreach ($services['items'] as $item) {
-                $item['invoice_service_id'] = $invoice_service->id;
-                ItemService::create($item);
+            if (isset($service['items'])) {
+                $items = $service['items'];
+                foreach ($items as $item) {
+                    $item['invoice_service_id'] = $invoice_service->id;
+                    ItemService::create($item);
+                }
             }
         }
 

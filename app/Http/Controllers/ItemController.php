@@ -83,14 +83,6 @@ class ItemController extends Controller
 
     protected function validateItem()
     {
-        return request()->validate([
-            'code' => ['required', 'numeric'],
-            'description' => ['required', 'max:255'],
-            'price' => ['required', 'between:0,999999999.999'],
-            'discounted_price' => ['required', 'between:0,999999999.999', 'lte:price'],
-            'type' => ['max:255'],
-            'SAT' => ['max:255'],
-            'tax' => ['boolean'],
-        ]);
+        return request()->validate(Item::$rules);
     }
 }

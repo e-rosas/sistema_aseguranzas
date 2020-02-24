@@ -52,7 +52,7 @@
                                         <td>{{ $item->discounted_price }}</td>
                                         <td>{{ $item->type }}</td>
                                         <td>{{ $item->SAT }}</td>
-                                        <td>{{ $item->item_category->name }}</td>
+                                        <td>{{ $item->category->name }}</td>
                                         <td class="text-right">
                                             <div class="dropdown">
                                                 <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

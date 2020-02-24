@@ -37,6 +37,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('insurees', ['as' => 'persondata.storeinsuree', 'uses' => 'PersonDataController@storeInsuree']);
     Route::post('beneficiaries', ['as' => 'persondata.storebeneficiary', 'uses' => 'PersonDataController@storeBeneficiary']);
 
+    Route::post('invoices/search', 'InvoiceController@search')->name('invoices.search');
+
     Route::post('discounts/get', 'DiscountsInvoiceController@discounts')->name('discounts.get');
     //Route::post('payments', 'PaymentController@getInvoicePayments')->name('invoices.payments');
     Route::post('invoices/adddiscounts', 'DiscountsInvoiceController@addAppliedDiscounts')->name('invoices.discounts');

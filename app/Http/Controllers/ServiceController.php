@@ -38,6 +38,7 @@ class ServiceController extends Controller
     public function store(Request $request)
     {
         $validated = $this->validateService();
+
         Service::create($validated);
 
         return redirect()->route('services.index')->withStatus(__('Service successfully created.'));
@@ -81,11 +82,6 @@ class ServiceController extends Controller
 
     protected function validateService()
     {
-        return request()->validate([
-            'code' => ['required', 'max:255'],
-            'description' => ['required', 'max:255'],
-            'price' => ['required', 'between:0,999999999.999'],
-            'discounted_price' => ['required', 'between:0,999999999.999'],
-        ]);
+        return request()->validate(Service::$rules);
     }
 }
