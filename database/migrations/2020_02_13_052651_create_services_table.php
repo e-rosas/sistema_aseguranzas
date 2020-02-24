@@ -13,7 +13,7 @@ class CreateServicesTable extends Migration
     {
         Schema::create('services', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('code')->unique();
+            $table->string('code')->unique()->nullable();
             $table->string('description');
             $table->decimal('price', 13, 4);
             $table->decimal('discounted_price', 13, 4);

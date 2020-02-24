@@ -20,7 +20,7 @@ class SearchProductController extends Controller
         foreach ($services as $service) {
             $response[] = [
                 'id' => $service->id,
-                'text' => $service->description,
+                'text' => $service->code.' '.$service->description,
             ];
         }
         echo json_encode($response);
@@ -49,7 +49,7 @@ class SearchProductController extends Controller
         foreach ($items as $item) {
             $response[] = [
                 'id' => $item->id,
-                'text' => $item->description,
+                'text' => $item->code.' '.$item->description,
             ];
         }
         echo json_encode($response);
