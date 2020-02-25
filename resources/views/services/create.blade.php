@@ -1,7 +1,7 @@
 @extends('layouts.app', ['title' => __('Service Management')])
 
 @section('content')
-    @include('services.partials.header', ['title' => __('Add Service')])   
+    @include('layouts.headers.header', ['title' => __('Add Service')])   
 
     <div class="container-fluid mt--7">
         <div class="row">

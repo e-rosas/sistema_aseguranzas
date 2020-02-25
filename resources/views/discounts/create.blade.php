@@ -1,7 +1,7 @@
 @extends('layouts.app', ['title' => __('Discount Management')])
 
 @section('content')
-    @include('discounts.partials.header', ['title' => __('Add Discount')])   
+    @include('layouts.headers.header', ['title' => __('Add Discount')])   
 
     <div class="container-fluid mt--7">
         <div class="row">

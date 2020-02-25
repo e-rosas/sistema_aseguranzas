@@ -1,7 +1,7 @@
 @extends('layouts.app', ['title' => __('User Profile')])
 
 @section('content')
-    @include('users.partials.header', [
+    @include('layouts.headers.header', [
         'title' => __('Hello') . ' '. auth()->user()->name,
         'description' => __('This is your profile page. You can see the progress you\'ve made with your work and manage your projects or assigned tasks'),
         'class' => 'col-lg-7'
@@ -15,7 +15,7 @@
                         <div class="col-lg-3 order-lg-2">
                             <div class="card-profile-image">
                                 <a href="#">
-                                    <img src="{{ asset('argon') }}/img/theme/team-4-800x800.jpg" class="rounded-circle">
+                                    
                                 </a>
                             </div>
                         </div>

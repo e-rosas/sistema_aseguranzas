@@ -17,10 +17,6 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::post('insurees/search', 'SearchPatientController@searchInsuree')->name('insurees.search');
-Route::post('patients/search', 'SearchPatientController@search')->name('patients.search');
-Route::post('services/search', 'SearchProductController@searchService')->name('services.search');
-Route::post('services/find', 'SearchProductController@findService')->name('services.find');
 
 Route::group(['middleware' => 'auth'], function () {
     Route::resource('insurers', 'InsurerController');
@@ -37,10 +33,14 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('insurees', ['as' => 'persondata.storeinsuree', 'uses' => 'PersonDataController@storeInsuree']);
     Route::post('beneficiaries', ['as' => 'persondata.storebeneficiary', 'uses' => 'PersonDataController@storeBeneficiary']);
 
+    Route::post('insurees/search', 'SearchPatientController@searchInsuree')->name('insurees.search');
+    Route::post('patients/search', 'SearchPatientController@search')->name('patients.search');
+    Route::post('services/search', 'SearchProductController@searchService')->name('services.search');
+    Route::post('services/find', 'SearchProductController@findService')->name('services.find');
+
     Route::post('invoices/search', 'InvoiceController@search')->name('invoices.search');
 
     Route::post('discounts/get', 'DiscountsInvoiceController@discounts')->name('discounts.get');
-    //Route::post('payments', 'PaymentController@getInvoicePayments')->name('invoices.payments');
     Route::post('invoices/adddiscounts', 'DiscountsInvoiceController@addAppliedDiscounts')->name('invoices.discounts');
 
     Route::post('items/search', 'SearchProductController@searchItem')->name('items.search');

@@ -1,7 +1,7 @@
 @extends('layouts.app', ['title' => __('Invoice Management')])
 
 @section('content')
-    @include('invoices.partials.header', ['title' => __('Add Invoice')])   
+    @include('layouts.headers.header', ['title' => __('Add Invoice')])   
 
     <div class="container-fluid mt--7">
         <div class="row">

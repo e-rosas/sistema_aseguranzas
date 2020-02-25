@@ -9,12 +9,6 @@
                 <div class="card bg-secondary shadow border-0">
                     
                     <div class="card-body px-lg-5 py-lg-5">
-                        <div class="text-center text-muted mb-4">
-                            <small>
-                                <a href="{{ route('register') }}">{{ __('Create new account') }}</a> 
-                            </small>
-                            <br>
-                        </div>
                         <form role="form" method="POST" action="{{ route('login') }}">
                             @csrf
 
@@ -48,13 +42,6 @@
                                 <button type="submit" class="btn btn-primary my-4">{{ __('Sign in') }}</button>
                             </div>
                         </form>
-                    </div>
-                </div>
-                <div class="row mt-3">
-                    <div class="col-6 text-right">
-                        <a href="{{ route('register') }}" class="text-light">
-                            <small>{{ __('Create new account') }}</small>
-                        </a>
                     </div>
                 </div>
             </div>

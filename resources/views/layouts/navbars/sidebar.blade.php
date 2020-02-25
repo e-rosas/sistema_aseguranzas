@@ -89,12 +89,7 @@
                     <a class="nav-link" href="{{ route('categories.index') }}">
                         <i class="ni ni-tv-2 text-primary"></i> {{ __('Categories') }}
                     </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('user.index') }}">
-                        <i class="ni ni-tv-2 text-primary"></i> {{ __('User Management') }}
-                    </a>
-                </li>               
+                </li>              
             </ul>
         </div>
     </div>

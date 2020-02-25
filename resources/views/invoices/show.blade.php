@@ -1,7 +1,7 @@
 @extends('layouts.app', ['title' => __('User Management')])
 
 @section('content')
-    @include('invoices.partials.header', ['title' => __('View Invoice')])
+    @include('layouts.headers.header', ['title' => __('View Invoice')])
     <div class="container-fluid mt--7">
         <div class="row">
             @component('components.patientInfo', ['person_data' => $invoice->person_data])
