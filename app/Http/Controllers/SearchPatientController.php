@@ -30,11 +30,14 @@ class SearchPatientController extends Controller
     public function searchInsuree(Request $request)
     {
         $search = $request->search;
-        $patients = PersonData::query()
-            ->whereLike('name', $search)
-            ->whereLike('last_name', $search)
-            ->whereLike('maiden_name', $search)
+        $patients = PersonData::query($search)
             ->where('insured', 1)
+            ->where(function ($query) use ($search) {
+                $query->whereLike('name', $search)
+                    ->whereLike('last_name', $search)
+                    ->whereLike('maiden_name', $search)
+                ;
+            })
             ->get()->take(5)
         ;
         $response = [];

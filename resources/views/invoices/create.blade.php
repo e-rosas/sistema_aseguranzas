@@ -211,6 +211,18 @@
                                 
                                 @endcomponent
                             </div>
+                            {{--  price  --}}
+                            <div class=" col-auto form-group">
+                                <input type="numeric"  name="quantity" id="custom-price" class="form-control form-control-alternative" 
+                                placeholder="Price" required>
+                            
+                            </div>
+                            {{--  discounted-price  --}}
+                            <div class=" col-auto form-group">
+                                <input type="numeric" min="1" name="quantity" id="custom-discounted-price" class="form-control form-control-alternative" 
+                                placeholder="Discounted"  required>
+                            
+                            </div>
                             {{--  quantity  --}}
                             <div class=" col-auto form-group{{ $errors->has('quantity') ? ' has-danger' : '' }}">
                                 <input type="numeric" min="1" name="quantity" id="input-quantity" class="form-control form-control-alternative{{ $errors->has('quantity') ? ' is-invalid' : '' }}" 
@@ -286,8 +298,8 @@
         constructor(service_id, description, price, discounted_price, quantity, id) {
             this.service_id = service_id;
             this.description = description;
-            this.base_price = parseFloat(price.replace(/,/g,''));
-            this.base_discounted_price = parseFloat(discounted_price.replace(/,/g,''));
+            this.base_price = price;
+            this.base_discounted_price = discounted_price;
             this.price = this.base_price;
             this.discounted_price = this.base_discounted_price;
             this.quantity = quantity;
@@ -468,7 +480,7 @@
         return Number(this.total_with_discounts);
     }
 
-    function getService(id, quantity){
+    function getService(id, quantity, price, discounted_price){
         $.ajax({
             url: "{{route('services.find')}}",
             dataType: 'json',
@@ -479,7 +491,7 @@
             },
         success: function (response) {                
                 addServiceToCart(response.id, response.description, 
-                    response.price, response.discounted_price, quantity, services.length);                                    
+                    price, discounted_price, quantity, services.length);                                    
             }
         });
             return false;
@@ -621,9 +633,11 @@
 
         $("#add_service").click(function(){
             var quantity = Number(document.getElementById("input-quantity").value);
+            var price = Number(document.getElementById("custom-price").value);
+            var discounted_price = Number(document.getElementById("custom-discounted-price").value);
             if(quantity > 0){
                 var service_id= $("#service_id").children("option:selected").val();
-                getService(service_id, quantity);
+                getService(service_id, quantity, price, discounted_price);
             }
             
         });

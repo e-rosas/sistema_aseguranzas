@@ -21,6 +21,8 @@ class SearchProductController extends Controller
             $response[] = [
                 'id' => $service->id,
                 'text' => $service->code.' '.$service->description,
+                'price' => $service->price,
+                'discounted_price' => $service->discounted_price,
             ];
         }
         echo json_encode($response);
@@ -30,7 +32,7 @@ class SearchProductController extends Controller
     public function findService(Request $request)
     {
         $service_id = $request->service_id;
-        $service = Service::find($service_id, ['id', 'code', 'description', 'price', 'discounted_price'])
+        $service = Service::find($service_id, ['id', 'code', 'description'])
         ;
 
         echo json_encode($service);
