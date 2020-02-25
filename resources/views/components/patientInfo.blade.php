@@ -9,6 +9,7 @@
                             <h2>{{ __('Patient') }}</h2>
                         @else 
                             <h2>{{ __('Insuree') }}</h2>
+                            <span> {{ $person_data->insurance_id }} </span>
                         @endif
                         
                     </a>
