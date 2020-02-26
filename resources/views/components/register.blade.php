@@ -15,7 +15,7 @@
                     </div>
                     <div class="form-group{{ $errors->has('maiden_name') ? ' has-danger' : '' }} col-md-4 col-auto">
                         <label class="form-control-label" for="input-maiden_name">{{ __('Maiden name') }}</label>
-                        <input type="text" name="maiden_name" id="input-maiden_name" class="form-control form-control-alternative{{ $errors->has('maiden_name') ? ' is-invalid' : '' }}" placeholder="{{ __('Maiden name') }}" value="{{ old('maiden_name') }}" required autofocus>
+                        <input type="text" name="maiden_name" id="input-maiden_name" class="form-control form-control-alternative{{ $errors->has('maiden_name') ? ' is-invalid' : '' }}" placeholder="{{ __('Maiden name') }}" value="{{ old('maiden_name') }}" autofocus>
                     
                         @if ($errors->has('maiden_name'))
                             <span class="invalid-feedback" role="alert">
@@ -98,7 +98,7 @@
                 <div class="row">
                     <div class="form-group{{ $errors->has('phone_number') ? ' has-danger' : '' }} col-md-6 col-auto">
                         <label class="form-control-label" for="input-phone_number">{{ __('Phone number') }}</label>
-                        <input type="text" name="phone_number" id="input-phone_number" class="form-control form-control-alternative{{ $errors->has('phone_number') ? ' is-invalid' : '' }}" placeholder="{{ __('Phone number') }}" value="{{ old('phone_number') }}" required>
+                        <input type="text" name="phone_number" id="input-phone_number" class="form-control form-control-alternative{{ $errors->has('phone_number') ? ' is-invalid' : '' }}" placeholder="{{ __('Phone number') }}" value="{{ old('phone_number') }}">
                     
                         @if ($errors->has('phone_number'))
                             <span class="invalid-feedback" role="alert">
@@ -108,7 +108,7 @@
                     </div>
                     <div class="form-group{{ $errors->has('email') ? ' has-danger' : '' }} col-md-6 col-auto">
                         <label class="form-control-label" for="input-email">{{ __('Email') }}</label>
-                        <input type="email" name="email" id="input-email" class="form-control form-control-alternative{{ $errors->has('email') ? ' is-invalid' : '' }}" placeholder="{{ __('Email') }}" value="{{ old('email') }}" required>
+                        <input type="email" name="email" id="input-email" class="form-control form-control-alternative{{ $errors->has('email') ? ' is-invalid' : '' }}" placeholder="{{ __('Email') }}" value="{{ old('email') }}">
     
                         @if ($errors->has('email'))
                             <span class="invalid-feedback" role="alert">
