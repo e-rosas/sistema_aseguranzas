@@ -108,7 +108,7 @@
                     </div>
                     <div class="form-group{{ $errors->has('email') ? ' has-danger' : '' }} col-md-6 col-auto">
                         <label class="form-control-label" for="input-email">{{ __('Email') }}</label>
-                        <input type="text" name="email" id="input-email" class="form-control form-control-alternative{{ $errors->has('email') ? ' is-invalid' : '' }}" placeholder="{{ __('Email') }}" value="{{ old('email') }}">
+                        <input type="text" name="email" id="input-email" class="form-control form-control-alternative{{ $errors->has('email') ? ' is-invalid' : '' }}" placeholder="{{ __('Optional email') }}" value="{{ old('email') }}">
     
                         @if ($errors->has('email'))
                             <span class="invalid-feedback" role="alert">
