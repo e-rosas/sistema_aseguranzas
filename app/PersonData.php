@@ -35,7 +35,6 @@ class PersonData extends Model
         'postal_code' => 'digits:5',
         'phone_number' => 'max:255',
         'email' => 'max:255',
-        'insured' => 'boolean',
     ];
     protected $dates = ['birth_date'];
     /**

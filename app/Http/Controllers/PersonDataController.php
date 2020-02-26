@@ -97,26 +97,14 @@ class PersonDataController extends Controller
 
     protected function validateData()
     {
-        return request()->validate([
-            'name' => ['required', 'min:3', 'max:255'],
-            'last_name' => ['max:255'],
-            'maiden_name' => ['max:255'],
-            'birth_date' => ['required'],
-            'city' => ['max:255'],
-            'address' => ['max:255'],
-            'city' => ['max:255'],
-            'state' => ['max:255'],
-            'postal_code' => ['digits:5'],
-            'phone_number' => ['required', 'max:255'],
-            'email' => ['email'],
-            'insured' => ['boolean'],
-        ]);
+        return request()->validate(PersonData::$rules);
     }
 
     protected function validateInsuree()
     {
         return request()->validate([
             'insurer_id' => ['required'],
+            'insurance_id' => ['required'],
         ]);
     }
 
