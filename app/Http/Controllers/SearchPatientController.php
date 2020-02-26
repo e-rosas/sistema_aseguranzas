@@ -13,9 +13,7 @@ class SearchPatientController extends Controller
     {
         $search = $request->search;
         $patients = PersonData::query()
-            ->whereLike('name', $search)
-            ->whereLike('last_name', $search)
-            ->whereLike('maiden_name', $search)
+            ->whereLike(['name', 'last_name', 'maiden_name'], $search)
             ->get()->take(5)
         ;
         $response = [];
@@ -35,9 +33,7 @@ class SearchPatientController extends Controller
         $patients = PersonData::query($search)
             ->where('insured', 1)
             ->where(function ($query) use ($search) {
-                $query->whereLike('name', $search)
-                    ->whereLike('last_name', $search)
-                    ->whereLike('maiden_name', $search)
+                $query->whereLike(['name', 'last_name', 'maiden_name'], $search)
                 ;
             })
             ->get()->take(5)

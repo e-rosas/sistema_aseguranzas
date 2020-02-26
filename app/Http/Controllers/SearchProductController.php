@@ -12,8 +12,7 @@ class SearchProductController extends Controller
     {
         $search = $request->search;
         $services = Service::query()
-            ->whereLike('code', $search)
-            ->whereLike('description', $search)
+            ->whereLike(['code', 'description'], $search)
             ->get()->take(5)
         ;
         $response = [];
@@ -43,8 +42,7 @@ class SearchProductController extends Controller
     {
         $search = $request->search;
         $items = Item::query()
-            ->whereLike('code', $search)
-            ->whereLike('description', $search)
+            ->whereLike(['code', 'description'], $search)
             ->get()->take(5)
         ;
         $response = [];
