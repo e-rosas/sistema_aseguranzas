@@ -17,6 +17,14 @@
                             </div>
                         </div>
                     </div>
+
+                    <form  method="post" action="{{ route('insurees.searchIndex') }}" >
+                        @csrf
+                        <div class="form-group col-md-12 col-auto">
+                            <label for="example-search-input" class="form-control-label">Search</label>
+                            <input name="search" class="form-control" type="search" required placeholder="Search insurees..." id="search">
+                        </div>
+                    </form>
                     
                     <div class="col-12">
                         @if (session('status'))

@@ -35,9 +35,8 @@ class InvoiceController extends Controller
     public function search(Request $request)
     {
         $search = $request->search;
-        $invoices = Invoice::query()
-            ->whereLike('number', $search)
-            ->paginate(5)
+        $invoices = Invoice::whereLike(['number', 'person_data.name', 'person_data.last_name', 'person_data.maiden_name'], $search)
+            ->paginate(10)
         ;
 
         return view('invoices.index', compact('invoices'));

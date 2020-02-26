@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Beneficiary;
+use App\Insuree;
 use App\PersonData;
 use Illuminate\Http\Request;
 
@@ -49,5 +51,26 @@ class SearchPatientController extends Controller
         }
         echo json_encode($response);
         exit;
+    }
+
+    public function searchInsureeIndex(Request $request)
+    {
+        $search = $request->search;
+
+        $insurees = Insuree::whereLike(['person_data.name', 'person_data.last_name', 'person_data.maiden_name'], $search)
+            ->paginate(10)
+        ;
+
+        return view('insurees.index', compact('insurees'));
+    }
+
+    public function searchBeneficiary(Request $request)
+    {
+        $search = $request->search;
+        $beneficiaries = Beneficiary::whereLike(['person_data.name', 'person_data.last_name', 'person_data.maiden_name'], $search)
+            ->paginate(10)
+        ;
+
+        return view('beneficiaries.index', compact('beneficiaries'));
     }
 }

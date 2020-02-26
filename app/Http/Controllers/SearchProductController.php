@@ -67,4 +67,15 @@ class SearchProductController extends Controller
         echo json_encode($item);
         exit;
     }
+
+    public function searchServiceIndex(Request $request)
+    {
+        $search = $request->search;
+
+        $services = Service::whereLike(['description', 'code'], $search)
+            ->paginate(10)
+        ;
+
+        return view('services.index', compact('services'));
+    }
 }

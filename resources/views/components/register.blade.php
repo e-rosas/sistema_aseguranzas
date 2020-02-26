@@ -14,8 +14,8 @@
                         @endif
                     </div>
                     <div class="form-group{{ $errors->has('maiden_name') ? ' has-danger' : '' }} col-md-4 col-auto">
-                        <label class="form-control-label" for="input-maiden_name">{{ __('Maiden name') }}</label>
-                        <input type="text" name="maiden_name" id="input-maiden_name" class="form-control form-control-alternative{{ $errors->has('maiden_name') ? ' is-invalid' : '' }}" placeholder="{{ __('Maiden name') }}" value="{{ old('maiden_name') }}" autofocus>
+                        <label class="form-control-label" for="input-maiden_name">{{ __('Middle name') }}</label>
+                        <input type="text" name="maiden_name" id="input-maiden_name" class="form-control form-control-alternative{{ $errors->has('maiden_name') ? ' is-invalid' : '' }}" placeholder="{{ __('Middle name') }}" value="{{ old('maiden_name') }}" autofocus>
                     
                         @if ($errors->has('maiden_name'))
                             <span class="invalid-feedback" role="alert">
