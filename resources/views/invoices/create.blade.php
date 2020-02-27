@@ -64,7 +64,7 @@
                                         <div class="input-group-prepend">
                                             <span  class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
                                         </div>
-                                        <input name="date" id="input-date" class="form-control form-control-alternative{{ $errors->has('date') ? ' is-invalid' : '' }}"  type="date" required>
+                                        <input onchange="handler(event);" name="date" id="input-date" class="form-control form-control-alternative{{ $errors->has('date') ? ' is-invalid' : '' }}"  type="date" required>
                                     </div>
                                     @if ($errors->has('date'))
                                         <span class="invalid-feedback" role="alert">
@@ -211,6 +211,15 @@
                                 
                                 @endcomponent
                             </div>
+                            {{--  date  --}}
+                            <div class="col-md-4 col-auto form-group">
+                                <div class="input-group input-group-alternative">
+                                    <div class="input-group-prepend">
+                                        <span  class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
+                                    </div>
+                                    <input name="date_service" id="input-date_service" class="form-control form-control-alternative"  type="date" required>
+                                </div>
+                            </div>
                             {{--  price  --}}
                             <div class=" col-auto form-group">
                                 <input type="numeric"  name="quantity" id="custom-price" class="form-control form-control-alternative" 
@@ -246,6 +255,7 @@
                                 <thead class="thead-light">
                                     <tr>
                                         <th scope="col"></th>
+                                        <th scope="col">{{ __('Date') }}</th>
                                         <th scope="col">{{ __('Description') }}</th>
                                         <th scope="col">{{ __('Price') }}</th>
                                         <th scope="col">{{ __('Discounted Price') }}</th>
@@ -284,8 +294,17 @@
 @endsection
 @push('js')
 <script>
+    function handler(e){
+        var date = document.getElementById("input-date").value;
+        document.getElementById("input-date_service").value = date;
+      }
     // CSRF Token
     var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+
+    function getCorrectDate(date){
+        utcDate = new Date(date); //Date object a day behind
+        return new Date(utcDate.getTime() + utcDate.getTimezoneOffset() * 60000)
+    }
     class Service {
         quantity = 1;
         items = [];
@@ -295,7 +314,8 @@
         sub_total_discounted = 0;
         total_price = 0;
         total_discounted_price = 0;
-        constructor(service_id, description, price, discounted_price, quantity, id) {
+        created_at = new Date();
+        constructor(service_id, description, price, discounted_price, quantity, id, created_at) {
             this.service_id = service_id;
             this.description = description;
             this.base_price = price;
@@ -306,6 +326,12 @@
             this.total_price = quantity * price;
             this.total_discounted_price = quantity * discounted_price;
             this.id = id;
+            this.date2 = getCorrectDate(created_at);
+            this.created_at = this.date2.toISOString().split('T')[0]+' '+this.date2.toTimeString().split(' ')[0];
+        }
+
+        get date(){
+            return this.date2.toLocaleDateString();
         }
 
         // Add to cart
@@ -417,8 +443,10 @@
                 return;
             }
         }
+
+        var created_at = document.getElementById("input-date_service").value;
         
-        var service = new Service(service_id, description, price, discounted_price, quantity, id);
+        var service = new Service(service_id, description, price, discounted_price, quantity, id, created_at);
         this.services.push(service);   
         displayCart();  
     }
@@ -589,13 +617,13 @@
    
 
     function displayCart() {
-        console.log(" 2 display cart");
         totalCart();
         var output = "";
         for(var i in this.services) {
 
           output += "<tr value="+this.services[i].id+">"
             + "<td>  <input type='checkbox' name='service'>  </td>"
+            + "<td>" + this.services[i].date + "</td>"
             + "<td>" + this.services[i].description + "</td>"
             + "<td>" + this.services[i].price + "</td>" 
             + "<td>" + this.services[i].discounted_price + "</td>"
@@ -624,6 +652,8 @@
     var today = yyyy + '-' + mm + '-' + dd;
     $(document).ready(function(){
         document.getElementById("input-date").value = today;
+        document.getElementById("input-date_service").value = today;
+
 
         $("#person_data_id").change(function(){
 
@@ -635,6 +665,7 @@
             var quantity = Number(document.getElementById("input-quantity").value);
             var price = Number(document.getElementById("custom-price").value);
             var discounted_price = Number(document.getElementById("custom-discounted-price").value);
+            console.log(document.getElementById("input-date_service").value);
             if(quantity > 0){
                 var service_id= $("#service_id").children("option:selected").val();
                 getService(service_id, quantity, price, discounted_price);

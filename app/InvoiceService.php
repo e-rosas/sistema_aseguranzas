@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class InvoiceService extends Model
 {
+    public $dates = ['created_at', 'updated_at'];
     public $fillable = [
         'invoice_id',
         'service_id',
@@ -19,6 +20,7 @@ class InvoiceService extends Model
         'total_discounted_price',
         'description',
         'quantity',
+        'created_at',
     ];
     public static $rules = [
         'invoice_id' => 'required',
@@ -33,6 +35,7 @@ class InvoiceService extends Model
         'total_discounted_price' => 'numeric|required|between:0,999999999.999',
         'description' => 'max:255',
         'quantity' => 'numeric|required',
+        'created_at' => 'date',
     ];
     protected $casts = [
         'id' => 'integer',
