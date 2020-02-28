@@ -48,8 +48,9 @@ class InsureeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function show(Insuree $Insuree)
+    public function show(Insuree $insuree)
     {
+        return view('insurees.show', compact('insuree'));
     }
 
     /**

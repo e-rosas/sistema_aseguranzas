@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Insuree extends Model
 {
+    public $invoices;
+    public $
     public $fillable = [
         'person_data_id',
         'insurer_id',
