@@ -13,13 +13,13 @@
                 {{--  number --}}
                 <div class="col-md-4 col-auto form-group">
                     <label class="form-control-label" for="label-number">{{ __('Number') }}</label>
-                    <label id="label-num">{{ $invoice->number }}</label>
+                    <label id="label-number">{{ $invoice->number }}</label>
 
                 </div>
                 {{--  date  --}}
                 <div class="col-md-4 col-auto form-group">
                     <label class="form-control-label" for="label-date">{{ __('Date') }}</label>
-                    <label id="label-num">{{ $invoice->date->format('l jS \\of F Y') }}</label>
+                    <label id="label-date">{{ $invoice->date->format('l jS \\of F Y') }}</label>
 
                 </div>
                 {{--  status --}}
@@ -33,13 +33,13 @@
                 {{--  amount_paid  --}}
                 <div class="col-md-4 col-auto form-group">
                     <label class="form-control-label" for="label-amount_paid">{{ __('Amount paid') }}</label>
-                    <label id="label-num">{{ $invoice->amount_paid }}</label>
+                    <label id="label-amount_paid">{{ $invoice->amount_paid }}</label>
 
                 </div>
                 {{--  amount_due  --}}
                 <div class="col-md-4 col-auto form-group">
                     <label class="form-control-label" for="label-amount_due">{{ __('Amount due') }}</label>
-                    <label id="label-num">{{ $invoice->getAmountDue() }}</label>
+                    <label id="label-amount_due">{{ $invoice->getAmountDue() }}</label>
 
                 </div>
             </div>
@@ -47,26 +47,40 @@
                 {{--  Comments  --}}
                 <div class="col-md-12 col-auto form-group">
                     <label class="form-control-label" for="label-comments">{{ __('Comments') }}</label>
-                    <label id="label-num">{{ $invoice->comments }}</label>
+                    <label id="label-comments">{{ $invoice->comments }}</label>
                 </div>
             </div>
             <div class="form-row">
-                {{--  total  --}}
+                {{--  tax  --}}
                 <div class="col-md-3 col-auto form-group">
-                    <label class="form-control-label" for="label-total">{{ __('Total') }}</label>
-                    <label id="label-num">{{ $invoice->total }}</label>
+                    <label class="form-control-label" for="label-tax">{{ __('Tax') }}</label>
+                    <label id="label-tax">{{ $invoice->tax }}</label>
 
                 </div>
                 {{--  sub_total  --}}
                 <div class="col-md-3 col-auto form-group">
                     <label class="form-control-label" for="label-sub_total">{{ __('Subtotal') }}</label>
-                    <label id="label-num">{{ $invoice->sub_total }}</label>
+                    <label id="label-sub_total">{{ $invoice->sub_total }}</label>
 
                 </div>
-                {{--  tax  --}}
+                {{--  total  --}}
                 <div class="col-md-3 col-auto form-group">
-                    <label class="form-control-label" for="label-tax">{{ __('Tax') }}</label>
-                    <label id="label-num">{{ $invoice->tax }}</label>
+                    <label class="form-control-label" for="label-total">{{ __('Total') }}</label>
+                    <label id="label-total">{{ $invoice->total }}</label>
+
+                </div>
+            </div>
+            <div class="form-row">
+                {{--  dtax --}}
+                <div class="col-md-3 col-auto form-group">
+                    <label class="form-control-label" for="label-dtax">{{ __('Tax with discounts') }}</label>
+                    <label id="label-dtax">{{ $invoice->dtax }}</label>
+
+                </div>
+                {{--  sub_total_with_discounts  --}}
+                <div class="col-md-3 col-auto form-group">
+                    <label class="form-control-label" for="label-sub_total_with_discounts">{{ __('Total with discounts') }}</label>
+                    <label id="label-num">{{ $invoice->sub_total_with_discounts }}</label>
 
                 </div>
                 {{--  total_with_discounts  --}}
