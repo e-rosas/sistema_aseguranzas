@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\CalculateTotalsOfInvoices;
 use App\Beneficiary;
 use App\Insuree;
 use App\Insurer;
@@ -54,7 +55,13 @@ class InsureeController extends Controller
         $beneficiaries = Beneficiary::with('person_data.invoices')->where('insuree_id', '=', $insuree->id)->paginate(5);
         $insuree->person_data->load('invoices');
 
-        return view('insurees.show', compact('insuree', 'beneficiaries'));
+        $totals = new CalculateTotalsOfInvoices($insuree->person_data->invoices);
+        foreach ($beneficiaries as $beneficiary) {
+            $totals->addInvoices($beneficiary->person_data->invoices);
+        }
+        $totals->calculateTotals();
+
+        return view('insurees.show', compact('insuree', 'beneficiaries', 'totals'));
     }
 
     /**
