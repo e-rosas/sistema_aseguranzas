@@ -79,8 +79,8 @@
                 </div>
                 {{--  sub_total_with_discounts  --}}
                 <div class="col-md-3 col-auto form-group">
-                    <label class="form-control-label" for="label-sub_total_with_discounts">{{ __('Total with discounts') }}</label>
-                    <label id="label-num">{{ $invoice->sub_total_with_discounts }}</label>
+                    <label class="form-control-label" for="label-sub_total_with_discounts">{{ __('Subtotal with discounts') }}</label>
+                    <label id="label-num">{{ $invoice->sub_total_discounted }}</label>
 
                 </div>
                 {{--  total_with_discounts  --}}

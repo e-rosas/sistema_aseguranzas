@@ -75,8 +75,8 @@
                                                             <button type="button" class="dropdown-item" onclick="confirm('{{ __("Are you sure you want to delete this insuree?") }}') ? this.parentElement.submit() : ''">
                                                                 {{ __('Delete') }}
                                                             </button>
-                                                        </form>    
-                                                        <a class="dropdown-item" href="{{ route('profile.edit') }}">{{ __('Edit') }}</a> --}}  
+                                                        </form>   --}}   
+                                                        <a class="dropdown-item" href="{{ route('insurees.show', $insuree) }}">{{ __('View') }}</a> 
                                                 </div>
                                             </div>
                                         </td>

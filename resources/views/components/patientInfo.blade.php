@@ -28,7 +28,7 @@
                     {{ $person_data->fullName() }}<span class="font-weight-light"></span>
                 </h3>
                 <div class="h4 font-weight-300">
-                    <span> {{ $person_data->birth_date }} </span>
+                    <span> {{ $person_data->birth_date->format('M-d-Y') }} </span>
                 </div>
                 <div class="h4 font-weight-300">
                     <span> {{ $person_data->address }} </span>

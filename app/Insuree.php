@@ -8,6 +8,8 @@ class Insuree extends Model
 {
     public $invoices;
 
+    public $beneficiaries;
+
     public $fillable = [
         'person_data_id',
         'insurer_id',
@@ -25,15 +27,19 @@ class Insuree extends Model
         'insurance_id' => 'string',
     ];
 
+    public function invoices()
+    {
+    }
+
     public function person_data()
     {
         return $this->belongsTo('App\PersonData');
     }
 
-    public function beneficiaries()
+    /* public function beneficiaries()
     {
         return $this->hasMany('App\Beneficiary');
-    }
+    } */
 
     public function insurer()
     {

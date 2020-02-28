@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Beneficiary;
 use App\Insuree;
 use App\Insurer;
 use App\PersonData;
@@ -50,7 +51,10 @@ class InsureeController extends Controller
      */
     public function show(Insuree $insuree)
     {
-        return view('insurees.show', compact('insuree'));
+        $beneficiaries = Beneficiary::with('person_data.invoices')->where('insuree_id', '=', $insuree->id)->paginate(5);
+        $insuree->person_data->load('invoices');
+
+        return view('insurees.show', compact('insuree', 'beneficiaries'));
     }
 
     /**
