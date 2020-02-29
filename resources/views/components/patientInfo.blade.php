@@ -16,7 +16,7 @@
         <div class="card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
             <div class="d-flex justify-content-center">
                 @if ($person_data->insured==0)
-                    
+                <a  href="{{ route('beneficiaries.show', $person_data->beneficiary) }}" class="btn btn-sm btn-info mr-4">{{ __('View') }}</a> 
                 @else
                 <a href="{{ route('insurees.show', $person_data->insuree) }}" class="btn btn-sm btn-info mr-4">{{ __('View') }}</a>
                 @endif        

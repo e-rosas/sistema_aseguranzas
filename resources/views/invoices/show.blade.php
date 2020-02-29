@@ -47,7 +47,7 @@
                     </div>
                     <div class="tab-pane fade" id="tabs-icons-text-2" role="tabpanel" aria-labelledby="tabs-icons-text-2-tab">
                         <div class="col-md-12 col-auto text-right">
-                            <button type="button" class="btn btn-sm btn-succes" data-toggle="modal" data-target="#modal-form">{{ __('Add') }}</i></button>
+                            <button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#modal-form">{{ __('Add') }}</i></button>
                             <br />
                             @component('components.discountsModal',['invoice_id'=>$invoice->id, 'discounted_total'=>$invoice->total_with_discounts])
                                 

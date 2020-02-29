@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\CalculateTotalsOfInvoices;
 use App\Beneficiary;
+use App\Invoice;
 use Illuminate\Http\Request;
 
 class BeneficiaryController extends Controller
@@ -46,6 +48,12 @@ class BeneficiaryController extends Controller
      */
     public function show(Beneficiary $beneficiary)
     {
+        $beneficiary->load('insuree.person_data');
+        $invoices = Invoice::where('person_data_id', '=', $beneficiary->person_data->id)->paginate(5);
+        $totals = new CalculateTotalsOfInvoices($invoices);
+        $totals->calculateTotals();
+
+        return view('beneficiaries.show', compact('beneficiary', 'invoices', 'totals'));
     }
 
     /**
