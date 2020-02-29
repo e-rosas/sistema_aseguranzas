@@ -63,4 +63,9 @@ class CalculateTotalsOfInvoices
             $this->amount_due += (float) $invoice->amount_due;
         }
     }
+
+    public function getInvoicesCount()
+    {
+        return count($this->invoices);
+    }
 }

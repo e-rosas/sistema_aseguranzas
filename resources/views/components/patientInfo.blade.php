@@ -4,25 +4,27 @@
         <div class="row justify-content-center">
             <div class="col-lg-3 order-lg-2 col-auto">
                 <div class="card col-auto">
-                    <a href="#">
                         @if ($person_data->insured==0)
                             <h2>{{ __('Patient') }}</h2>
                         @else 
                             <h2>{{ __('Insuree') }}</h2>
                             <span> {{ $person_data->insurance_id }} </span>
                         @endif
-                        
-                    </a>
+
                 </div>
             </div>
         </div>
         <div class="card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
             <div class="d-flex justify-content-center">
-                <a href="#" class="btn btn-sm btn-info mr-4">{{ __('View') }}</a>
+                @if ($person_data->insured==0)
+                    
+                @else
+                <a href="{{ route('insurees.show', $person_data->insuree) }}" class="btn btn-sm btn-info mr-4">{{ __('View') }}</a>
+                @endif
+                
             </div>
         </div>
-        <div class="card-body pt-0 pt-md-4">
-            
+        <div class="card-body pt-0 pt-md-4">    
             <div class="text-center">
                 <h3>
                     {{ $person_data->fullName() }}<span class="font-weight-light"></span>
