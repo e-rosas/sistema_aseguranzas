@@ -1,5 +1,5 @@
-<div class="col-xl-3 col-md-6">
-    <div class="card card-stats">
+<div class="col-xl-3 col-lg-6">
+    <div class="card card-stats mb-4 mb-xl-0">
         <div class="card-body">        
             <div class="row">
                 <div class="col">
@@ -8,7 +8,7 @@
                 </div>
                 <div class="col-auto">
                 <div class="icon icon-shape bg-orange text-white rounded-circle shadow">
-                    <i class="ni ni-chart-pie-35"></i>
+                    <i class="fas fa-dollar-sign"></i>
                 </div>
                 </div>
             </div>

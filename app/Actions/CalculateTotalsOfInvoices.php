@@ -57,10 +57,10 @@ class CalculateTotalsOfInvoices
     public function calculateTotals()
     {
         foreach ($this->invoices as $invoice) {
-            $this->total += (float) $invoice->total;
-            $this->total_with_discounts += (float) $invoice->total_with_discounts;
-            $this->amount_paid += (float) $invoice->amount_paid;
-            $this->amount_due += (float) $invoice->amount_due;
+            $this->total += (float) str_replace(',', '', $invoice->total);
+            $this->total_with_discounts += (float) str_replace(',', '', $invoice->total_with_discounts);
+            $this->amount_paid += (float) str_replace(',', '', $invoice->amount_paid);
+            $this->amount_due += (float) str_replace(',', '', $invoice->amount_due);
         }
     }
 
