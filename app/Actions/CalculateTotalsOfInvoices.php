@@ -27,7 +27,7 @@ class CalculateTotalsOfInvoices
      */
     public function getTotal()
     {
-        return number_format($this->total, 3);
+        return $this->number_shorten($this->total, 3);
     }
 
     /**
@@ -35,7 +35,7 @@ class CalculateTotalsOfInvoices
      */
     public function getTotal_with_discounts()
     {
-        return number_format($this->total_with_discounts, 3);
+        return $this->number_shorten($this->total_with_discounts, 3);
     }
 
     /**
@@ -43,7 +43,7 @@ class CalculateTotalsOfInvoices
      */
     public function getAmount_paid()
     {
-        return number_format($this->amount_paid, 3);
+        return $this->number_shorten($this->amount_paid, 3);
     }
 
     /**
@@ -51,7 +51,7 @@ class CalculateTotalsOfInvoices
      */
     public function getAmount_due()
     {
-        return number_format($this->amount_due, 3);
+        return $this->number_shorten($this->amount_due, 3);
     }
 
     public function calculateTotals()
@@ -67,5 +67,35 @@ class CalculateTotalsOfInvoices
     public function getInvoicesCount()
     {
         return count($this->invoices);
+    }
+
+    // Shortens a number and attaches K, M, B, etc. accordingly
+    private function number_shorten($number, $precision = 3, $divisors = null)
+    {
+        // Setup default $divisors if not provided
+        if (!isset($divisors)) {
+            $divisors = [
+                pow(1000, 0) => '', // 1000^0 == 1
+                pow(1000, 1) => 'K', // Thousand
+                pow(1000, 2) => 'M', // Million
+                pow(1000, 3) => 'B', // Billion
+                pow(1000, 4) => 'T', // Trillion
+                pow(1000, 5) => 'Qa', // Quadrillion
+                pow(1000, 6) => 'Qi', // Quintillion
+            ];
+        }
+
+        // Loop through each $divisor and find the
+        // lowest amount that matches
+        foreach ($divisors as $divisor => $shorthand) {
+            if (abs($number) < ($divisor * 1000)) {
+                // We found a match!
+                break;
+            }
+        }
+
+        // We found our match, or there were no matches.
+        // Either way, use the last defined value for $divisor.
+        return 0 + number_format($number / $divisor, $precision).$shorthand;
     }
 }

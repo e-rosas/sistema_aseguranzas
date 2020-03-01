@@ -22,11 +22,18 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $invoices = Invoice::all();
+        $invoices = Invoice::orderBy('amount_due', 'desc')->get();
 
         $totals = new CalculateTotalsOfInvoices($invoices);
         $totals->calculateTotals();
 
-        return view('dashboard', compact('totals'));
+        $topInvoices = [];
+
+        for ($i = 0; $i < 10; ++$i) {
+            $invoices[$i]->load('person_data');
+            array_push($topInvoices, $invoices[$i]);
+        }
+
+        return view('dashboard', compact('totals', 'topInvoices'));
     }
 }
