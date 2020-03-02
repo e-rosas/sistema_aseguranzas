@@ -18,9 +18,9 @@
 @push('js')
 <script>
 
-    function getBeneficiaryData(id){
+    function getInsureeData(id){
         $.ajax({
-            url: "{{route('beneficiaries.find')}}",
+            url: "{{route('insurees.find')}}",
             dataType: 'json',
             type:"post",
             data: {
@@ -37,9 +37,9 @@
     }
     
     $(document).ready(function(){
-        $('#beneficiaries_table').on("click", ".edit-person", function(event) {
+        $('#insurees_table').on("click", ".edit-person", function(event) {
             var id = $(this).data('person');
-            getBeneficiaryData(id);
+            getInsureeData(id);
 
 
         })

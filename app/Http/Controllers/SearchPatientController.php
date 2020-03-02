@@ -73,9 +73,17 @@ class SearchPatientController extends Controller
     public function findBeneficiary(Request $request)
     {
         $person_data_id = $request->person_data_id;
-        $beneficiary = Beneficiary::with('person_data', 'insuree')->find($person_data_id);
+        $beneficiary = Beneficiary::with('person_data', 'insuree')->where('person_data_id', '=', $person_data_id)->firstOrFail();
 
         echo json_encode($beneficiary);
+        exit;
+    }
+
+    public function findInsuree(Request $request)
+    {
+        $person_data_id = $request->person_data_id;
+        $insuree = Insuree::with('person_data', 'insurer')->where('person_data_id', '=', $person_data_id)->firstOrFail();
+        echo json_encode($insuree);
         exit;
     }
 }

@@ -26,9 +26,11 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('items', 'ItemController');
     Route::resource('calls', 'CallController');
     Route::resource('payments', 'PaymentController');
+
     Route::resource('user', 'UserController', ['except' => ['show']]);
     Route::post('insurees', ['as' => 'persondata.storeinsuree', 'uses' => 'PersonDataController@storeInsuree']);
     Route::post('beneficiaries', ['as' => 'persondata.storebeneficiary', 'uses' => 'PersonDataController@storeBeneficiary']);
+    Route::patch('person_data', ['as' => 'persondata.update', 'uses' => 'PersonDataController@update']);
 
     Route::post('insurees/search', 'SearchPatientController@searchInsuree')->name('insurees.search');
     Route::post('patients/search', 'SearchPatientController@search')->name('patients.search');
@@ -38,6 +40,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('invoices/search', 'InvoiceController@search')->name('invoices.search');
     Route::post('beneficiaries/search', 'SearchPatientController@searchBeneficiary')->name('beneficiaries.search');
     Route::post('beneficiaries/find', 'SearchPatientController@findBeneficiary')->name('beneficiaries.find');
+    Route::post('insurees/find', 'SearchPatientController@findInsuree')->name('insurees.find');
     Route::post('insurees/searchIndex', 'SearchPatientController@searchInsureeIndex')->name('insurees.searchIndex');
     Route::post('services/searchIndex', 'SearchProductController@searchServiceIndex')->name('services.searchIndex');
 

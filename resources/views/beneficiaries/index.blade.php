@@ -76,7 +76,7 @@
                                                             </button>
                                                         </form>   --}}  
                                                         <a class="dropdown-item" href="{{ route('beneficiaries.show', $beneficiary) }}">{{ __('View') }}</a> 
-                                                        <a data-person="{{ $beneficiary->person_data->id }} " class="edit-person dropdown-item" data-toggle="modal" data-target="#modal-person_data">{{ __('Edit') }}</a> 
+                                                        <a data-person="{{ $beneficiary->person_data->id }}" class="edit-person dropdown-item" data-toggle="modal" data-target="#modal-person_data">{{ __('Edit') }}</a> 
                                                 </div>
                                             </div>
                                         </td>

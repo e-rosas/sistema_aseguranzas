@@ -82,8 +82,16 @@ class PersonDataController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, PersonData $personData)
+    public function update(Request $request)
     {
+        $person_data_id = $request->person_data_id;
+        $validated = $this->validateData();
+        $person_data = PersonData::find($person_data_id);
+
+        $person_data->fill($validated);
+        $person_data->save();
+
+        return back()->withStatus(__('Profile successfully updated.'));
     }
 
     /**

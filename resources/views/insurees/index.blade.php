@@ -37,7 +37,7 @@
                         @endif
                     </div>
                     {{--  Table  --}}
-                    <div class="table-responsive">
+                    <div class="table-responsive" id="insurees_table">
                         <table class="table align-items-center table-flush">
                             <thead class="thead-light">
                                 <tr>
@@ -76,7 +76,8 @@
                                                                 {{ __('Delete') }}
                                                             </button>
                                                         </form>   --}}   
-                                                        <a class="dropdown-item" href="{{ route('insurees.show', $insuree) }}">{{ __('View') }}</a> 
+                                                        <a class="dropdown-item" href="{{ route('insurees.show', $insuree) }}">{{ __('View') }}</a>
+                                                        <a data-person="{{ $insuree->person_data->id }}" class="edit-person dropdown-item" data-toggle="modal" data-target="#modal-person_data">{{ __('Edit') }}</a> 
                                                 </div>
                                             </div>
                                         </td>
@@ -96,6 +97,7 @@
                 </div>
             </div>
         </div>
+        @include('insurees.edit')
             
         @include('layouts.footers.auth')
     </div>
