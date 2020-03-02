@@ -116,14 +116,7 @@
                             </span>
                         @endif
                     </div>
-                </div>
-                {{--  @if ($beneficiary)
-                    <div class="custom-control custom-control-alternative custom-checkbox mb-3 col-md-4 col-auto">
-                        <input type="checkbox" name="insured" id="input-insured" class="custom-control-input">
-                        <label class="custom-control-label" for="input-insured">{{ __('Insured') }}</label>    
-                    </div>
-                @endif  --}}
-                
+                </div>    
             </div>
 
    

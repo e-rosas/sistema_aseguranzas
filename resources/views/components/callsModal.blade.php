@@ -78,7 +78,7 @@
                                     </div>
                                 </div>                   
                                 <div class="text-center">
-                                    <button id="save_call" type="submit" class="btn btn-success mt-4">{{ __('Save') }}</button>
+                                    <button id="save_call" type="submit" class="btn btn-block btn-success">{{ __('Save') }}</button>
                                 </div>
                             </div>
                         </form>

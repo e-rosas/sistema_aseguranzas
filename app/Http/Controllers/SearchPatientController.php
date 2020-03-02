@@ -69,4 +69,13 @@ class SearchPatientController extends Controller
 
         return view('beneficiaries.index', compact('beneficiaries'));
     }
+
+    public function findBeneficiary(Request $request)
+    {
+        $person_data_id = $request->person_data_id;
+        $beneficiary = Beneficiary::with('person_data', 'insuree')->find($person_data_id);
+
+        echo json_encode($beneficiary);
+        exit;
+    }
 }
