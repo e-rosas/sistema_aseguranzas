@@ -114,7 +114,7 @@ class Invoice extends Model
 
     public function calls()
     {
-        return $this->hasMany('App\Call');
+        return $this->hasMany('App\Call')->orderBy('date', 'desc');
     }
 
     public function discounts()
@@ -124,7 +124,7 @@ class Invoice extends Model
 
     public function payments()
     {
-        return $this->hasMany('App\Payment');
+        return $this->hasMany('App\Payment')->orderBy('date', 'desc');
     }
 
     public function findInsuree()

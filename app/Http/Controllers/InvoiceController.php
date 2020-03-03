@@ -85,6 +85,9 @@ class InvoiceController extends Controller
      */
     public function edit(Invoice $invoice)
     {
+        $invoice->loadMissing('services');
+
+        return view('invoices.edit', compact('invoice'));
     }
 
     /**
