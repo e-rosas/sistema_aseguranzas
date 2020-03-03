@@ -1,9 +1,19 @@
 @extends('layouts.app', ['title' => __('Invoice Management')])
 
 @section('content')
-    @include('layouts.headers.header', ['title' => __('Edit Invoice Services')])   
+    @include('layouts.headers.header', ['title' => __('Edit Invoice')])   
 
     <div class="container-fluid mt--7">
+        <div class="col-12">
+            @if (session('status'))
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    {{ session('status') }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            @endif
+        </div>
         <div class="row">
             {{-- Patient --}}
             <div class="col-xl-12 order-xl-1">
@@ -19,13 +29,17 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <form method="post" action="{{ route('invoices.store') }}" autocomplete="off">
-                            @csrf
-                            @component('components.searchPatients')
-                                
-                            @endcomponent
-
-                        </form>
+                        {{--  Names  --}}
+                        <div class="row">
+                            <div class="form-group col-md-6 col-auto">
+                                <label class="form-control-label" for="person_name">{{ __('Patient') }}</label>
+                                <label id="person_name"> {{ $invoice->person_data->fullName() }} </label>
+                            </div>     
+                            <div class="form-group col-md-6 col-auto text-right">
+                                <button type="button" data-toggle="modal" data-target="#modal-person" class="btn btn-outline-info">Change</button>
+                            </div>                    
+                        </div>
+                        
                     </div>                    
                 </div>               
             </div>
@@ -49,7 +63,7 @@
                                 <div class="col-md-4 col-auto form-group{{ $errors->has('number') ? ' has-danger' : '' }}">
                                     <label class="form-control-label" for="input-number">{{ __('Number') }}</label>
                                     <input type="text" name="number" id="input-number" class="form-control form-control-alternative{{ $errors->has('number') ? ' is-invalid' : '' }}" 
-                                    placeholder="{{ __('Number') }}" value="{{ old('number') }}" required>
+                                    placeholder="{{ __('Number') }}" value="{{ $invoice->number }}" required>
 
                                     @if ($errors->has('number'))
                                         <span class="invalid-feedback" role="alert">
@@ -64,7 +78,8 @@
                                         <div class="input-group-prepend">
                                             <span  class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
                                         </div>
-                                        <input onchange="handler(event);" name="date" id="input-date" class="form-control form-control-alternative{{ $errors->has('date') ? ' is-invalid' : '' }}"  type="date" required>
+                                        <input onchange="handler(event);" name="date" id="input-date" class="form-control form-control-alternative{{ $errors->has('date') ? ' is-invalid' : '' }}"  
+                                        type="date" value="{{ $invoice->date }}" required>
                                     </div>
                                     @if ($errors->has('date'))
                                         <span class="invalid-feedback" role="alert">
@@ -78,7 +93,7 @@
                                 <div class="col-md-4 col-auto form-group{{ $errors->has('amount_paid') ? ' has-danger' : '' }}">
                                     <label class="form-control-label" for="input-amount_paid">{{ __('Amount paid') }}</label>
                                     <input type="numeric" name="amount_paid" id="input-amount_paid" class="form-control form-control-alternative{{ $errors->has('amount_paid') ? ' is-invalid' : '' }}" 
-                                    placeholder="{{ __('Amount paid') }}" value="{{ old('amount_paid') }}">
+                                    placeholder="{{ __('Amount paid') }}" value="" readonly>
 
                                     @if ($errors->has('amount_paid'))
                                         <span class="invalid-feedback" role="alert">
@@ -90,7 +105,7 @@
                                 <div class="col-md-4 col-auto form-group{{ $errors->has('amount_due') ? ' has-danger' : '' }}">
                                     <label class="form-control-label" for="input-amount_due">{{ __('Amount due') }}</label>
                                     <input type="numeric" name="amount_due" id="input-amount_due" class="form-control form-control-alternative{{ $errors->has('amount_due') ? ' is-invalid' : '' }}" 
-                                    placeholder="{{ __('Amount due') }}" value="{{ old('amount_due') }}">
+                                    value="" readonly>
 
                                     @if ($errors->has('amount_due'))
                                         <span class="invalid-feedback" role="alert">
@@ -104,7 +119,7 @@
                                 <div class="col-md-12 col-auto form-group{{ $errors->has('comments') ? ' has-danger' : '' }}">
                                     <label class="form-control-label" for="input-comments">{{ __('Comments') }}</label>
                                     <input type="text" name="comments" id="input-comments" class="form-control form-control-alternative{{ $errors->has('comments') ? ' is-invalid' : '' }}" 
-                                    placeholder="{{ __('Comments') }}" value="{{ old('comments') }}">
+                                    placeholder="{{ __('Comments') }}" value="">
 
                                     @if ($errors->has('comments'))
                                         <span class="invalid-feedback" role="alert">
@@ -118,7 +133,7 @@
                                 <div class="col-md-4 col-auto form-group{{ $errors->has('tax') ? ' has-danger' : '' }}">
                                     <label class="form-control-label" for="input-tax">{{ __('Tax') }}</label>
                                     <input type="numeric" name="tax" id="input-tax" class="form-control form-control-alternative{{ $errors->has('tax') ? ' is-invalid' : '' }}" 
-                                    placeholder="{{ __('Tax') }}" value="{{ old('tax') }}" readonly>
+                                    placeholder="{{ __('Tax') }}" value="" readonly>
                             
                                     @if ($errors->has('tax'))
                                         <span class="invalid-feedback" role="alert">
@@ -132,7 +147,7 @@
                                 <div class="col-md-4 col-auto form-group{{ $errors->has('sub_total') ? ' has-danger' : '' }}">
                                     <label class="form-control-label" for="input-sub_total">{{ __('Subtotal') }}</label>
                                     <input type="numeric" name="sub_total" id="input-sub_total" class="form-control form-control-alternative{{ $errors->has('sub_total') ? ' is-invalid' : '' }}" 
-                                    placeholder="{{ __('Subtotal') }}" value="{{ old('sub_total') }}" readonly>
+                                    placeholder="{{ __('Subtotal') }}" value="" readonly>
                             
                                     @if ($errors->has('sub_total'))
                                         <span class="invalid-feedback" role="alert">
@@ -147,7 +162,7 @@
                                 <div class="col-md-4 col-auto form-group{{ $errors->has('total') ? ' has-danger' : '' }}">
                                     <label class="form-control-label" for="input-total">{{ __('Total') }}</label>
                                     <input type="numeric" name="total" id="input-total" class="form-control form-control-alternative{{ $errors->has('total') ? ' is-invalid' : '' }}" 
-                                    placeholder="{{ __('Total') }}" value="{{ old('total') }}" readonly>
+                                    placeholder="{{ __('Total') }}" value="" readonly>
                             
                                     @if ($errors->has('total'))
                                         <span class="invalid-feedback" role="alert">
@@ -163,19 +178,19 @@
                                 <div class="col-md-4 col-auto form-group">
                                     <label class="form-control-label" for="input-dtax">{{ __('Tax with discounts') }}</label>
                                     <input type="numeric" name="dtax" id="input-dtax" class="form-control form-control-alternative" 
-                                    placeholder="0" value="0" readonly>
+                                    placeholder="0" value="" readonly>
                                 </div>
                                 {{--  sub_total_discounts  --}}
                                 <div class="col-md-4 col-auto form-group">
                                     <label class="form-control-label" for="input-sub_total_discounts">{{ __('Subtotal with discounts') }}</label>
                                     <input type="numeric" name="sub_total_discounts" id="input-sub_total_discounts" class="form-control form-control-alternative" 
-                                    placeholder="0" value="0" readonly>
+                                    placeholder="0" value="" readonly>
                                 </div>
                                 {{--  total_with_discounts  --}}
                                 <div class="col-md-4 col-auto form-group{{ $errors->has('total_with_discounts') ? ' has-danger' : '' }}">
                                     <label class="form-control-label" for="input-total_with_discounts">{{ __('Total with discounts') }}</label>
                                     <input type="numeric" name="total_with_discounts" id="input-total_with_discounts" class="form-control form-control-alternative{{ $errors->has('total_with_discounts') ? ' is-invalid' : '' }}" 
-                                    placeholder="{{ __('Total with discounts') }}" value="{{ old('total_with_discounts') }}" readonly>
+                                    placeholder="{{ __('Total with discounts') }}" value="" readonly>
                             
                                     @if ($errors->has('total_with_discounts'))
                                         <span class="invalid-feedback" role="alert">
@@ -288,6 +303,8 @@
         </div>
 
         @include('items.partials.itemsModal')
+
+        @include('components.selectPersonModal', ['invoice_id' => $invoice->id]);
         
         @include('layouts.footers.auth')
     </div>
@@ -508,6 +525,27 @@
         return Number(this.total_with_discounts);
     }
 
+    function getInvoiceServices(id){
+        $.ajax({
+            url: "{{route('invoiceservices.get')}}",
+            dataType: 'json',
+            type:"post",
+            data: {
+                "_token": "{{ csrf_token() }}",
+                "invoice_id" : id
+            },
+        success: function (response) {
+            for(var i = 0; i < response.length; i++){
+                addServiceToCart(response[i].id, response[i].description, 
+                    response[i].price, response[i].discounted_price, response[i].quantity, services.length);   
+            }
+            displayCart();                
+                                                 
+            }
+        });
+            return false;
+    }
+
     function getService(id, quantity, price, discounted_price){
         $.ajax({
             url: "{{route('services.find')}}",
@@ -585,6 +623,7 @@
 
     var selectedServiceId;
 
+
     function showProductsModal(id){
         selectedServiceId = id;
         //Find service in array
@@ -654,7 +693,7 @@
         document.getElementById("input-date").value = today;
         document.getElementById("input-date_service").value = today;
 
-
+        getInvoiceServices({!! $invoice->id !!});
         $("#person_data_id").change(function(){
 
             var selectedService= $(this).children("option:selected").val();
@@ -720,7 +759,7 @@
 
         });
     });
-    displayCart();
+    
 </script>
     
 @endpush

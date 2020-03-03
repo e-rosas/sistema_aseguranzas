@@ -75,6 +75,7 @@
                                                             </button>
                                                         </form>    --}}  
                                                         <a class="dropdown-item" href="{{ route('invoices.show', $invoice) }}">{{ __('View') }}</a>
+                                                        <a class="dropdown-item" href="{{ route('invoices.edit', $invoice) }}">{{ __('Edit') }}</a>
                                                 </div>
                                             </div>
                                         </td>

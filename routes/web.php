@@ -31,11 +31,14 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('insurees', ['as' => 'persondata.storeinsuree', 'uses' => 'PersonDataController@storeInsuree']);
     Route::post('beneficiaries', ['as' => 'persondata.storebeneficiary', 'uses' => 'PersonDataController@storeBeneficiary']);
     Route::patch('person_data', ['as' => 'persondata.update', 'uses' => 'PersonDataController@update']);
+    Route::patch('invoices_update', ['as' => 'invoice.updateperson', 'uses' => 'InvoiceController@updatePersonData']);
 
     Route::post('insurees/search', 'SearchPatientController@searchInsuree')->name('insurees.search');
     Route::post('patients/search', 'SearchPatientController@search')->name('patients.search');
     Route::post('services/search', 'SearchProductController@searchService')->name('services.search');
     Route::post('services/find', 'SearchProductController@findService')->name('services.find');
+
+    Route::post('invoice_services', 'InvoiceServiceController@getInvoiceServices')->name('invoiceservices.get');
 
     Route::post('invoices/search', 'InvoiceController@search')->name('invoices.search');
     Route::post('beneficiaries/search', 'SearchPatientController@searchBeneficiary')->name('beneficiaries.search');

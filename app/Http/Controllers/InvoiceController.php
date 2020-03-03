@@ -99,6 +99,19 @@ class InvoiceController extends Controller
     {
     }
 
+    public function updatePersonData(Request $request)
+    {
+        $id = $request->invoice_id;
+
+        $invoice = Invoice::where('id', '=', $id)->first();
+
+        $person_data_id = $request->person_data_id;
+        $invoice->person_data_id = $person_data_id;
+        $invoice->save();
+
+        return back()->withStatus(__('Invoice successfully updated.'));
+    }
+
     /**
      * Remove the specified resource from storage.
      *
