@@ -30,6 +30,11 @@ class Payment extends Model
 
     protected $dates = ['date'];
 
+    public function getAmountAttribute($value)
+    {
+        return number_format($value, 3);
+    }
+
     public function invoice()
     {
         return $this->belongsTo('App\Invoice');

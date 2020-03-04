@@ -6,6 +6,9 @@
                 <div class="col-8 col-auto">
                     <h3 class="mb-0">{{ __('Invoice') }}</h3>
                 </div>
+                <div class="col-4 col-auto text-right">
+                    <a href="{{ route('invoices.edit', $invoice) }}" class="btn btn-sm btn-primary">{{ __('Edit') }}</a>
+                </div>
             </div>
         </div>
         <div class="card-body">
@@ -42,13 +45,28 @@
                     <label id="label-amount_due">{{ $invoice->getAmountDue() }}</label>
 
                 </div>
+                {{--  Latest call  --}}
+                @if ($invoice->calls->count()>0)
+                <div class="col-md-4 col-auto form-group">
+                    <label class="form-control-label" for="label-latest_call">{{ __('Latest call') }}</label>
+                    <label id="label-amount_due">{{ $invoice->calls[0]->date->format('l jS \\of F Y')}}</label>
+                </div>
+                @endif
+                
             </div>
             <div class="form-row">
                 {{--  Comments  --}}
-                <div class="col-md-12 col-auto form-group">
+                <div class="col-md-9 col-auto form-group">
                     <label class="form-control-label" for="label-comments">{{ __('Comments') }}</label>
                     <label id="label-comments">{{ $invoice->comments }}</label>
                 </div>
+                {{--  Latest payment  --}}
+                @if ($invoice->payments->count()>0)
+                <div class="col-md-3 col-auto form-group">
+                    <label class="form-control-label" for="label-latest_call">{{ __('Latest payment') }}</label>
+                    <label id="label-amount_due">{{ $invoice->payments[0]->date->format('l jS \\of F Y')}}</label>
+                </div>
+                @endif
             </div>
             <div class="form-row">
                 {{--  tax  --}}

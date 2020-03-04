@@ -5,6 +5,7 @@
             <tr>
                 <th scope="col">{{ __('Number') }}</th>
                 <th scope="col">{{ __('Date') }}</th>
+                <th scope="col">{{ __('Amount') }}</th>
                 <th scope="col">{{ __('Claim') }}</th>
                 <th scope="col">{{ __('Comments') }}</th>
             </tr>
@@ -15,6 +16,7 @@
                     <td>{{ $payment->number}}</td>
                     <td>{{ $payment->date->format('M-d-Y')}}</td>
                     <td>{{ $payment->amount}}</td>
+                    <td>{{ $payment->claim}}</td>
                     <td>{{ $payment->comments}}</td>
                 </tr>
             @endforeach
