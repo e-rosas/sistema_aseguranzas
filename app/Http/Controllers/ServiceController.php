@@ -51,6 +51,7 @@ class ServiceController extends Controller
      */
     public function show(Service $service)
     {
+        return view('services.show', compact('service'));
     }
 
     /**
@@ -67,8 +68,15 @@ class ServiceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Service $service)
+    public function update(Request $request)
     {
+        $validated = $this->validateService();
+        $service = Service::find($request->service_id);
+
+        $service->fill($validated);
+        $service->save();
+
+        return back()->withStatus(__('Service successfully updated.'));
     }
 
     /**

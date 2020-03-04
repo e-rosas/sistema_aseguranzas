@@ -40,4 +40,14 @@ class Service extends Model
     {
         return number_format($value, 3);
     }
+
+    public function category()
+    {
+        return $this->belongsTo('App\Category');
+    }
+
+    public function invoices()
+    {
+        return $this->belongsToMany('App\Invoice', 'invoice_services');
+    }
 }

@@ -1,4 +1,11 @@
 window._ = require('lodash');
+require( 'jszip' );
+require( 'pdfmake' );
+require( 'datatables.net-bs4' )();
+require( 'datatables.net-buttons-bs4' )();
+require( 'datatables.net-buttons/js/buttons.html5.js' )();
+require( 'datatables.net-buttons/js/buttons.print.js' )();
+require( 'datatables.net-responsive-bs4' )();
 
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests

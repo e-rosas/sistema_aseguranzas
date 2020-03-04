@@ -21,7 +21,7 @@
                                 <h3 class="mb-0">{{ __('Invoices') }}</h3>
                             </div>
                             <div class="col text-right">
-                                <a href="#!" class="btn btn-sm btn-primary">{{ __('Add') }}</a>
+                                <a href="{{ route('invoices.create') }}" class="btn btn-sm btn-primary">{{ __('Add') }}</a>
                             </div>
                         </div>
                     </div>

@@ -20,7 +20,7 @@ class Insuree extends Model
         'insurer_id' => 'required',
         'insurance_id' => 'required|max:255',
     ];
-    protected $with = ['person_data'];
+
     protected $casts = [
         'person_data_id' => 'integer',
         'insurer_id' => 'integer',

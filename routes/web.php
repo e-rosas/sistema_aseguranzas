@@ -17,7 +17,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::group(['middleware' => 'auth'], function () {
     Route::resource('insurers', 'InsurerController');
-    Route::resource('services', 'ServiceController');
+    Route::resource('services', 'ServiceController', ['except' => ['update']]);
     Route::resource('discounts', 'DiscountController');
     Route::resource('beneficiaries', 'BeneficiaryController');
     Route::resource('insurees', 'InsureeController');
@@ -31,6 +31,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('insurees', ['as' => 'persondata.storeinsuree', 'uses' => 'PersonDataController@storeInsuree']);
     Route::post('beneficiaries', ['as' => 'persondata.storebeneficiary', 'uses' => 'PersonDataController@storeBeneficiary']);
     Route::patch('person_data', ['as' => 'persondata.update', 'uses' => 'PersonDataController@update']);
+    Route::patch('services_update', ['as' => 'service.update', 'uses' => 'ServiceController@update']);
     Route::patch('invoices_updateperson', ['as' => 'invoice.updateperson', 'uses' => 'InvoiceController@updatePersonData']);
     Route::patch('invoices_update', ['as' => 'invoice.update', 'uses' => 'InvoiceController@update']);
     Route::post('insurees/search', 'SearchPatientController@searchInsuree')->name('insurees.search');

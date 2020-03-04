@@ -75,6 +75,8 @@ class InvoiceController extends Controller
      */
     public function show(Invoice $invoice)
     {
+        $invoice = $invoice->load('services.service', 'payments');
+
         return view('invoices.show', compact('invoice'));
     }
 

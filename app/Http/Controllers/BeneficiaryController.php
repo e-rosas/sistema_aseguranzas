@@ -16,7 +16,7 @@ class BeneficiaryController extends Controller
      */
     public function index()
     {
-        $beneficiaries = Beneficiary::with(['person_data', 'insuree.insurer'])->paginate(15);
+        $beneficiaries = Beneficiary::with(['person_data', 'insuree.person_data', 'insuree.insurer'])->paginate(15);
 
         return view('beneficiaries.index', compact('beneficiaries'));
         //return view('beneficiaries.index', ['beneficiaries' => $model->paginate(15)]);

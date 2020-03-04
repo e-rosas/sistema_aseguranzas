@@ -75,7 +75,7 @@
                             <br />
                             @include('payments.partials.addModal',['number'=>$invoice->payments->count() + 1, 'invoice_id'=>$invoice->id])
                         </div>
-                        @include('payments.partials.table', ['payments'=>$invoice->payments()->paginate(4), 'invoice_id'=>$invoice->id])
+                        @include('payments.partials.table', ['payments'=>$invoice->payments, 'invoice_id'=>$invoice->id])
                     </div>
                 </div>
             </div>

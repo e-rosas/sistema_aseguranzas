@@ -37,7 +37,7 @@
                         @endif
                     </div>
 
-                    <div class="table-responsive">
+                    <div class="table-responsive" id="services_table">
                         <table class="table align-items-center table-flush">
                             <thead class="thead-light">
                                 <tr>
@@ -70,8 +70,9 @@
                                                             <button type="button" class="dropdown-item" onclick="confirm('{{ __("Are you sure you want to delete this service?") }}') ? this.parentElement.submit() : ''">
                                                                 {{ __('Delete') }}
                                                             </button>
-                                                        </form>    
-                                                        <a class="dropdown-item" href="{{ route('profile.edit') }}">{{ __('Edit') }}</a> --}}  
+                                                        </form>    --}}  
+                                                        <a class="dropdown-item" href="{{ route('services.show', $service) }}">{{ __('View') }}</a>
+                                                        <a data-service="{{ $service->id }}"  class="edit-service dropdown-item" data-toggle="modal" data-target="#modal-service">{{ __('Edit') }}</a>
                                                 </div>
                                             </div>
                                         </td>
@@ -88,6 +89,8 @@
                 </div>
             </div>
         </div>
+
+        @include('services.partials.editService')
             
         @include('layouts.footers.auth')
     </div>

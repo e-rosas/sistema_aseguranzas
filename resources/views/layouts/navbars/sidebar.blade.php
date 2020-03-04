@@ -77,7 +77,7 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('invoices.index') }}">
-                        <i class="ni ni-tv-2 text-primary"></i> {{ __('Invoices') }}
+                        <i class="fas fa-file-invoice-dollar text-primary"></i> {{ __('Invoices') }}
                     </a>
                 </li>
                 <li class="nav-item">
@@ -87,7 +87,7 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('categories.index') }}">
-                        <i class="ni ni-tv-2 text-primary"></i> {{ __('Categories') }}
+                        <i class="fas fa-cube text-primary"></i> {{ __('Categories') }}
                     </a>
                 </li>              
             </ul>

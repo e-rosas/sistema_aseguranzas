@@ -31,7 +31,7 @@ class SearchProductController extends Controller
     public function findService(Request $request)
     {
         $service_id = $request->service_id;
-        $service = Service::find($service_id, ['id', 'code', 'description'])
+        $service = Service::find($service_id)
         ;
 
         echo json_encode($service);
