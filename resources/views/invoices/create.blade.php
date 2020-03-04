@@ -235,7 +235,7 @@
                             {{--  quantity  --}}
                             <div class=" col-auto form-group{{ $errors->has('quantity') ? ' has-danger' : '' }}">
                                 <input type="numeric" min="1" name="quantity" id="input-quantity" class="form-control form-control-alternative{{ $errors->has('quantity') ? ' is-invalid' : '' }}" 
-                                placeholder="1" value="1" required>
+                                placeholder="Quantity" value=1 required>
                             
                                 @if ($errors->has('quantity'))
                                     <span class="invalid-feedback" role="alert">
@@ -663,10 +663,13 @@
 
         $("#add_service").click(function(){
             var quantity = Number(document.getElementById("input-quantity").value);
-            var price = Number(document.getElementById("custom-price").value);
-            var discounted_price = Number(document.getElementById("custom-discounted-price").value);
-            console.log(document.getElementById("input-date_service").value);
+            
+
             if(quantity > 0){
+                var price = document.getElementById("custom-price").value;
+                price = parseFloat(price.replace(/,/g,''));
+                var discounted_price = document.getElementById("custom-discounted-price").value;
+                discounted_price = parseFloat(discounted_price.replace(/,/g,''));
                 var service_id= $("#service_id").children("option:selected").val();
                 getService(service_id, quantity, price, discounted_price);
             }
