@@ -56,7 +56,7 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <form method="post" action="{{ route('invoices.store') }}" autocomplete="off">
+                        <form autocomplete="off">
                             @csrf
                             <div class="form-row">
                                 {{--  number --}}
@@ -304,7 +304,7 @@
 
         @include('items.partials.itemsModal')
 
-        @include('components.selectPersonModal', ['invoice_id' => $invoice->id]);
+        @include('components.selectPersonModal', ['invoice_id' => $invoice->id])
         
         @include('layouts.footers.auth')
     </div>
@@ -467,18 +467,13 @@
         this.services.push(service);   
         displayCart();  
     }
-    // Remove service from cart
-    function removeServiceFromCart(service_id) {
-        for(var service in this.services) {
-            if(this.services[service].service_id === service_id) {
-                this.services[service].quantity --;
-                if(this.services[service].quantity === 0) {
-                    this.services.splice(service, 1);
-                }
-                break;
-            }
-        };
+    function addServiceToCartFromInvoice(service_id, description, price, discounted_price, quantity, id, created_at) {
+        
+        var service = new Service(service_id, description, price, discounted_price, quantity, services.length, created_at);
+        this.services.push(service);   
+        displayCart();  
     }
+
 
     function removeServiceFromCartAll(service_id) {
         for(var service in this.services) {
@@ -536,8 +531,8 @@
             },
         success: function (response) {
             for(var i = 0; i < response.length; i++){
-                addServiceToCart(response[i].id, response[i].description, 
-                    response[i].price, response[i].discounted_price, response[i].quantity, services.length);   
+                addServiceToCartFromInvoice(response[i].service_id, response[i].description, 
+                    response[i].price, response[i].discounted_price, response[i].quantity, response[i].id, response[i].created_at);   
             }
             displayCart();                
                                                  
@@ -592,11 +587,12 @@
     function sendCart(person_data_id, date, amount_due, amount_paid,
          comments, number){
         $.ajax({
-            url: "{{route('invoices.store')}}",
-            type:"post",
+            url: "{{route('invoice.update')}}",
+            type:"patch",
             data: {
                 "_token": "{{ csrf_token() }}",
-                "person_data_id" : person_data_id,
+                "invoice_id": {!! $invoice->id !!},
+                "person_data_id" : {!! $invoice->person_data_id !!},
                 "date" : date,
                 "amount_due" : amount_due,
                 "amount_paid" : amount_paid,
@@ -704,7 +700,7 @@
             var quantity = Number(document.getElementById("input-quantity").value);
             var price = Number(document.getElementById("custom-price").value);
             var discounted_price = Number(document.getElementById("custom-discounted-price").value);
-            console.log(document.getElementById("input-date_service").value);
+            
             if(quantity > 0){
                 var service_id= $("#service_id").children("option:selected").val();
                 getService(service_id, quantity, price, discounted_price);
@@ -735,13 +731,18 @@
 
         
         $("#save").click(function(){
-            var person_data_id= $("#person_data_id").children("option:selected").val();
-            var date = document.getElementById("input-date").value; 
-            var amount_due = Number(document.getElementById("input-amount_due").value); 
-            var amount_paid = Number(document.getElementById("input-amount_paid").value); 
-            var comments = document.getElementById("input-comments").value;
-            var number = document.getElementById("input-number").value;  
-            sendCart(person_data_id, date, amount_due, amount_paid, comments, number);
+            if(services.length > 0){
+                var date = document.getElementById("input-date").value; 
+                var amount_due = Number(document.getElementById("input-amount_due").value); 
+                var amount_paid = Number(document.getElementById("input-amount_paid").value); 
+                var comments = document.getElementById("input-comments").value;
+                var number = document.getElementById("input-number").value;  
+                sendCart(person_data_id, date, amount_due, amount_paid, comments, number);
+            }
+            else{
+                alert('No services added.')
+            }
+            
             
 
         });

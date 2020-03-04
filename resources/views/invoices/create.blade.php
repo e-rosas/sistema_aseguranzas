@@ -696,13 +696,19 @@
 
         
         $("#save").click(function(){
-            var person_data_id= $("#person_data_id").children("option:selected").val();
-            var date = document.getElementById("input-date").value; 
-            var amount_due = Number(document.getElementById("input-amount_due").value); 
-            var amount_paid = Number(document.getElementById("input-amount_paid").value); 
-            var comments = document.getElementById("input-comments").value;
-            var number = document.getElementById("input-number").value;  
-            sendCart(person_data_id, date, amount_due, amount_paid, comments, number);
+            if(services.length > 0 ) {
+                var person_data_id= $("#person_data_id").children("option:selected").val();
+                var date = document.getElementById("input-date").value; 
+                var amount_due = Number(document.getElementById("input-amount_due").value); 
+                var amount_paid = Number(document.getElementById("input-amount_paid").value); 
+                var comments = document.getElementById("input-comments").value;
+                var number = document.getElementById("input-number").value;  
+                sendCart(person_data_id, date, amount_due, amount_paid, comments, number);
+            }
+            
+            else {
+                alert("No services added.");
+            }
             
 
         });

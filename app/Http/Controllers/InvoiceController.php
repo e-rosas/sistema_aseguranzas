@@ -95,8 +95,28 @@ class InvoiceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Invoice $invoice)
+    public function update(Request $request)
     {
+        $validated = $this->validateInvoice();
+        $invoice = Invoice::findOrFail($request->invoice_id);
+        $invoice->fill($validated);
+        InvoiceService::where('invoice_id', $invoice->id)->delete();
+        $services = $request->services;
+        foreach ($services as $service) {
+            $service['invoice_id'] = $invoice->id;
+            $invoice_service = InvoiceService::create($service);
+            if (isset($service['items'])) {
+                $items = $service['items'];
+                foreach ($items as $item) {
+                    $item['invoice_service_id'] = $invoice_service->id;
+                    ItemService::create($item);
+                }
+            }
+        }
+
+        $invoice->save();
+
+        return route('invoices.show', [$invoice]);
     }
 
     public function updatePersonData(Request $request)
