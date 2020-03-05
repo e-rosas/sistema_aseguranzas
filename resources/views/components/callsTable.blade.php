@@ -7,6 +7,7 @@
                 <th scope="col">{{ __('Date') }}</th>
                 <th scope="col">{{ __('Claim') }}</th>
                 <th scope="col">{{ __('Comments') }}</th>
+                <th scope="col"></th>
             </tr>
         </thead>
         <tbody>

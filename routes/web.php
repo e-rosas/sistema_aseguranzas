@@ -24,7 +24,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('invoices', 'InvoiceController', ['except' => ['update']]);
     Route::resource('categories', 'CategoryController');
     Route::resource('items', 'ItemController');
-    Route::resource('calls', 'CallController');
+    Route::resource('calls', 'CallController', ['except' => ['update']]);
     Route::resource('payments', 'PaymentController');
 
     Route::resource('user', 'UserController', ['except' => ['show']]);
@@ -34,10 +34,12 @@ Route::group(['middleware' => 'auth'], function () {
     Route::patch('services_update', ['as' => 'service.update', 'uses' => 'ServiceController@update']);
     Route::patch('invoices_updateperson', ['as' => 'invoice.updateperson', 'uses' => 'InvoiceController@updatePersonData']);
     Route::patch('invoices_update', ['as' => 'invoice.update', 'uses' => 'InvoiceController@update']);
+    Route::patch('calls_update', ['as' => 'calls.update', 'uses' => 'CallController@update']);
     Route::post('insurees/search', 'SearchPatientController@searchInsuree')->name('insurees.search');
     Route::post('patients/search', 'SearchPatientController@search')->name('patients.search');
     Route::post('services/search', 'SearchProductController@searchService')->name('services.search');
     Route::post('services/find', 'SearchProductController@findService')->name('services.find');
+    Route::post('calls/find', 'CallController@find')->name('calls.find');
 
     Route::post('invoice_services', 'InvoiceServiceController@getInvoiceServices')->name('invoiceservices.get');
 

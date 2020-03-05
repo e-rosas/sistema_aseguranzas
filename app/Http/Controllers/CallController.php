@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Call;
+use App\Http\Resources\CallResource;
 use App\Invoice;
 use Illuminate\Http\Request;
 
@@ -70,8 +71,15 @@ class CallController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Call $call)
+    public function update(Request $request)
     {
+        $validated = $this->validateCall();
+        $id = $request->id;
+        $call = Call::find($id);
+        $call->fill($validated);
+        $call->save();
+
+        return new CallResource($call);
     }
 
     /**
@@ -86,5 +94,14 @@ class CallController extends Controller
     public function validateCall()
     {
         return request()->validate(Call::$rules);
+    }
+
+    public function find(Request $request)
+    {
+        $call = Call::findOrFail($request->id);
+
+        CallResource::withoutWrapping();
+
+        return new CallResource($call);
     }
 }

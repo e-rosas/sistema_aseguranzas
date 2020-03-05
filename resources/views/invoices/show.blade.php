@@ -80,6 +80,8 @@
                 </div>
             </div>
         </div>
+
+        @include('calls.partials.editCallModal', ['invoice_id' => $invoice->id])
         
         @include('layouts.footers.auth')
     </div>

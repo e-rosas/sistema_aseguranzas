@@ -4,7 +4,7 @@
             <div class="modal-body p-0">
                 <div class="card bg-secondary shadow border-0">
                     <div class="card-header bg-transparent">
-                        <h6 class="heading-small text-muted mb-4">{{ __('Add call') }}</h6>                 
+                        <h6 class="heading-small text-muted mb-4">{{ __('Edit call') }}</h6>                 
                     </div>
                     <div class="card-body px-lg-5 py-lg-5">
                         <form role="form" method="post" action="{{ route('calls.update') }}"  autocomplete="off">
@@ -85,14 +85,16 @@
             data: {
                 "_token": "{{ csrf_token() }}",
                 "id": id,
+                "invoice_id": {{ $invoice_id }},
                 "number": number,
                 "claim": claim,
                 "date": date,
                 "comments": comments,
-
-
             },
-        success: function (response) {
+        success: function (data) {
+            CallData(data.id, data.number, data.claim,
+                data.date, data.comments);
+                alert('Call updated');
                 
 
             }
@@ -117,11 +119,11 @@
             type:"post",
             data: {
                 "_token": "{{ csrf_token() }}",
-                "call_id" : id
+                "id" : id
             },
-        success: function (response) {                
-                CallData(response.id,response.number, response.claim, 
-                        response.date, response.comments);                                 
+        success: function (data) {          
+            CallData(data.id,data.number, data.claim, 
+                    data.date, data.comments);                                 
             }
         });
             return false;
