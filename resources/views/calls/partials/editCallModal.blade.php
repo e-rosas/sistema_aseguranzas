@@ -7,15 +7,22 @@
                         <h6 class="heading-small text-muted mb-4">{{ __('Edit call') }}</h6>                 
                     </div>
                     <div class="card-body px-lg-5 py-lg-5">
-                        <form role="form" method="post" action="{{ route('calls.update') }}"  autocomplete="off">
-                            @csrf                     
+                        <div>                  
                             <div class="form-group">
                                 {{--  Call --}}
                                 <input readonly type="hidden" name="call_id" id="update-call_id" class="form-control"
                                  required>
                                 
                                 {{--  Number --}}
-                                <input type="hidden" name="number" id="update-number" class="form-control" required>
+                                <div class="form-group ">
+                                    <div class="input-group input-group-alternative">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-hashtag"></i></span>
+                                        </div>
+                                        <input type="numeric" readonly name="number" id="update-number" class="form-control" required>
+                                    </div>
+                                </div>
+                                
                                 {{--  Claim  --}}
                                 <div class="form-group {{ $errors->has('claim') ? ' has-danger' : '' }}">
                                     <div class="input-group input-group-alternative">
@@ -65,7 +72,7 @@
                                     <button id="update_call" class="btn btn-block btn-success">{{ __('Save') }}</button>
                                 </div>
                             </div>
-                        </form>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -81,7 +88,7 @@
         $.ajax({
             url: "{{route('calls.update')}}",
             dataType: 'json',
-            type:"post",
+            type:"patch",
             data: {
                 "_token": "{{ csrf_token() }}",
                 "id": id,
@@ -91,12 +98,12 @@
                 "date": date,
                 "comments": comments,
             },
-        success: function (data) {
-            CallData(data.id, data.number, data.claim,
-                data.date, data.comments);
-                alert('Call updated');
+        success: function (response) {
+            console.log(response.data);
+            var calls = response.data;
+            displayCalls(calls); //on callsModal
                 
-
+            $('#modal-update-call').modal('hide')
             }
         });
             return false;

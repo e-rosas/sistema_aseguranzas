@@ -7,8 +7,7 @@
                         <h6 class="heading-small text-muted mb-4">{{ __('Add call') }}</h6>                 
                     </div>
                     <div class="card-body px-lg-5 py-lg-5">
-                        <form role="form" method="post" action="{{ route('calls.store') }}"  autocomplete="off">
-                            @csrf                     
+                        <div class="form-group">                 
                             <div class="form-group">
                                 {{--  Invoice --}}
                                 <div class="form-group">
@@ -78,10 +77,10 @@
                                     </div>
                                 </div>                   
                                 <div class="text-center">
-                                    <button id="save_call" type="submit" class="btn btn-block btn-success">{{ __('Save') }}</button>
+                                    <button id="save_call" class="btn btn-block btn-success">{{ __('Save') }}</button>
                                 </div>
                             </div>
-                        </form>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -92,28 +91,61 @@
 @push('js')
 
 <script>
-    function sendCall(){
+    function sendCall(number, claim, date, 
+    comments){
         $.ajax({
             url: "{{route('calls.store')}}",
             dataType: 'json',
             type:"post",
             data: {
                 "_token": "{{ csrf_token() }}",
-                "invoice_id": "{{ $invoice_id }}",
-
-
+                "invoice_id": {{ $invoice_id }},
+                "number": number,
+                "claim": claim,
+                "date": date,
+                "comments": comments,
             },
-        success: function (response) {
-                
+        success: function (data) {
+            console.log(data);
+            displayCalls(data);
+            $('#modal-call').modal('hide')
 
             }
         });
             return false;
     }
 
-    $("#save_call").click(function(){
-            
+    function showEditCallModal(id){
         
+        getCallData(id); //on editCallModal
+        $('#modal-update-call').modal('show')
+
+    }
+
+    function displayCalls(data){
+        var calls = data;
+        var output = "";
+
+        for(var i = 0; i < calls.length; i++){
+            output += "<tr value="+calls[i].id+">"
+                + "<td>" + calls[i].number + "</td>"
+                + "<td>" + calls[i].date + "</td>" 
+                + "<td>" + calls[i].claim + "</td>" 
+                + "<td>" + calls[i].comments+ "</td>"
+                +'<td class="text-right"><button class="btn btn-icon btn-outline-warning btn-sm"  type="button" onClick="showEditCallModal(\'' + calls[i].id + '\')"><span class="btn-inner--icon"><i class="fas fa-edit"></i></span></button>' 
+                +  "</td></tr>";
+        }
+
+        $('#calls_table tbody').html(output);
+    }
+
+    $("#save_call").click(function(){
+        var number = document.getElementById("input-number").value;
+        var claim = document.getElementById("input-claim").value;
+        var date = document.getElementById("input-date").value;
+        var comments = document.getElementById("input-comments").value;
+
+        sendCall(number, claim, date, comments);
 
 
     });

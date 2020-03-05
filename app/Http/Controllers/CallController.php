@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Call;
 use App\Http\Resources\CallResource;
-use App\Invoice;
 use Illuminate\Http\Request;
 
 class CallController extends Controller
@@ -40,12 +39,7 @@ class CallController extends Controller
         $validated = $this->validateCall();
         Call::create($validated);
 
-        $invoice = Invoice::find($request->invoice_id)->load('person_data');
-
-        return redirect()->action(
-            'InvoiceController@show',
-            ['invoice' => $invoice]
-        );
+        return $this->getInvoiceCalls($request->invoice_id);
     }
 
     /**
@@ -79,7 +73,7 @@ class CallController extends Controller
         $call->fill($validated);
         $call->save();
 
-        return new CallResource($call);
+        return $this->getInvoiceCalls($call->invoice_id);
     }
 
     /**
@@ -103,5 +97,12 @@ class CallController extends Controller
         CallResource::withoutWrapping();
 
         return new CallResource($call);
+    }
+
+    private function getInvoiceCalls($invoice_id)
+    {
+        $calls = Call::where('invoice_id', $invoice_id)->paginate(3);
+
+        return CallResource::collection($calls);
     }
 }
