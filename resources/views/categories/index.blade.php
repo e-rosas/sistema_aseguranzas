@@ -41,7 +41,7 @@
                                     <thead class="thead-light">
                                         <tr>
                                             <th scope="col">{{ __('Name') }}</th>
-                                            
+                                            <th scope="col"></th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -52,10 +52,6 @@
                 </div>
             </div>
         </div>
-
-        
-        
-            
         @include('layouts.footers.auth')
     </div>
 @endsection
@@ -70,6 +66,10 @@
                 serverSide: true,
                 responsive: true,
                 lengthChange: false,
+                "pagingType": "numbers",
+                "columnDefs": [
+                    { "width": "12%", "targets": 1 }
+                ],
                 buttons: [
                     'copy', 'pdf','print', 'excel'
                 ],
@@ -80,6 +80,7 @@
                 },
                 columns: [
                     { data: 'name' },
+                    { data: 'action', name: 'action', orderable: false, searchable: false}
                 ],
             });
             table.buttons().container()
