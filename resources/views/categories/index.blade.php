@@ -30,7 +30,7 @@
                     </div>
 
                     <div class="table-responsive">
-                        <table class="table align-items-center table-flush">
+                        <table id="categories_table" class="table align-items-center table-flush">
                             <thead class="thead-light">
                                 <tr>
                                     <th scope="col">{{ __('Name') }}</th>
@@ -38,7 +38,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($categories as $category)
+                                {{--  @foreach ($categories as $category)
                                     <tr>
                                         <td>{{ $category->name }}</td>
                                         <td class="text-right">
@@ -47,21 +47,11 @@
                                                     <i class="fas fa-ellipsis-v"></i>
                                                 </a>
                                                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                                        {{--  <form action="{{ route('item_category.destroy', $item_category) }}" method="post">
-                                                            @csrf
-                                                            @method('delete')
-                                                            
-                                                            <a class="dropdown-item" href="{{ route('item_category.edit', $item_category) }}">{{ __('Edit') }}</a>
-                                                            <button type="button" class="dropdown-item" onclick="confirm('{{ __("Are you sure you want to delete this item_category?") }}') ? this.parentElement.submit() : ''">
-                                                                {{ __('Delete') }}
-                                                            </button>
-                                                        </form>    
-                                                        <a class="dropdown-item" href="{{ route('profile.edit') }}">{{ __('Edit') }}</a> --}}  
                                                 </div>
                                             </div>
                                         </td>
                                     </tr>
-                                @endforeach
+                                @endforeach  --}}
                             </tbody>
                         </table>
                     </div>
@@ -77,3 +67,23 @@
         @include('layouts.footers.auth')
     </div>
 @endsection
+@push('js')
+    <script src="{{ mix('js/app.js') }}"></script>
+    <script src="{{ asset('vendor/datatables/buttons.server-side.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+            var table = $('#categories_table').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: {
+                    url: "/allcategories",
+                    dataSrc: "data",
+                    type: "GET"
+                },
+                columns: [
+                    { data: 'name' },
+                ],
+            });
+        });
+    </script>
+@endpush

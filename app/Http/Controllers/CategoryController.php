@@ -17,6 +17,11 @@ class CategoryController extends Controller
         return view('categories.index', ['categories' => $model->paginate(15)]);
     }
 
+    public function list()
+    {
+        return datatables(Category::all())->toJson();
+    }
+
     /**
      * Show the form for creating a new resource.
      *
