@@ -68,9 +68,8 @@
     </div>
 @endsection
 @push('js')
-    <script src="{{ mix('js/app.js') }}"></script>
-    <script src="{{ asset('vendor/datatables/buttons.server-side.js') }}"></script>
-    <script>
+    
+   <script>
         $(document).ready(function() {
             var table = $('#categories_table').DataTable({
                 processing: true,
