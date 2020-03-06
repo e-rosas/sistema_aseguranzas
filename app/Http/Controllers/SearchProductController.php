@@ -13,7 +13,7 @@ class SearchProductController extends Controller
         $search = $request->search;
         $services = Service::query()
             ->whereLike(['code', 'description'], $search)
-            ->get()->take(5)
+            ->get()->take(8)
         ;
         $response = [];
         foreach ($services as $service) {

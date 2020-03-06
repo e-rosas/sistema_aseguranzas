@@ -28,52 +28,51 @@
                             </div>
                         @endif
                     </div>
-
-                    <div class="table-responsive">
-                        <table id="categories_table" class="table align-items-center table-flush">
-                            <thead class="thead-light">
-                                <tr>
-                                    <th scope="col">{{ __('Name') }}</th>
-                                    <th scope="col"></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {{--  @foreach ($categories as $category)
-                                    <tr>
-                                        <td>{{ $category->name }}</td>
-                                        <td class="text-right">
-                                            <div class="dropdown">
-                                                <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                    <i class="fas fa-ellipsis-v"></i>
-                                                </a>
-                                                <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                @endforeach  --}}
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="card-footer py-4">
-                        <nav class="d-flex justify-content-end" aria-label="...">
-                            {{ $categories->links() }}
-                        </nav>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col-xl-12 mb-5 mb-xl-0">
+                <div class="card">
+                    <div class="row">
+                            <!-- Projects table -->
+                            <div class="table-responsive">
+                                <table  id="categories_table" class=" table dt-responsive table-flushed table-bordered">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th scope="col">{{ __('Name') }}</th>
+                                            
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+
+        
+        
             
         @include('layouts.footers.auth')
     </div>
 @endsection
 @push('js')
+
     
    <script>
         $(document).ready(function() {
             var table = $('#categories_table').DataTable({
+                dom: 'Bfrtip',
                 processing: true,
                 serverSide: true,
+                responsive: true,
+                lengthChange: false,
+                buttons: [
+                    'copy', 'pdf','print', 'excel'
+                ],
                 ajax: {
                     url: "/allcategories",
                     dataSrc: "data",
@@ -83,6 +82,8 @@
                     { data: 'name' },
                 ],
             });
+            table.buttons().container()
+                .appendTo( '#categories_table_wrapper .col-md-6:eq(0)' );
         });
     </script>
 @endpush

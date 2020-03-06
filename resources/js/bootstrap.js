@@ -1,20 +1,7 @@
 window._ = require("lodash");
 
-//  resources/js/bootstrap.js
-window.$ = window.jQuery = require("jquery");
 
-// ### Datatables
-window.JSZip = require("jszip");
-require("datatables.net-bs4");
-require("datatables.net-buttons-bs4");
-require("datatables.net-buttons/js/buttons.html5.js");
-require("datatables.net-buttons/js/buttons.print.js");
-require("datatables.net-responsive-bs4");
 
-// pdfMake
-var pdfMake = require("pdfmake/build/pdfmake.js");
-var pdfFonts = require("pdfmake/build/vfs_fonts.js");
-pdfMake.vfs = pdfFonts.pdfMake.vfs;
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
  * to our Laravel back-end. This library automatically handles sending the
