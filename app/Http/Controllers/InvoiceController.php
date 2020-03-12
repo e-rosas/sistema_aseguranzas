@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Invoice;
 use App\InvoiceService;
 use App\ItemService;
-use App\Payment;
 use Illuminate\Http\Request;
 
 class InvoiceController extends Controller
@@ -75,7 +74,7 @@ class InvoiceController extends Controller
      */
     public function show(Invoice $invoice)
     {
-        $invoice = $invoice->load('services.service', 'payments');
+        $invoice = $invoice->load('services.service');
 
         return view('invoices.show', compact('invoice'));
     }
@@ -141,15 +140,6 @@ class InvoiceController extends Controller
      */
     public function destroy(Invoice $invoice)
     {
-    }
-
-    public function getInvoicePayments($invoice_id)
-    {
-        $payments = Payment::where('invoice_id', $invoice_id)->paginate(4);
-
-        $payments->withPath('payments/url');
-
-        return view('payments.partials.table', ['payments' => $payments])->render();
     }
 
     protected function validateInvoice()

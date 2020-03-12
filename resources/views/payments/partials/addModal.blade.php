@@ -86,7 +86,7 @@
             type:"post",
             data: {
                 "_token": "{{ csrf_token() }}",
-                "invoice_id": {{ $invoice_id }},
+                "person_data_id": {{ $person_data_id }},
                 "number": number,
                 "amount": amount,
                 "date": date,

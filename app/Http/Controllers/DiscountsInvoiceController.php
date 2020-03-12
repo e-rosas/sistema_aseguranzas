@@ -2,31 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Discount;
-use App\DiscountInvoice;
-use App\Http\Resources\DiscountResource;
-use App\Invoice;
-use Illuminate\Http\Request;
+use App\DiscountPersonData;
+use App\Http\Requests\ApplyDiscountRequest;
 
 class DiscountsInvoiceController extends Controller
 {
-    public function addAppliedDiscounts(Request $request)
+    public function addDiscount(ApplyDiscountRequest $request)
     {
-        foreach ($request->appliedDiscounts as $applied_discount) {
-            DiscountInvoice::create($applied_discount);
-        }
-        $invoice_id = $request->appliedDiscounts[0]['invoice_id'];
-        $discounts = DiscountInvoice::where('invoice_id', $invoice_id)->paginate(5);
-        $invoice = Invoice::find($invoice_id);
-        $invoice->status = 'with benefits';
-        $invoice->save();
+        $validated = $request->validated();
+        DiscountPersonData::create($validated);
+        $response = [
+            'success' => true,
+            'message' => 'Registered successfully.',
+        ];
 
-        return response()->json($discounts);
-    }
-
-    public function discounts()
-    {
-        return DiscountResource::collection(Discount::paginate(5));
+        return response()->json($response, 200);
     }
 
     public function validateAppliedDiscount()

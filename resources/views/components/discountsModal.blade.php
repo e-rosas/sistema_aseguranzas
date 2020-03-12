@@ -5,21 +5,17 @@
                 <div class="card bg-secondary shadow border-0">
                     <div class="card-header bg-transparent">
                         <h5 class="heading-small text-muted mb-4">{{ __('Select discounts') }}</h5>
-                        {{--  Available discounts  --}}
-                        <div class="table-responsive">
-                            <table id="discounts_table" class="table align-items-center table-flush">
-                                <thead class="thead-light">
-                                    <tr>
-                                        <th scope="col">{{ __('Select') }}</th>
-                                        <th scope="col">{{ __('Percentage') }}</th>
-                                        <th scope="col">{{ __('Range of days') }}</th>
-                                        <th scope="col">{{ __('Amount of days') }}</th>
-                                    </tr>
-                                </thead>
-                                <tbody>  
-                                </tbody> 
-                            </table>
-                        </div>  
+                        {{--  discount --}}
+                        <div class="form-group {{ $errors->has('discount_percentage') ? ' has-danger' : '' }}">
+                            <div class="input-group input-group-alternative">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-calendar"></i></span>
+                                </div>
+                                <label for="input-new_discount_percentage">{{ __('Add percentage') }}</label>
+                                <input type="number" step="0.1" min="0" max="100" name="new_percentage" id="input-new_discount_percentage" class="form-control form-control-alternative"
+                                value=10>
+                            </div>
+                        </div> 
                         {{--  start_date  --}}
                         <div class="form-group {{ $errors->has('start_date') ? ' has-danger' : '' }}">
                             <div class="input-group input-group-alternative">
@@ -35,6 +31,21 @@
                                 @endif
                             </div>
                         </div> 
+                        {{--  end_date  --}}
+                        <div class="form-group {{ $errors->has('end_date') ? ' has-danger' : '' }}">
+                            <div class="input-group input-group-alternative">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-calendar"></i></span>
+                                </div>
+                                <input type="date" name="end_date" id="input-end_date" class="form-control {{ $errors->has('end_date') ? ' is-invalid' : '' }}" 
+                                value="{{ old('end_date') }}" required>
+                                @if ($errors->has('end_date'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('end_date') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div> 
                         {{--  Generate  --}}
                         <div class="row">
                             <div class="col text-center">
@@ -46,10 +57,10 @@
                     </div>
                     <div class="card-body px-lg-5 py-lg-5">
                         {{--  Invoice --}}
-                        <input type="hidden"  readonly  name="invoice_id" id="input-invoice_id" class="form-control"
-                        value="{{ $invoice_id ?? '' }}" required>
-                        <input  type="text" name="discounted_total" id="input-discounted_total" class="form-control"
-                        value="{{ $discounted_total ?? '' }}" required>
+                        <input type="hidden"  readonly  name="person_data_id" id="input-person_data_id" class="form-control"
+                        value="{{ $person_data_id ?? '' }}" required>
+                        <input  type="hidden" name="discounted_total" id="input-total_invoices" class="form-control"
+                        value="{{ $total_invoices ?? '' }}" required>
 
                         {{--  Applied Discounts  --}}
                         <h6 class="heading-small text-muted mb-4">{{ __('Applied discounts') }}</h6>
@@ -60,9 +71,9 @@
                                         <th scope="col">{{ __('Select') }}</th>
                                         <th scope="col">{{ __('Percentage') }}</th>
                                         <th scope="col">{{ __('Total with discount') }}</th>
+                                        <th scope="col">{{ __('Difference') }}</th>
                                         <th scope="col">{{ __('Start date') }}</th>
                                         <th scope="col">{{ __('End date') }}</th>
-                                        <th scope="col">{{ __('Amount of days') }}</th>
                                     </tr>
                                 </thead>
                                 <tbody>  
@@ -86,6 +97,7 @@
     // CSRF Token
     var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
     var appliedDiscounts = [];
+    var percentages = [];
 
     function addDays(date, days) {
         var result = new Date(date);
@@ -95,31 +107,19 @@
     
     class AppliedDiscount {
         active = 0;
-        end_date = new Date();
-        end = new Date();
+        status = 'ACTIVE';
         discounted_total = 0;
-        constructor(invoice_id, discount_id, discount_percentage, 
-                    invoice_total, start_date, days, id){
-            this.invoice_id = invoice_id;
-            this.discount_id = discount_id;
+        difference = 0;
+        constructor(person_data_id, discount_percentage, 
+                    total_invoices, start_date, end_date, id){
+            this.person_data_id = person_data_id;
             this.discount_percentage = discount_percentage;
             this.invoice_total = invoice_total;
+            this.discounted_total = discount_percentage * invoice_total / 100;
+            this.difference = this.invoice_total - this.discounted_total;
             this.start_date = start_date.toISOString().split('T')[0]+' '+start_date.toTimeString().split(' ')[0];
-            this.start = start_date;
-            this.days = days;
-            this.end_date = addDays(this.start, this.days);
-            this.end = new Date(this.end_date);
-            this.end_date = this.end_date.toISOString().split('T')[0]+' '+this.end_date.toTimeString().split(' ')[0];
+            this.end_date = end_date.toISOString().split('T')[0]+' '+end_date.toTimeString().split(' ')[0];
             this.id = id;
-        }
-
-        get discountedTotal(){
-            return this.calcDiscountedTotal();
-        }
-
-        calcDiscountedTotal(){
-            this.discounted_total = this.discount_percentage * this.invoice_total / 100;
-            return this.discounted_total;
         }
 
         get startDate(){
@@ -135,7 +135,7 @@
 
     function sendAppliedDiscounts(){
         $.ajax({
-            url: "{{route('invoices.discounts')}}",
+            url: "{{route('person_data.discounts')}}",
             dataType: 'json',
             type:"post",
             data: {
@@ -179,36 +179,6 @@
 
     var today = yyyy + '-' + mm + '-' + dd;
 
-    function getDiscounts(){
-        $.ajax({
-            url: "{{route('discounts.get')}}",
-            dataType: 'json',
-            type:"post",
-            data: {
-                "_token": "{{ csrf_token() }}",
-            },
-        success: function (response) {
-                const discounts = response['data'];
-                var count = discounts.length;
-
-                var output = "";
-
-                for(var i = 0; i < count; i++){
-                    output += "<tr value="+discounts[i].id+">"
-                        + "<td>  <input type='checkbox' name='discount'>  </td>"
-                        + "<td id=percentage"+discounts[i].id+">" + discounts[i].percentage + "</td>"
-                        + "<td>" + discounts[i].range_of_days + "</td>" 
-                        + "<td id=days"+discounts[i].id+">" + discounts[i].amount_of_days + "</td>"
-                        +  "</tr>";
-
-                }
-                $('#discounts_table tbody').html(output);
-
-            }
-        });
-            return false;
-    }
-
     function displayAppliedDiscounts(){
         var output = "";
 
@@ -216,20 +186,24 @@
             output += "<tr value="+appliedDiscounts[i].id+">" 
                 + "<td>  <input type='radio'  name='active' checked></td>"
                 + "<td id=percentage"+appliedDiscounts[i].id+">" + appliedDiscounts[i].discount_percentage + "</td>"
-                + "<td>" + appliedDiscounts[i].discountedTotal + "</td>" 
+                + "<td>" + appliedDiscounts[i].discounted_total + "</td>"
+                + "<td>" + appliedDiscounts[i].difference + "</td>" 
                 + "<td>" + appliedDiscounts[i].startDate + "</td>" 
                 + "<td>" + appliedDiscounts[i].endDate + "</td>" 
-                + "<td id=days"+appliedDiscounts[i].id+">" + appliedDiscounts[i].days + "</td>"
                 +  "</tr>";
         }
 
         $('#applied_discounts_table tbody').html(output);
     }
 
+    function addPossibleDiscount(possibleDiscount){
+        appliedDiscounts.push(possibleDiscount);
+    }
+
 
     $(document).ready(function(){
+        percentages = [20, 25, 30];
         $('#modal-form').on('shown.bs.modal', function (e) {
-             getDiscounts();
         })
 
         
@@ -255,10 +229,10 @@
 
         
           
-          $("#generate").click(function(){
+        $("#generate").click(function(){
             appliedDiscounts = [];
-            const invoice_id = Number(document.getElementById("input-invoice_id").value); 
-            const invoice_total = Number(document.getElementById("input-discounted_total").value);
+            const person_data_id = Number(document.getElementById("input-person_data_id").value); 
+            const total_invoices = Number(document.getElementById("input-discounted_total").value);
 
             var today2 = new Date();
             var time = today2.toTimeString().split(' ')[0]; 
@@ -266,31 +240,22 @@
             var date = document.getElementById("input-start_date").value; 
             var dateTime = date+' '+time;
             var start_date = new Date(dateTime);
+            var enddate = document.getElementById("input-end_date").value;
+            var end_date = new Date(enddate+' '+time);
 
+            for(var i = 0; i < percentages.length, i++){
+                var possibleDiscount = new AppliedDiscount(person_data_id,
+                percentages[i], total_invoices, start_date, end_date, percentages.length);
+                addPossibleDiscount(possibleDiscount);
+            }
+
+            
 
             $("#discounts_table tbody").find('input[name="discount"]').each(function(){
 
                 if($(this).is(":checked")){
                                  
-                    var discount_id = Number($(this).parents("tr").attr('value'));
-                    var discount_percentage = Number(document.getElementById("percentage"+discount_id).innerHTML);
-                    
-                    var days = Number(document.getElementById("days"+discount_id).innerHTML);
-
-                    var start2 = new Date();
-
-                    if(appliedDiscounts.length > 0){
-                        
-                        start2= new Date(appliedDiscounts[appliedDiscounts.length-1].end);                     
-                    } 
-                    else {
-                        start2 = new Date(start_date);
-                    }
-
-                    var ad = new AppliedDiscount(invoice_id, discount_id, discount_percentage, 
-                    invoice_total, start2, days, appliedDiscounts.length);
-
-                    appliedDiscounts.push(ad);                    
+                                       
 
                 }
 

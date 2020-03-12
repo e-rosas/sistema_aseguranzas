@@ -5,30 +5,31 @@ namespace App;
 use Carbon\Carbon as Carbon;
 use Illuminate\Database\Eloquent\Model;
 
-class DiscountInvoice extends Model
+class DiscountPersonData extends Model
 {
     public $fillable = [
-        'invoice_id',
-        'discount_id',
+        'person_data_id',
+        'discount_percentage',
         'start_date',
         'end_date',
         'active',
+        'status',
         'discounted_total',
     ];
     public static $rules = [
-        'invoice_id' => 'required',
-        'discount_id' => 'required',
+        'person_data_id' => 'required',
+        'discount_percentage' => 'required|between:0,99.99',
         'start_date' => 'date|required',
         'end_date' => 'date|required',
         'discounted_total' => 'numeric|required|between:0,999999999.999',
         'active' => 'boolean',
     ];
-    protected $with = ['discount'];
     protected $casts = [
         'id' => 'integer',
-        'invoice_id' => 'integer',
-        'discount_id' => 'integer',
+        'person_data_id' => 'integer',
+        'discount_percentage' => 'decimal:5',
         'active' => 'boolean',
+        'status' => 'string',
         'discounted_total' => 'decimal:13',
     ];
 
@@ -49,13 +50,8 @@ class DiscountInvoice extends Model
         $this->attributes['end_date'] = Carbon::parse($value)->toDateTimeString();
     }
 
-    public function invoice()
+    public function person_data()
     {
         return $this->belongsTo('App\Invoice');
-    }
-
-    public function discount()
-    {
-        return $this->belongsTo('App\Discount');
     }
 }

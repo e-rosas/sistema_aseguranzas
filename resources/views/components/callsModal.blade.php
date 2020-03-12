@@ -12,8 +12,8 @@
                                 {{--  Invoice --}}
                                 <div class="form-group">
                                     <div class="input-group input-group-alternative">
-                                        <input readonly type="hidden" name="invoice_id" id="input-invoice_id" class="form-control"
-                                        value="{{ $invoice_id ?? '' }}" required>
+                                        <input readonly type="hidden" name="person_data_id" id="input-person_data_id" class="form-control"
+                                        value="{{ $person_data_id ?? '' }}" required>
                                     </div>
                                 </div>
                                 {{--  Number --}}
@@ -99,7 +99,7 @@
             type:"post",
             data: {
                 "_token": "{{ csrf_token() }}",
-                "invoice_id": {{ $invoice_id }},
+                "person_data_id": {{ $person_data_id }},
                 "number": number,
                 "claim": claim,
                 "date": date,

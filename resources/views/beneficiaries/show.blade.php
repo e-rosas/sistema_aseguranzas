@@ -34,7 +34,9 @@
         </div>
         <div class="row mt-5">
             <div class="col-xl-8">
-                <div class="card shadow">
+                @include('components.personTab', ['invoices'=>$invoices, 'person_data'=>$beneficiary->person_data,
+                    'total_invoices'=>$totals->getAmount_due(), 'total'=>$totals->])
+                {{-- <div class="card shadow">
                     <div class="card-header border-0">
                         <div class="row align-items-center">
                             <div class="col">
@@ -51,7 +53,7 @@
                             {{ $invoices->links() }}
                         </nav>
                     </div>
-                </div>
+                </div> --}}
             </div>
             <div class="col-xl-4 order-xl-2 mb-5 mb-xl-0">
                 <div class="card card-profile shadow">
@@ -96,4 +98,5 @@
             </div>
         </div>  
     </div>
+    @include('calls.partials.editCallModal', ['person_data_id' => $person_data_id->id])
 @endsection

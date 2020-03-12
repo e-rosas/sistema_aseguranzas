@@ -81,6 +81,21 @@ class PersonData extends Model
         return $this->insuree();
     }
 
+    public function calls()
+    {
+        return $this->hasMany('App\Call')->orderBy('date', 'desc');
+    }
+
+    public function discounts()
+    {
+        return $this->hasMany('App\DiscountPersonData');
+    }
+
+    public function payments()
+    {
+        return $this->hasMany('App\Payment')->orderBy('date', 'desc');
+    }
+
     public function fullName()
     {
         return $this->last_name.' '.$this->maiden_name.' '.$this->name;
