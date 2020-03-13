@@ -16,8 +16,6 @@ class CreatePersonStats
 
     /**
      * Handle the event.
-     *
-     * @param object $event
      */
     public function handle(PersonDataCreated $event)
     {

@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\CalculatePersonStats;
 use App\Beneficiary;
 use App\Insuree;
 use App\PersonData;
+use App\PersonStats;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -101,6 +103,30 @@ class PersonDataController extends Controller
      */
     public function destroy(PersonData $personData)
     {
+    }
+
+    public function fullNames()
+    {
+        $persons = PersonData::get();
+        foreach ($persons as $person) {
+            $person['full_name'] = $person->fullName();
+            $person->save();
+        }
+    }
+
+    public function Stats()
+    {
+        $amounts = new CalculatePersonStats();
+        $person_data_ids = PersonData::select('id')->get();
+        foreach ($person_data_ids as $person_data_id) {
+            $stats = [];
+            $amounts->calculateAmounts($person_data_id);
+            $stats['person_data_id'] = $person_data_id;
+            $stats['status'] = 0;
+            $stats['amount_paid'] = 0;
+            $stats['amount_due'] = $amounts->amount_due;
+            PersonStats::create($stats);
+        }
     }
 
     protected function validateData()

@@ -24,6 +24,7 @@ class CreatePersonDataTable extends Migration
             $table->string('phone_number');
             $table->string('email')->nullable();
             $table->boolean('insured');
+            $table->string('full_name');
             $table->timestamps();
         });
     }

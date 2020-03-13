@@ -13,6 +13,7 @@ class PersonData extends Model
         'last_name',
         'maiden_name',
         'name',
+        'full_name',
         'birth_date',
         'address',
         'city',
@@ -28,9 +29,10 @@ class PersonData extends Model
      * @var array
      */
     public static $rules = [
-        'last_name' => 'max:255',
-        'maiden_name' => 'max:255',
-        'name' => 'required|min:2|max:255',
+        'last_name' => 'max:120',
+        'maiden_name' => 'max:20',
+        'name' => 'required|min:2|max:100',
+        'full_name' => 'max:250',
         'birth_date' => 'date',
         'address' => 'max:255',
         'city' => 'max:255',
@@ -55,9 +57,10 @@ class PersonData extends Model
      */
     protected $casts = [
         'id' => 'integer',
-        'last_nane' => 'string',
+        'last_name' => 'string',
         'maiden_name' => 'string',
         'name' => 'string',
+        'full_name' => 'string',
         'birth_date' => 'date:Y-m-d',
         'address' => 'string',
         'city' => 'string',
@@ -67,6 +70,11 @@ class PersonData extends Model
         'email' => 'string',
         'insured' => 'boolean',
     ];
+
+    public function person_stats()
+    {
+        return $this->hasOne('App\PersonStats');
+    }
 
     public function insuree()
     {

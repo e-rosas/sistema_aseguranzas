@@ -14,7 +14,7 @@ class SearchPatientController extends Controller
         $search = $request->search;
         $patients = PersonData::query()
             ->whereLike(['name', 'last_name', 'maiden_name'], $search)
-            ->get()->take(15)
+            ->get()->take(25)
         ;
         $response = [];
         foreach ($patients as $patient) {
@@ -36,7 +36,7 @@ class SearchPatientController extends Controller
                 $query->whereLike(['name', 'last_name', 'maiden_name'], $search)
                 ;
             })
-            ->get()->take(10)
+            ->get()->take(20)
         ;
         $response = [];
         foreach ($patients as $patient) {
