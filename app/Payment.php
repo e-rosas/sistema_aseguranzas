@@ -11,18 +11,18 @@ class Payment extends Model
         'number',
         'comments',
         'date',
-        'invoice_id',
+        'person_data_id',
     ];
     public static $rules = [
         'amount' => 'required|numeric|between:0,999999999.999',
         'comments' => 'max:1000',
         'number' => 'required',
         'date' => 'date',
-        'invoice_id' => 'required',
+        'person_data_id' => 'required',
     ];
     protected $casts = [
         'id' => 'integer',
-        'invoice_id' => 'integer',
+        'person_data_id' => 'integer',
         'comments' => 'string',
         'amount' => 'decimal:13',
         'number' => 'string',
@@ -35,8 +35,8 @@ class Payment extends Model
         return number_format($value, 3);
     }
 
-    public function invoice()
+    public function person_data()
     {
-        return $this->belongsTo('App\Invoice');
+        return $this->belongsTo('App\PersonData');
     }
 }

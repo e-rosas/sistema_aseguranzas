@@ -52,6 +52,6 @@ class DiscountPersonData extends Model
 
     public function person_data()
     {
-        return $this->belongsTo('App\Invoice');
+        return $this->belongsTo('App\PersonData');
     }
 }

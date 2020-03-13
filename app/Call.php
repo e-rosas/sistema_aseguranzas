@@ -11,18 +11,18 @@ class Call extends Model
         'comments',
         'claim',
         'date',
-        'invoice_id',
+        'person_data_id',
     ];
     public static $rules = [
         'number' => 'required',
         'comments' => 'max:1000',
         'date' => 'date',
         'claim' => 'max:255',
-        'invoice_id' => 'required',
+        'person_data_id' => 'required',
     ];
     protected $casts = [
         'id' => 'integer',
-        'invoice_id' => 'integer',
+        'person_data_id' => 'integer',
         'comments' => 'string',
         'claim' => 'string',
         'number' => 'string',
@@ -30,8 +30,8 @@ class Call extends Model
 
     protected $dates = ['date'];
 
-    public function invoice()
+    public function person_data()
     {
-        return $this->belongsTo('App\Invoice');
+        return $this->belongsTo('App\PersonData');
     }
 }

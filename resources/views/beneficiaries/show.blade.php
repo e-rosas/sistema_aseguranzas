@@ -22,12 +22,27 @@
                                 <span class="h2 font-weight-bold mb-0"> <a href="{{ route('insurees.show', $beneficiary->insuree) }}"> {{ $beneficiary->insuree->fullName()  }} </a></span>
                             </div>
                             <div class="col-auto">
-                            <div class="icon icon-shape bg-orange text-white rounded-circle shadow">
-                                <i class="fas fa-dollar-sign"></i>
-                            </div>
+                                <div class="icon icon-shape bg-orange text-white rounded-circle shadow">
+                                    <i class="fas fa-dollar-sign"></i>
+                                </div>
                             </div>
                         </div>
-            
+                        <div class="row">
+                            {{--  Latest call  --}}
+                            @if ($beneficiary->person_data->calls->count()>0)
+                            <div class="col-md-4 col-auto form-group">
+                                <label class="form-control-label" for="label-latest_call">{{ __('Latest call') }}</label>
+                                <label id="label-amount_due">{{ $beneficiary->person_data->calls[0]->date->format('l jS \\of F Y')}}</label>
+                            </div>
+                            @endif
+                            {{--  Latest payment  --}}
+                            @if ($beneficiary->person_data->payments->count()>0)
+                            <div class="col-md-3 col-auto form-group">
+                                <label class="form-control-label" for="label-latest_call">{{ __('Latest payment') }}</label>
+                                <label id="label-amount_due">{{ $beneficiary->person_data->payments[0]->date->format('l jS \\of F Y')}}</label>
+                            </div>
+                            @endif
+                        </div>
                     </div> 
                 </div>
             </div>
@@ -35,7 +50,7 @@
         <div class="row mt-5">
             <div class="col-xl-8">
                 @include('components.personTab', ['invoices'=>$invoices, 'person_data'=>$beneficiary->person_data,
-                    'total_invoices'=>$totals->getAmount_due(), 'total'=>$totals->])
+                    'total_invoices'=>$totals->getAmount_due(), 'total'=>$totals->getTotal()])
                 {{-- <div class="card shadow">
                     <div class="card-header border-0">
                         <div class="row align-items-center">
@@ -98,5 +113,5 @@
             </div>
         </div>  
     </div>
-    @include('calls.partials.editCallModal', ['person_data_id' => $person_data_id->id])
+    @include('calls.partials.editCallModal', ['person_data_id' => $beneficiary->person_data->id])
 @endsection

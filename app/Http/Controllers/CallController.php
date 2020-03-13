@@ -15,7 +15,7 @@ class CallController extends Controller
      */
     public function index()
     {
-        $calls = \App\Call::with(['invoice.person_data'])->paginate(15);
+        $calls = \App\Call::with(['Person.person_data'])->paginate(15);
 
         return view('calls.index', compact('calls'));
     }
@@ -39,7 +39,7 @@ class CallController extends Controller
         $validated = $this->validateCall();
         Call::create($validated);
 
-        return $this->getInvoiceCalls($request->invoice_id);
+        return $this->getPersonCalls($request->Person_id);
     }
 
     /**
@@ -73,7 +73,7 @@ class CallController extends Controller
         $call->fill($validated);
         $call->save();
 
-        return $this->getInvoiceCalls($call->invoice_id);
+        return $this->getPersonCalls($call->person_data_id);
     }
 
     /**
@@ -99,9 +99,9 @@ class CallController extends Controller
         return new CallResource($call);
     }
 
-    private function getInvoiceCalls($invoice_id)
+    private function getPersonCalls($person_data_id)
     {
-        $calls = Call::where('invoice_id', $invoice_id)->paginate(3);
+        $calls = Call::where('person_data_id', $person_data_id)->paginate(3);
 
         return CallResource::collection($calls);
     }

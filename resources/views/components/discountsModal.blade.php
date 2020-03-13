@@ -98,13 +98,7 @@
     var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
     var appliedDiscounts = [];
     var percentages = [];
-
-    function addDays(date, days) {
-        var result = new Date(date);
-        result.setDate(result.getDate() + days);
-        return result;
-      }
-    
+   
     class AppliedDiscount {
         active = 0;
         status = 'ACTIVE';
@@ -243,7 +237,7 @@
             var enddate = document.getElementById("input-end_date").value;
             var end_date = new Date(enddate+' '+time);
 
-            for(var i = 0; i < percentages.length, i++){
+            for(var i = 0; i < percentages.length; i++){
                 var possibleDiscount = new AppliedDiscount(person_data_id,
                 percentages[i], total_invoices, start_date, end_date, percentages.length);
                 addPossibleDiscount(possibleDiscount);
