@@ -29,7 +29,7 @@
                 <div class="col-md-12 col-auto text-right">
                     <button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#modal-form">{{ __('Add') }}</i></button>
                     <br />
-                    @component('components.discountsModal',['person_data_id'=>$person_data->id, 'total_invoices'=>$total])
+                    @component('components.discountsModal',['person_data_id'=>$person_data->id, 'stats'=>$stats])
                         
                     @endcomponent
                 </div>

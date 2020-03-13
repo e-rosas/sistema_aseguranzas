@@ -2,61 +2,41 @@
 
 namespace App\Actions;
 
-class CalculateTotalsOfInvoices
+class CalculateTotalsOfPayments
 {
-    public $total = 0;
-    public $total_with_discounts = 0;
-    public $amount_due = 0;
-    private $invoices = [];
+    public $amount_paid = 0;
+    private $payments = [];
 
-    public function __construct($invoices)
+    public function __construct($payments)
     {
-        $this->addInvoices($invoices);
+        $this->addPayments($payments);
     }
 
-    public function addInvoices($invoices)
+    public function addPayments($payments)
     {
-        $invoices->map(function ($invoice) {
-            array_push($this->invoices, $invoice);
+        $payments->map(function ($payment) {
+            array_push($this->payments, $payment);
         });
     }
 
     /**
-     * Get the value of total.
+     * Get the value of amount_paid.
      */
-    public function getTotal()
+    public function getAmount_paid()
     {
-        return number_format($this->total, 3);
-    }
-
-    /**
-     * Get the value of total_with_discounts.
-     */
-    public function getTotal_with_discounts()
-    {
-        return number_format($this->total_with_discounts, 3);
-    }
-
-    /**
-     * Get the value of amount_due.
-     */
-    public function getAmount_due()
-    {
-        return number_format($this->amount_due, 3);
+        return number_format($this->amount_paid, 3);
     }
 
     public function calculateTotals()
     {
-        foreach ($this->invoices as $invoice) {
-            $this->total += (float) str_replace(',', '', $invoice->total);
-            $this->total_with_discounts += (float) str_replace(',', '', $invoice->total_with_discounts);
-            $this->amount_due += (float) str_replace(',', '', $invoice->amount_due);
+        foreach ($this->payments as $payment) {
+            $this->amount_paid += (float) str_replace(',', '', $payment->amount_paid);
         }
     }
 
-    public function getInvoicesCount()
+    public function getPaymentsCount()
     {
-        return count($this->invoices);
+        return count($this->payments);
     }
 
     // Shortens a number and attaches K, M, B, etc. accordingly

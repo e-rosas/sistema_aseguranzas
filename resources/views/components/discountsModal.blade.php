@@ -6,16 +6,21 @@
                     <div class="card-header bg-transparent">
                         <h5 class="heading-small text-muted mb-4">{{ __('Select discounts') }}</h5>
                         {{--  discount --}}
-                        <div class="form-group {{ $errors->has('discount_percentage') ? ' has-danger' : '' }}">
-                            <div class="input-group input-group-alternative">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="fas fa-calendar"></i></span>
+                        <div class="form-row">
+                            <div class=" col-md-4 form-group {{ $errors->has('discount_percentage') ? ' has-danger' : '' }}">
+                                <div class="input-group input-group-alternative">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-percent"></i></span>
+                                    </div>
+                                    <input type="number" step="0.1" min="0" max="100" name="new_percentage" id="input-new_discount_percentage" class="form-control form-control-alternative"
+                                    value=10>
                                 </div>
-                                <label for="input-new_discount_percentage">{{ __('Add percentage') }}</label>
-                                <input type="number" step="0.1" min="0" max="100" name="new_percentage" id="input-new_discount_percentage" class="form-control form-control-alternative"
-                                value=10>
+                            </div> 
+                            <div class="col-md-4 text-right">
+                                <button id="add_discount" type="button" class="btn btn-outline-primary">{{ __('Add') }}</button>
                             </div>
-                        </div> 
+                        </div>
+                        
                         {{--  start_date  --}}
                         <div class="form-group {{ $errors->has('start_date') ? ' has-danger' : '' }}">
                             <div class="input-group input-group-alternative">
@@ -49,30 +54,26 @@
                         {{--  Generate  --}}
                         <div class="row">
                             <div class="col text-center">
-                                <button id="generate" type="button" class="btn btn-outline-primary btn-sm btn-block">{{ __('Generate') }}</button>
+                                <button id="generate" type="button" class="btn btn-outline-primary btn-sm btn-block">{{ __('Preview discounts') }}</button>
                             </div>
                         </div>  
                         
 
                     </div>
                     <div class="card-body px-lg-5 py-lg-5">
-                        {{--  Invoice --}}
-                        <input type="hidden"  readonly  name="person_data_id" id="input-person_data_id" class="form-control"
-                        value="{{ $person_data_id ?? '' }}" required>
-                        <input  type="hidden" name="discounted_total" id="input-total_invoices" class="form-control"
-                        value="{{ $total_invoices ?? '' }}" required>
 
                         {{--  Applied Discounts  --}}
                         <h6 class="heading-small text-muted mb-4">{{ __('Applied discounts') }}</h6>
                         <div class="table-responsive">
-                            <table id="applied_discounts_table" class="table align-items-center table-flush">
+                            <table id="applied_discounts_table" class="table align-items-center">
                                 <thead class="thead-light">
                                     <tr>
                                         <th scope="col">{{ __('Select') }}</th>
-                                        <th scope="col">{{ __('Percentage') }}</th>
-                                        <th scope="col">{{ __('Total with discount') }}</th>
+                                        <th scope="col">{{ __('Discount %') }}</th>
+                                        <th scope="col">{{ __('Total with new discount') }}</th>
+                                        <th scope="col">{{ __('Amount due') }}</th>
                                         <th scope="col">{{ __('Difference') }}</th>
-                                        <th scope="col">{{ __('Start date') }}</th>
+                                        <th scope="col">{{ __('Difference %') }}</th>
                                         <th scope="col">{{ __('End date') }}</th>
                                     </tr>
                                 </thead>
@@ -83,7 +84,7 @@
                         {{--  Select discount  --}}
                         <div class="row">
                             <div class="col text-center">
-                                <button id="select" type="button" class="btn btn-outline-success btn-sm btn-block">{{ __('Select') }}</button>
+                                <button id="select" type="button" class="btn btn-success btn-sm btn-block">{{ __('Apply Discount') }}</button>
                             </div>
                         </div>  
                     </div>
@@ -105,24 +106,38 @@
         discounted_total = 0;
         difference = 0;
         constructor(person_data_id, discount_percentage, 
-                    total_invoices, start_date, end_date, id){
+                    amount_due_without_discounts, amount_due, start_date, end_date, id){
             this.person_data_id = person_data_id;
             this.discount_percentage = discount_percentage;
-            this.invoice_total = invoice_total;
-            this.discounted_total = discount_percentage * invoice_total / 100;
-            this.difference = this.invoice_total - this.discounted_total;
+            this.amount_due_without_discounts = amount_due_without_discounts;
+            this.discounted_total = discount_percentage * amount_due_without_discounts / 100;
+            this.amount_due = amount_due;
+            this.difference = this.discounted_total - this.amount_due;
+            this.percentage_difference = this.difference / this.amount_due * 100;
             this.start_date = start_date.toISOString().split('T')[0]+' '+start_date.toTimeString().split(' ')[0];
             this.end_date = end_date.toISOString().split('T')[0]+' '+end_date.toTimeString().split(' ')[0];
             this.id = id;
         }
 
         get startDate(){
-            return this.start.toLocaleString();
+            return this.start_date.toLocaleString();
         }
 
 
         get endDate(){
-            return this.end.toLocaleString();
+            return this.end_date.toLocaleString();
+        }
+
+        get discountedTotal(){
+            return this.discounted_total.toFixed(2);
+        }
+
+        get Difference(){
+            return this.difference.toFixed(2);
+        }
+
+        get DifferencePercentage(){
+            return this.percentage_difference.toFixed(2) + "%";
         }
 
     }
@@ -177,12 +192,20 @@
         var output = "";
 
         for(var i = 0; i < appliedDiscounts.length; i++){
-            output += "<tr value="+appliedDiscounts[i].id+">" 
+            var color = "";
+            if(appliedDiscounts[i].difference < 0){
+                color = "table-danger";
+            }
+            else if(appliedDiscounts[i].percentage_difference < 5){
+                color = "table-warning";
+            }
+            output += "<tr value="+appliedDiscounts[i].id+" class="+color+">" 
                 + "<td>  <input type='radio'  name='active' checked></td>"
                 + "<td id=percentage"+appliedDiscounts[i].id+">" + appliedDiscounts[i].discount_percentage + "</td>"
-                + "<td>" + appliedDiscounts[i].discounted_total + "</td>"
-                + "<td>" + appliedDiscounts[i].difference + "</td>" 
-                + "<td>" + appliedDiscounts[i].startDate + "</td>" 
+                + "<td>" + appliedDiscounts[i].discountedTotal + "</td>"
+                + "<td>" + appliedDiscounts[i].amount_due + "</td>" 
+                + "<td>" + appliedDiscounts[i].Difference + "</td>" 
+                + "<td>" + appliedDiscounts[i].DifferencePercentage + "</td>" 
                 + "<td>" + appliedDiscounts[i].endDate + "</td>" 
                 +  "</tr>";
         }
@@ -225,8 +248,9 @@
           
         $("#generate").click(function(){
             appliedDiscounts = [];
-            const person_data_id = Number(document.getElementById("input-person_data_id").value); 
-            const total_invoices = Number(document.getElementById("input-discounted_total").value);
+            const person_data_id = {{ $person_data_id }}
+            const amount_due_without_discounts = {{ $stats->amount_due_without_discounts }}
+            const amount_due = {{ $stats->amount_due }};
 
             var today2 = new Date();
             var time = today2.toTimeString().split(' ')[0]; 
@@ -239,7 +263,7 @@
 
             for(var i = 0; i < percentages.length; i++){
                 var possibleDiscount = new AppliedDiscount(person_data_id,
-                percentages[i], total_invoices, start_date, end_date, percentages.length);
+                percentages[i], amount_due_without_discounts, amount_due, start_date, end_date, percentages.length);
                 addPossibleDiscount(possibleDiscount);
             }
 
