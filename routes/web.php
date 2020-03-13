@@ -50,8 +50,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('insurees/searchIndex', 'SearchPatientController@searchInsureeIndex')->name('insurees.searchIndex');
     Route::post('services/searchIndex', 'SearchProductController@searchServiceIndex')->name('services.searchIndex');
 
-    Route::post('discounts/get', 'DiscountsInvoiceController@discounts')->name('discounts.get');
-    Route::post('invoices/adddiscounts', 'DiscountsInvoiceController@addAppliedDiscounts')->name('invoices.discounts');
+    Route::post('person_data/adddiscount', 'DiscountsInvoiceController@addDiscount')->name('person_data.discounts');
 
     Route::post('items/search', 'SearchProductController@searchItem')->name('items.search');
     Route::post('items/find', 'SearchProductController@findItem')->name('items.find');

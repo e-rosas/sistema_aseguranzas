@@ -112,21 +112,6 @@ class Invoice extends Model
         return $this->hasMany('App\InvoiceService');
     }
 
-    public function calls()
-    {
-        return $this->hasMany('App\Call')->orderBy('date', 'desc');
-    }
-
-    public function discounts()
-    {
-        return $this->hasMany('App\DiscountInvoice');
-    }
-
-    public function payments()
-    {
-        return $this->hasMany('App\Payment')->orderBy('date', 'desc');
-    }
-
     public function findInsuree()
     {
         $insureeid = DB::table('beneficiaries')->where('person_data_id', $this->person_data_id)->value('insuree_id');
@@ -153,23 +138,15 @@ class Invoice extends Model
 
     public function getAmountDue()
     {
-        if (0 == strcmp($this->status, 'with benefits')) {
+        /* if (0 == strcmp($this->status, 'with benefits')) {
             $applied_discount = DB::table('discount_invoices')
                 ->where('invoice_id', $this->id)
                 ->where('active', true)
             ;
 
             return $applied_discount->discounted_total;
-        }
+        } */
 
         return $this->amount_due;
-    }
-
-    public function callCount()
-    {
-        return DB::table('calls')
-            ->where('invoice_id', $this->id)
-            ->count()
-        ;
     }
 }

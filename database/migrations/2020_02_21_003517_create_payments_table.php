@@ -13,12 +13,12 @@ class CreatePaymentsTable extends Migration
     {
         Schema::create('payments', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('invoice_id');
+            $table->unsignedBigInteger('person_data_id');
             $table->string('number');
             $table->text('comments')->nullable();
             $table->dateTime('date');
             $table->decimal('amount', 13, 4);
-            $table->foreign('invoice_id')->references('id')->on('invoices')->onDelete('cascade');
+            $table->foreign('person_data_id')->references('id')->on('person_data')->onDelete('cascade');
             $table->timestamps();
         });
     }

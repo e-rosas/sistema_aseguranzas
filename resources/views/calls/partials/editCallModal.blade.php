@@ -92,14 +92,13 @@
             data: {
                 "_token": "{{ csrf_token() }}",
                 "id": id,
-                "invoice_id": {{ $invoice_id }},
+                "person_data_id": {{ $person_data_id }},
                 "number": number,
                 "claim": claim,
                 "date": date,
                 "comments": comments,
             },
         success: function (response) {
-            console.log(response.data);
             var calls = response.data;
             displayCalls(calls); //on callsModal
                 
