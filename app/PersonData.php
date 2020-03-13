@@ -2,10 +2,13 @@
 
 namespace App;
 
+use App\Events\PersonDataCreated;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
 
 class PersonData extends Model
 {
+    use Notifiable;
     public $fillable = [
         'last_name',
         'maiden_name',
@@ -35,6 +38,14 @@ class PersonData extends Model
         'postal_code' => 'digits:5',
         'phone_number' => 'max:255',
         'email' => 'max:255',
+    ];
+    /**
+     * The event map for the model.
+     *
+     * @var array
+     */
+    protected $dispatchesEvents = [
+        'saved' => PersonDataCreated::class,
     ];
     protected $dates = ['birth_date'];
     /**
