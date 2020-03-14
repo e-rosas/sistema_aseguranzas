@@ -37,6 +37,11 @@ class PersonDataController extends Controller
         $data = $this->validateData();
         $insuree = $this->validateInsuree();
         $data['insured'] = 1;
+        if (isset($data['maiden_name'])) {
+            $data['full_name'] = $data['last_name'].' '.$data['maiden_name'].' '.$data['name'];
+        } else {
+            $data['full_name'] = $data['last_name'].' '.$data['name'];
+        }
 
         $personData = PersonData::create($data);
         $insuree['person_data_id'] = $personData->id;
@@ -51,6 +56,11 @@ class PersonDataController extends Controller
         $data = $this->validateData();
         $beneficiary = $this->validateBeneficiary();
         $data['insured'] = 0;
+        if (isset($data['maiden_name'])) {
+            $data['full_name'] = $data['last_name'].' '.$data['maiden_name'].' '.$data['name'];
+        } else {
+            $data['full_name'] = $data['last_name'].' '.$data['name'];
+        }
         $insuree = DB::table('insurees')->where('person_data_id', $beneficiary['insuree_id'])->value('id');
         $beneficiary['insuree_id'] = $insuree;
         $personData = PersonData::create($data);

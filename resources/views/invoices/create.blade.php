@@ -72,6 +72,17 @@
                                         </span>
                                     @endif
                                 </div>
+                                <div class="col-md-4 col-auto form-group{{ $errors->has('amount_due') ? ' has-danger' : '' }}">
+                                    <label class="form-control-label" for="input-amount_due">{{ __('Amount due') }}</label>
+                                    <input type="numeric" name="amount_due" id="input-amount_due" class="form-control form-control-alternative{{ $errors->has('amount_due') ? ' is-invalid' : '' }}" 
+                                    placeholder="{{ __('Amount due') }}" value="{{ old('amount_due') }}">
+
+                                    @if ($errors->has('amount_due'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('amount_due') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
                             </div>
                             {{-- <div class="form-row">
                                 {{--  amount_paid  
@@ -642,7 +653,7 @@
         document.getElementById("input-sub_total_discounts").value = this.sub_total_discounted;
         document.getElementById("input-tax").value = this.tax; 
         document.getElementById("input-dtax").value = this.dtax; 
-        document.getElementById("input-amount_paid").value = 0; 
+        
     }
     const current_date = new Date();
     var dd = String(current_date.getDate()).padStart(2, '0');
@@ -703,7 +714,7 @@
                 var person_data_id= $("#person_data_id").children("option:selected").val();
                 var date = document.getElementById("input-date").value; 
                 var amount_due = Number(document.getElementById("input-amount_due").value); 
-                var amount_paid = Number(document.getElementById("input-amount_paid").value); 
+                var amount_paid = 0;
                 var comments = document.getElementById("input-comments").value;
                 var number = document.getElementById("input-number").value;  
                 sendCart(person_data_id, date, amount_due, amount_paid, comments, number);
