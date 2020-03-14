@@ -73,8 +73,8 @@
                                     @endif
                                 </div>
                             </div>
-                            <div class="form-row">
-                                {{--  amount_paid  --}}
+                            {{-- <div class="form-row">
+                                {{--  amount_paid  
                                 <div class="col-md-4 col-auto form-group{{ $errors->has('amount_paid') ? ' has-danger' : '' }}">
                                     <label class="form-control-label" for="input-amount_paid">{{ __('Amount paid') }}</label>
                                     <input type="numeric" name="amount_paid" id="input-amount_paid" class="form-control form-control-alternative{{ $errors->has('amount_paid') ? ' is-invalid' : '' }}" 
@@ -86,7 +86,7 @@
                                         </span>
                                     @endif
                                 </div>
-                                {{--  amount_due  --}}
+                                {{--  amount_due  
                                 <div class="col-md-4 col-auto form-group{{ $errors->has('amount_due') ? ' has-danger' : '' }}">
                                     <label class="form-control-label" for="input-amount_due">{{ __('Amount due') }}</label>
                                     <input type="numeric" name="amount_due" id="input-amount_due" class="form-control form-control-alternative{{ $errors->has('amount_due') ? ' is-invalid' : '' }}" 
@@ -98,7 +98,7 @@
                                         </span>
                                     @endif
                                 </div>
-                            </div>
+                            </div> --}}
                             <div class="form-row">
                                 {{--  Comments  --}}
                                 <div class="col-md-12 col-auto form-group{{ $errors->has('comments') ? ' has-danger' : '' }}">
@@ -560,8 +560,8 @@
                 "_token": "{{ csrf_token() }}",
                 "person_data_id" : person_data_id,
                 "date" : date,
-                "amount_due" : amount_due,
-                "amount_paid" : amount_paid,
+                "amount_due" : 0,
+                "amount_paid" : 0,
                 "comments" : comments,
                 "number" : number,
                 "services" : this.services,

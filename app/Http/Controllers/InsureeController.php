@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\CalculatePersonStats;
 use App\Actions\CalculateTotalsOfInvoices;
 use App\Beneficiary;
 use App\Insuree;
@@ -53,15 +54,16 @@ class InsureeController extends Controller
     public function show(Insuree $insuree)
     {
         $beneficiaries = Beneficiary::with('person_data.invoices')->where('insuree_id', '=', $insuree->id)->paginate(5);
-        $insuree->person_data->load('invoices');
+        $stats = new CalculatePersonStats();
+        $stats->calculateAmounts($insuree->person_data->id);
 
-        $totals = new CalculateTotalsOfInvoices($insuree->person_data->invoices);
+        /* $totals = new CalculateTotalsOfInvoices($insuree->person_data->invoices);
         foreach ($beneficiaries as $beneficiary) {
             $totals->addInvoices($beneficiary->person_data->invoices);
         }
-        $totals->calculateTotals();
+        $totals->calculateTotals(); */
 
-        return view('insurees.show', compact('insuree', 'beneficiaries', 'totals'));
+        return view('insurees.show', compact('insuree', 'beneficiaries', 'stats'));
     }
 
     /**

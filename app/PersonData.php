@@ -117,7 +117,11 @@ class PersonData extends Model
 
     public function fullName()
     {
-        return $this->last_name.' '.$this->maiden_name.' '.$this->name;
+        /* if (!isset($this->maiden_name) || '' === trim($this->maiden_name)) {
+
+        } */
+        return $this->last_name.' '.$this->name;
+        //return $this->last_name.' '.$this->maiden_name.' '.$this->name;
     }
 
     public function addressDetails()

@@ -6,10 +6,10 @@
     <div class="container-fluid mt--7">
         <div class="row"> 
             <div class="col-xl-12 mb-5 mb-xl-0 card-group">
-                @include('components.invoiceStatsCard', ['title' => 'Total', 'value' => $totals->getTotal()])
-                @include('components.invoiceStatsCard', ['title' => 'Total with discounts', 'value' => $totals->getTotal_with_discounts()])
-                @include('components.invoiceStatsCard', ['title' => 'Amount paid', 'value' => $totals->getAmount_paid()])
-                @include('components.invoiceStatsCard', ['title' => 'Amount due', 'value' => $totals->getAmount_due()])
+                @include('components.invoiceStatsCard', ['title' => 'Total', 'value' => $stats->total_invoices->getTotal()])
+                @include('components.invoiceStatsCard', ['title' => 'Total with discounts', 'value' => $stats->total_invoices->getTotal_with_discounts()])
+                @include('components.invoiceStatsCard', ['title' => 'Amount paid', 'value' => $stats->total_payments->getAmount_paid()])
+                @include('components.invoiceStatsCard', ['title' => 'Amount due', 'value' => $stats->getAmount_due()])
             </div>
         </div>
         <div class="row mt-5">
@@ -40,12 +40,12 @@
                             <div class="col">
                                 <div class="card-profile-stats d-flex justify-content-center mt-md-5">
                                     <div>
-                                        <span class="heading"> {{ count($beneficiaries) }} </span>
+                                        <span class="heading"> {{ count($beneficiaries)}} </span>
                                         <span class="description">{{ __('Beneficiaries') }}</span>
                                     </div>
 
                                     <div>
-                                        <span class="heading"> {{ $totals->getInvoicesCount() }} </span>
+                                        <span class="heading"> {{ $stats->total_invoices->getInvoicesCount() }} </span>
                                         <span class="description">{{ __('Invoices') }}</span>
                                     </div>
                                 </div>
@@ -78,7 +78,9 @@
         </div>
         <div class="row mt-5">
             <div class="col-xl-12 mb-5 mb-xl-0">
-                <div class="card shadow">
+                @include('components.personTab', ['invoices'=>$insuree->person_data->invoices()->paginate(5), 'person_data'=>$insuree->person_data,
+                    'stats'=>$stats, 'beneficiaries' => $beneficiaries])
+                {{-- <div class="card shadow">
                     <div class="card-header border-0">
                         <div class="row align-items-center">
                             <div class="col">
@@ -90,7 +92,7 @@
                         </div>
                     </div>
                     @include('insurees.partials.beneficiariesTable', ['beneficiaries' => $beneficiaries])
-                </div>
+                </div> --}}
             </div>
         </div>
     </div>

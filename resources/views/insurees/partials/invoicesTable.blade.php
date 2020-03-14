@@ -6,8 +6,6 @@
                 <th scope="col">{{ __('Date') }}</th>
                 <th scope="col">{{ __('Total') }}</th>
                 <th scope="col">{{ __('Total with discounts') }}</th>
-                <th scope="col">{{ __('Amount paid') }}</th>
-                <th scope="col">{{ __('Amount due') }}</th>
             </tr>
         </thead>
         <tbody>
@@ -17,8 +15,6 @@
                     <td>{{ $invoice->date->format('M-d-Y') }}</td>
                     <td>{{ $invoice->total }}</td>
                     <td>{{ $invoice->total_with_discounts }}</td>
-                    <td>{{ $invoice->amount_paid }}</td>
-                    <td>{{ $invoice->getAmountDue() }}</td>
                 </tr>
             @endforeach
         </tbody>

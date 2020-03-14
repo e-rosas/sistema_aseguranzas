@@ -2,8 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Actions\CalculateTotalsOfInvoices;
-use App\Invoice;
+use App\PersonStats;
 
 class HomeController extends Controller
 {
@@ -22,18 +21,13 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $invoices = Invoice::orderBy('amount_due', 'desc')->get();
-
-        $totals = new CalculateTotalsOfInvoices($invoices);
-        $totals->calculateTotals();
-
-        $topInvoices = [];
+        /* $persons = PersonStats::with('person_data')->orderBy('amount_due', 'desc')->get();
+        $topPersons = [];
 
         for ($i = 0; $i < 10; ++$i) {
-            $invoices[$i]->load('person_data');
-            array_push($topInvoices, $invoices[$i]);
-        }
+            array_push($topPersons, $persons[$i]);
+        } */
 
-        return view('dashboard', compact('totals', 'topInvoices'));
+        return view('dashboard');
     }
 }

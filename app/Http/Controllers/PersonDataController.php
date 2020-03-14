@@ -107,7 +107,7 @@ class PersonDataController extends Controller
 
     public function fullNames()
     {
-        $persons = PersonData::get();
+        $persons = PersonData::whereNull('maiden_name')->get();
         foreach ($persons as $person) {
             $person['full_name'] = $person->fullName();
             $person->save();
@@ -120,8 +120,8 @@ class PersonDataController extends Controller
         $person_data_ids = PersonData::select('id')->get();
         foreach ($person_data_ids as $person_data_id) {
             $stats = [];
-            $amounts->calculateAmounts($person_data_id);
-            $stats['person_data_id'] = $person_data_id;
+            $amounts->calculateAmounts($person_data_id->id);
+            $stats['person_data_id'] = $person_data_id->id;
             $stats['status'] = 0;
             $stats['amount_paid'] = 0;
             $stats['amount_due'] = $amounts->amount_due;
