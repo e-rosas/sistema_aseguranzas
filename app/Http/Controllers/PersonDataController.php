@@ -107,7 +107,7 @@ class PersonDataController extends Controller
 
     public function fullNames()
     {
-        $persons = PersonData::whereNull('maiden_name')->get();
+        $persons = PersonData::whereNotNull('maiden_name')->get();
         foreach ($persons as $person) {
             $person['full_name'] = $person->fullName();
             $person->save();
