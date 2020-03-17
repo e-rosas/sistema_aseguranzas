@@ -134,6 +134,7 @@ class PersonDataController extends Controller
             $stats['person_data_id'] = $person_data_id->id;
             $stats['status'] = 0;
             $stats['amount_paid'] = 0;
+            $stats['personal_amount_due'] = 0;
             $stats['amount_due'] = $amounts->amount_due;
             PersonStats::create($stats);
         }

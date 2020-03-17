@@ -15,6 +15,7 @@ class CreatePersonStatsTable extends Migration
             $table->unsignedBigInteger('person_data_id')->primary();
             $table->decimal('amount_paid', 13, 4)->default(0);
             $table->decimal('amount_due', 13, 4)->default(0);
+            $table->decimal('personal_amount_due', 13, 4)->default(0);
             $table->tinyInteger('status')->default(0);
             $table->foreign('person_data_id')->references('id')->on('person_data')->onDelete('cascade');
             $table->timestamps();

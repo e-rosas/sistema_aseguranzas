@@ -35,11 +35,11 @@
                     <button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#modal-form">{{ __('Add') }}</i></button>
                     <br />
                     @component('components.discountsModal',['person_data_id'=>$person_data->id, 'stats'=>$stats])
-                        
+
                     @endcomponent
                 </div>
-                @component('components.discountsTable', ['discounts'=>$person_data->discounts])
-                    
+                @component('components.discountsTable', ['discounts'=>$person_data->discounts()->paginate(5)])
+
                 @endcomponent
             </div>
             <div class="tab-pane fade" id="tabs-icons-text-3" role="tabpanel" aria-labelledby="tabs-icons-text-3-tab">
@@ -47,11 +47,11 @@
                     <button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#modal-call">{{ __('Add') }}</i></button>
                     <br />
                     @component('components.callsModal',['number'=>$person_data->calls->count() + 1, 'person_data_id'=>$person_data->id])
-                        
+
                     @endcomponent
                 </div>
-                @component('components.callsTable', ['calls'=>$person_data->calls])
-                    
+                @component('components.callsTable', ['calls'=>$person_data->calls()->paginate(5)])
+
                 @endcomponent
             </div>
             <div class="tab-pane fade" id="tabs-icons-text-4" role="tabpanel" aria-labelledby="tabs-icons-text-3-tab">
@@ -60,7 +60,7 @@
                     <br />
                     @include('payments.partials.addModal',['number'=>$person_data->payments->count() + 1, 'person_data_id'=>$person_data->id])
                 </div>
-                @include('payments.partials.table', ['payments'=>$person_data->payments, 'person_data_id'=>$person_data->id])
+                @include('payments.partials.table', ['payments'=>$person_data->payments()->paginate(5), 'person_data_id'=>$person_data->id])
             </div>
             @if ($person_data->insured)
             <div class="tab-pane fade" id="tabs-icons-text-5" role="tabpanel" aria-labelledby="tabs-icons-text-3-tab">
@@ -68,7 +68,7 @@
                     @include('insurees.partials.beneficiariesTable', ['beneficiaries' => $beneficiaries])
                 </div>
             </div>
-            @endif   
+            @endif
         </div>
     </div>
 </div>

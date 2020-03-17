@@ -2,14 +2,28 @@
 
 namespace App;
 
+use App\Events\InvoiceEvent;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\DB;
 
 class Invoice extends Model
 {
+    use Notifiable;
     use SoftDeletes;
     public $insuree;
+
+    /**
+     * The event map for the model.
+     *
+     * @var array
+     */
+    protected $dispatchesEvents = [
+        'saved' => InvoiceEvent::class,
+        'updated' => InvoiceEvent::class,
+        'deleted' => InvoiceEvent::class,
+    ];
 
     public $fillable = [
         'number',

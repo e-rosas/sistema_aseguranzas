@@ -31,14 +31,6 @@ class BeneficiaryController extends Controller
         return view('beneficiaries.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-    }
 
     /**
      * Display the specified resource.
@@ -52,32 +44,5 @@ class BeneficiaryController extends Controller
         $stats->calculateAmounts($beneficiary->person_data->id);
 
         return view('beneficiaries.show', compact('beneficiary', 'stats'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Beneficiary $beneficiary)
-    {
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Beneficiary $beneficiary)
-    {
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Beneficiary $beneficiary)
-    {
     }
 }

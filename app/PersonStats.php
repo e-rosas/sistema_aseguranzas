@@ -10,6 +10,7 @@ class PersonStats extends Model
         'status',
         'amount_paid',
         'amount_due',
+        'personal_amount_due',
         'person_data_id',
     ];
     protected $casts = [
@@ -17,6 +18,7 @@ class PersonStats extends Model
         'status' => 'string',
         'amount_paid' => 'decimal:13',
         'amount_due' => 'decimal:13',
+        'personal_amount_due' => 'decimal:13',
     ];
 
     /**
@@ -26,6 +28,15 @@ class PersonStats extends Model
     {
         return number_format($this->amount_due, 3);
     }
+
+    /**
+     * Get the value of personal_amount_due.
+     */
+    public function getPersonalAmountDue()
+    {
+        return number_format($this->personal_amount_due, 3);
+    }
+
 
     /**
      * Get the value of amount_paid.

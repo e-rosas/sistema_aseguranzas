@@ -4,7 +4,7 @@
     @include('layouts.headers.header', ['title' => $beneficiary->person_data->fullName(), 'description' => $beneficiary->insuree->fullName() ])
 
     <div class="container-fluid mt--7">
-        <div class="row"> 
+        <div class="row">
             <div class="col-xl-12 mb-5 mb-xl-0 card-group">
                 @include('components.invoiceStatsCard', ['title' => 'Total', 'value' => $stats->total_invoices->getTotal()])
                 @include('components.invoiceStatsCard', ['title' => 'Total with discounts', 'value' => $stats->total_invoices->getTotal_with_discounts()])
@@ -15,7 +15,7 @@
         <div class="row mt-5">
             <div class="col-xl-8 col-lg-6">
                 <div class="card card-stats mb-4 mb-xl-0">
-                    <div class="card-body">        
+                    <div class="card-body">
                         <div class="row">
                             <div class="col">
                                 <h5 class="card-title text-uppercase text-muted mb-0">{{ __('Insuree') }}</h5>
@@ -32,18 +32,18 @@
                             @if ($beneficiary->person_data->calls->count()>0)
                             <div class="col-md-4 col-auto form-group">
                                 <label class="form-control-label" for="label-latest_call">{{ __('Latest call') }}</label>
-                                <label id="label-amount_due">{{ $beneficiary->person_data->calls[0]->date->format('l jS \\of F Y')}}</label>
+                                <label id="label-calls">{{ $beneficiary->person_data->calls[0]->date->format('l jS \\of F Y')}}</label>
                             </div>
                             @endif
                             {{--  Latest payment  --}}
                             @if ($beneficiary->person_data->payments->count()>0)
                             <div class="col-md-3 col-auto form-group">
                                 <label class="form-control-label" for="label-latest_call">{{ __('Latest payment') }}</label>
-                                <label id="label-amount_due">{{ $beneficiary->person_data->payments[0]->date->format('l jS \\of F Y')}}</label>
+                                <label id="label-payments">{{ $beneficiary->person_data->payments[0]->date->format('l jS \\of F Y')}}</label>
                             </div>
                             @endif
                         </div>
-                    </div> 
+                    </div>
                 </div>
             </div>
         </div>
@@ -109,7 +109,7 @@
                     </div>
                 </div>
             </div>
-        </div>  
+        </div>
     </div>
     @include('calls.partials.editCallModal', ['person_data_id' => $beneficiary->person_data->id])
 @endsection

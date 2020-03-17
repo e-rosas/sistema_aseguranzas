@@ -56,4 +56,11 @@ class CalculatePersonStats
     {
         return number_format($this->amount_due_without_discounts, 3);
     }
+    /**
+     * Get the value of amount_due.
+     */
+    public function getAmountPaid()
+    {
+        return $this->total_payments->amount_paid;
+    }
 }

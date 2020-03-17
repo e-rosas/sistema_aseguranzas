@@ -2,10 +2,23 @@
 
 namespace App;
 
+use App\Events\PaymentEvent;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
 
 class Payment extends Model
 {
+    use Notifiable;
+    /**
+     * The event map for the model.
+     *
+     * @var array
+     */
+    protected $dispatchesEvents = [
+        'saved' => PaymentEvent::class,
+        'updated' => PaymentEvent::class,
+        'deleted' => PaymentEvent::class,
+    ];
     public $fillable = [
         'amount',
         'number',

@@ -25,7 +25,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('categories', 'CategoryController');
     Route::resource('items', 'ItemController');
     Route::resource('calls', 'CallController', ['except' => ['update']]);
-    Route::resource('payments', 'PaymentController');
+    /* Route::resource('payments', 'PaymentController'); */
 
     Route::resource('user', 'UserController', ['except' => ['show']]);
     Route::post('insurees', ['as' => 'persondata.storeinsuree', 'uses' => 'PersonDataController@storeInsuree']);
@@ -56,6 +56,11 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('items/find', 'SearchProductController@findItem')->name('items.find');
 
     Route::get('allcategories', 'CategoryController@list')->name('categories.list');
+
+    Route::post('payments/add', 'PaymentController@store')->name('payments.store');
+    Route::post('payments/find', 'PaymentController@find')->name('payments.find');
+    Route::patch('payments/update', 'PaymentController@update')->name('payments.update');
+    Route::delete('payments/destroy', 'PaymentController@delete')->name('payments.destroy');
 
     Route::get('fullnames', 'PersonDataController@fullNames');
     Route::get('stats', 'PersonDataController@Stats');
