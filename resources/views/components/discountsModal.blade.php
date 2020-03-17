@@ -17,7 +17,7 @@
                                 </div>
                             </div> 
                             <div class="col-md-4 text-right">
-                                <button id="add_discount" type="button" class="btn btn-outline-primary">{{ __('Add') }}</button>
+                                <button id="add-percentage" type="button" class="btn btn-outline-primary">{{ __('Add') }}</button>
                             </div>
                         </div>
                         
@@ -142,14 +142,14 @@
 
     }
 
-    function sendAppliedDiscounts(){
+    function sendAppliedDiscount(appliedDiscount){
         $.ajax({
             url: "{{route('person_data.discounts')}}",
             dataType: 'json',
             type:"post",
             data: {
                 "_token": "{{ csrf_token() }}",
-                "appliedDiscounts" : appliedDiscounts,
+                "appliedDiscounts" : appliedDiscount,
             },
         success: function (response) {
 
@@ -170,7 +170,7 @@
             $('#discounts_invoice_table tbody').html(output);
 
             appliedDiscounts = [];
-            displayAppliedDiscounts();
+            displayGeneratedDiscounts();
 
             $('#modal-form').modal('hide')
             
@@ -188,7 +188,7 @@
 
     var today = yyyy + '-' + mm + '-' + dd;
 
-    function displayAppliedDiscounts(){
+    function displayGeneratedDiscounts(){
         var output = "";
 
         for(var i = 0; i < appliedDiscounts.length; i++){
@@ -217,6 +217,28 @@
         appliedDiscounts.push(possibleDiscount);
     }
 
+    function generateDiscounts(){
+        appliedDiscounts = [];
+        const person_data_id = {{ $person_data_id }}
+        const amount_due_without_discounts = {{ $stats->amount_due_without_discounts }}
+        const amount_due = {{ $stats->amount_due }};
+
+        var today2 = new Date();
+        var time = today2.toTimeString().split(' ')[0]; 
+
+        var date = document.getElementById("input-start_date").value; 
+        var dateTime = date+' '+time;
+        var start_date = new Date(dateTime);
+        var enddate = document.getElementById("input-end_date").value;
+        var end_date = new Date(enddate+' '+time);
+
+        for(var i = 0; i < percentages.length; i++){
+            var possibleDiscount = new AppliedDiscount(person_data_id,
+            percentages[i], amount_due_without_discounts, amount_due, start_date, end_date, percentages.length);
+            addPossibleDiscount(possibleDiscount);
+        }
+    }
+
 
     $(document).ready(function(){
         percentages = [20, 25, 30];
@@ -240,49 +262,24 @@
 
             });
             appliedDiscounts[i]['active'] = 1;
-            sendAppliedDiscounts();
+            var appliedDiscount = appliedDiscounts[i];
+            sendAppliedDiscount(appliedDiscount);
+
+        });
+
+        $("#add-percentage").click(function(){
+            var percentage = document.getElementById("input-new_discount_percentage").value; 
+            percentages.push(percentage);
+            
 
         });
 
         
           
         $("#generate").click(function(){
-            appliedDiscounts = [];
-            const person_data_id = {{ $person_data_id }}
-            const amount_due_without_discounts = {{ $stats->amount_due_without_discounts }}
-            const amount_due = {{ $stats->amount_due }};
-
-            var today2 = new Date();
-            var time = today2.toTimeString().split(' ')[0]; 
-
-            var date = document.getElementById("input-start_date").value; 
-            var dateTime = date+' '+time;
-            var start_date = new Date(dateTime);
-            var enddate = document.getElementById("input-end_date").value;
-            var end_date = new Date(enddate+' '+time);
-
-            for(var i = 0; i < percentages.length; i++){
-                var possibleDiscount = new AppliedDiscount(person_data_id,
-                percentages[i], amount_due_without_discounts, amount_due, start_date, end_date, percentages.length);
-                addPossibleDiscount(possibleDiscount);
-            }
-
             
-
-            $("#discounts_table tbody").find('input[name="discount"]').each(function(){
-
-                if($(this).is(":checked")){
-                                 
-                                       
-
-                }
-
-            });
-
-
-            displayAppliedDiscounts();
-            
-
+            generateDiscounts();
+            displayGeneratedDiscounts();
 
         });
     });

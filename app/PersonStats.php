@@ -39,4 +39,22 @@ class PersonStats extends Model
     {
         return $this->belongsTo('App\PersonData');
     }
+
+    public function getStatus()
+    {
+        switch ($this->status) {
+            case 0:
+                return 'Insurance discount';
+
+                break;
+            case 1:
+                return 'Personal discount';
+
+                break;
+            case 2:
+                return 'No discounts';
+
+                break;
+        }
+    }
 }

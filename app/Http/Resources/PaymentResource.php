@@ -20,7 +20,7 @@ class PaymentResource extends JsonResource
             'amount' => $this->amount,
             'number' => $this->number,
             'comments' => $this->comments,
-            'date' => $this->date,
+            'date' => $this->date->format('Y-m-d'),
         ];
     }
 }

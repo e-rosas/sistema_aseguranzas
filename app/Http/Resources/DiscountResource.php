@@ -17,9 +17,11 @@ class DiscountResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'percentage' => $this->percentage,
-            'range_of_days' => $this->range_of_days,
-            'amount_of_days' => $this->amount_of_days,
+            'discount_percentage' => $this->discount_percentage,
+            'start_date' => $this->start_date->format('Y-m-d'),
+            'end_date' => $this->end_date->format('Y-m-d'),
+            'active' => $this->active,
+            'discounted_total' => $this->getDiscountedTotalAttribute(),
         ];
     }
 }
