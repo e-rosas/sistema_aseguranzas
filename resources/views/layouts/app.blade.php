@@ -8,7 +8,7 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <title>{{ config('app.name', 'Hospital Mexico Dashboard') }}</title>
-        
+
         <!-- Favicon -->
         <link href="{{ asset('argon') }}/img/brand/favicon.png" rel="icon" type="image/png">
         <!-- Fonts -->
@@ -18,8 +18,8 @@
         <link href="{{ asset('argon') }}/vendor/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
         <!-- Argon CSS -->
         <link type="text/css" href="{{ asset('argon') }}/css/argon.css?v=1.0.0" rel="stylesheet">
-         <script src="{{ asset('argon') }}/vendor/jquery/dist/jquery.min.js"></script> 
-        {{-- <script src="{{ asset('js/app.js') }}"></script> --}}
+         <!-- <script src="{{ asset('argon') }}/vendor/jquery/dist/jquery.min.js"></script> -->
+        <script src="{{ asset('js/app.js') }}"></script>
         @stack('headjs')
     </head>
     <body class="{{ $class ?? '' }}">
@@ -29,7 +29,7 @@
             </form>
             @include('layouts.navbars.sidebar')
         @endauth
-        
+
         <div class="main-content">
             @include('layouts.navbars.navbar')
             @yield('content')
@@ -38,11 +38,11 @@
         @guest()
             @include('layouts.footers.guest')
         @endguest
-       
+
         <link type="text/css" href="{{ asset('css/app.css') }}" rel="stylesheet">
         <script src="{{ asset('argon') }}/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
         @stack('js')
-        
-        
+
+
     </body>
 </html>

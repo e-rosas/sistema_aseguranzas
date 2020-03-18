@@ -13,11 +13,11 @@
                                 <h3 class="mb-0">{{ __('Item Categories') }}</h3>
                             </div>
                             <div class="col-4 text-right">
-                                <a href="{{ route('categories.create') }}" class="btn btn-sm btn-primary">{{ __('Add Item Category') }}</a>
+                                <a href="{{ route('categories.create') }}" class="btn btn-sm btn-primary">{{ __('Add Category') }}</a>
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="col-12">
                         @if (session('status'))
                             <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -45,6 +45,11 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        @foreach ($categories as $category)
+                                        <tr>
+                                            <td>{{ $category->name }}</td>
+                                        </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
                         </div>
@@ -55,36 +60,3 @@
         @include('layouts.footers.auth')
     </div>
 @endsection
-@push('js')
-
-    
-   <script>
-        $(document).ready(function() {
-            var table = $('#categories_table').DataTable({
-                dom: 'Bfrtip',
-                processing: true,
-                serverSide: true,
-                responsive: true,
-                lengthChange: false,
-                "pagingType": "numbers",
-                "columnDefs": [
-                    { "width": "12%", "targets": 1 }
-                ],
-                buttons: [
-                    'copy', 'pdf','print', 'excel'
-                ],
-                ajax: {
-                    url: "/allcategories",
-                    dataSrc: "data",
-                    type: "GET"
-                },
-                columns: [
-                    { data: 'name' },
-                    { data: 'action', name: 'action', orderable: false, searchable: false}
-                ],
-            });
-            table.buttons().container()
-                .appendTo( '#categories_table_wrapper .col-md-6:eq(0)' );
-        });
-    </script>
-@endpush

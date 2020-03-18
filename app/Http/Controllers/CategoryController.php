@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Category;
 use Illuminate\Http\Request;
-use Yajra\DataTables\Facades\DataTables;
 
 class CategoryController extends Controller
 {
@@ -16,33 +15,6 @@ class CategoryController extends Controller
     public function index(Category $model)
     {
         return view('categories.index', ['categories' => $model->paginate(15)]);
-    }
-
-    public function list()
-    {
-        $categories = Category::query();
-
-        return DataTables::eloquent($categories)
-            ->addColumn('action', function ($id) {
-                return '<button class="btn btn-icon btn-outline-info btn-sm"  type="button" onClick="showEditCallModal('.$id->id.')">
-                <span class="btn-inner--icon">
-                    <i class="fas fa-eye"></i>
-                </span>
-            </button>
-            <button class="btn btn-icon btn-outline-warning btn-sm"  type="button" onClick="showEditCallModal('.$id->id.')">
-                <span class="btn-inner--icon">
-                    <i class="fas fa-edit"></i>
-                </span>
-            </button>
-            <button class="btn btn-icon btn-outline-danger btn-sm"  type="button" onClick="showEditCallModal('.$id->id.')">
-                <span class="btn-inner--icon">
-                    <i class="fas fa-trash"></i>
-                </span>
-            </button>'
-            ;
-            })
-            ->toJson()
-        ;
     }
 
     /**

@@ -22,10 +22,10 @@
                         @csrf
                         <div class="form-group col-md-12 col-auto">
                             <label for="example-search-input" class="form-control-label">Search</label>
-                            <input name="search" class="form-control" type="search" required placeholder="Number..." id="search">
+                            <input name="search" class="form-control" type="search" required placeholder="Search..." id="search">
                         </div>
                     </form>
-                    
+
                     <div class="col-12">
                         @if (session('status'))
                             <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -68,12 +68,12 @@
                                                         {{--  <form action="{{ route('invoice.destroy', $invoice) }}" method="post">
                                                             @csrf
                                                             @method('delete')
-                                                            
+
                                                             <a class="dropdown-item" href="{{ route('invoice.edit', $invoice) }}">{{ __('Edit') }}</a>
                                                             <button type="button" class="dropdown-item" onclick="confirm('{{ __("Are you sure you want to delete this invoice?") }}') ? this.parentElement.submit() : ''">
                                                                 {{ __('Delete') }}
                                                             </button>
-                                                        </form>    --}}  
+                                                        </form>    --}}
                                                         <a class="dropdown-item" href="{{ route('invoices.show', $invoice) }}">{{ __('View') }}</a>
                                                         <a class="dropdown-item" href="{{ route('invoices.edit', $invoice) }}">{{ __('Edit') }}</a>
                                                 </div>
@@ -92,7 +92,7 @@
                 </div>
             </div>
         </div>
-            
+
         @include('layouts.footers.auth')
     </div>
 @endsection
