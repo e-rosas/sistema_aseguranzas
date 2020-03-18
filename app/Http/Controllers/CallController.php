@@ -101,7 +101,7 @@ class CallController extends Controller
 
     private function getPersonCalls($person_data_id)
     {
-        $calls = Call::where('person_data_id', $person_data_id)->paginate(3);
+        $calls = Call::where('person_data_id', $person_data_id)->paginate(5);
 
         return CallResource::collection($calls);
     }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UpdatePaymentRequest;
 use App\Http\Resources\PaymentResource;
 use App\Payment;
 use App\person_stats;
@@ -20,17 +21,12 @@ class PaymentController extends Controller
         $validated = $this->validatePayment();
 
         //New action: Verify that paid amount does not exceed it's respective person_stats due amount
-        $person_stats = PersonStats::where('person_data_id', $validated['person_data_id'])->first();
-
-        $person_stats->amount_paid += (float) $validated['amount'];
-
-        if ($person_stats->amount_due < ($person_stats->amount_paid)) {
-            return ['error' => 'Amount paid of person_stats exceeds amount due with this payment.'];
-        }
 
         Payment::create($validated);
 
-        $payments = Payment::where('person_data_id', $request->person_data_id)->paginate(5);
+        $payments = Payment::where('person_data_id', $request->person_data_id)
+            ->orderBy('date', 'desc')
+            ->paginate(5);
 
         //new action: Add paid amount, calculate amount due
         /* $person_stats->amount_due -= (float) $validated['amount'];
@@ -44,23 +40,31 @@ class PaymentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Payment $payment)
+    public function update(UpdatePaymentRequest $request)
     {
-    }
+        $validated = $request->validated();
+        $id = $validated->payment_id;
+        $payment = Payment::find($id);
+        $payment->fill($validated);
+        $payment->save();
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Payment $payment)
-    {
+        $payments = Payment::where('person_data_id', $validated->person_data_id)
+            ->paginate(10);
+
+        return PaymentResource::collection($payments);
     }
 
     public function delete(Request $request)
     {
-        $payment = Payment::find($request->payment_id);
+        $payment = Payment::find($request['payment_id']);
+
+
+        $payments = Payment::where('person_data_id', $payment->person_data_id)
+            ->paginate(5);
+
+
         $payment->delete();
+        return PaymentResource::collection($payments);
     }
 
     public function validatePayment()
