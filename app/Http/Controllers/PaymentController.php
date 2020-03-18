@@ -20,7 +20,7 @@ class PaymentController extends Controller
         $validated = $this->validatePayment();
 
         //New action: Verify that paid amount does not exceed it's respective person_stats due amount
-        $person_stats = PersonStats::find($validated['person_data_id']);
+        $person_stats = PersonStats::where('person_data_id', $validated['person_data_id'])->first();
 
         $person_stats->amount_paid += (float) $validated['amount'];
 
@@ -33,8 +33,8 @@ class PaymentController extends Controller
         $payments = Payment::where('person_data_id', $request->person_data_id)->paginate(5);
 
         //new action: Add paid amount, calculate amount due
-        $person_stats->amount_due -= (float) $validated['amount'];
-        $person_stats->save();
+        /* $person_stats->amount_due -= (float) $validated['amount'];
+        $person_stats->save(); */
 
         return PaymentResource::collection($payments);
     }

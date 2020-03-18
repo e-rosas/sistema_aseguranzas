@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Actions\CalculatePersonStats;
 use App\Beneficiary;
-use Illuminate\Http\Request;
+use App\PersonStats;
 
 class BeneficiaryController extends Controller
 {
@@ -31,7 +30,6 @@ class BeneficiaryController extends Controller
         return view('beneficiaries.create');
     }
 
-
     /**
      * Display the specified resource.
      *
@@ -40,8 +38,8 @@ class BeneficiaryController extends Controller
     public function show(Beneficiary $beneficiary)
     {
         $beneficiary->load('insuree.person_data');
-        $stats = new CalculatePersonStats();
-        $stats->calculateAmounts($beneficiary->person_data->id);
+
+        $stats = PersonStats::where('person_data_id', $beneficiary->person_data->id)->first();
 
         return view('beneficiaries.show', compact('beneficiary', 'stats'));
     }

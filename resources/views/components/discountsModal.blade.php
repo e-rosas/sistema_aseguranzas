@@ -149,7 +149,12 @@
             type:"post",
             data: {
                 "_token": "{{ csrf_token() }}",
-                "appliedDiscounts" : appliedDiscount,
+                "person_data_id" : appliedDiscount.person_data_id,
+                "discount_percentage" : appliedDiscount.discount_percentage,
+                "start_date" : appliedDiscount.start_date,
+                "end_date" : appliedDiscount.end_date,
+                "discounted_total" : appliedDiscount.discounted_total,
+                "active" : appliedDiscount.active,
             },
         success: function (response) {
 

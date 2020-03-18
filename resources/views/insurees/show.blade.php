@@ -6,10 +6,12 @@
     <div class="container-fluid mt--7">
         <div class="row"> 
             <div class="col-xl-12 mb-5 mb-xl-0 card-group">
-                @include('components.invoiceStatsCard', ['title' => 'Total', 'value' => $stats->total_invoices->getTotal()])
-                @include('components.invoiceStatsCard', ['title' => 'Total with discounts', 'value' => $stats->total_invoices->getTotal_with_discounts()])
-                @include('components.invoiceStatsCard', ['title' => 'Amount paid', 'value' => $stats->total_payments->getAmount_paid()])
+                @include('components.invoiceStatsCard', ['title' => 'Total', 'value' => $stats->getTotal()])
+                @include('components.invoiceStatsCard', ['title' => 'Amount paid', 'value' => $stats->getAmount_paid()])
                 @include('components.invoiceStatsCard', ['title' => 'Amount due', 'value' => $stats->getAmount_due()])
+                @if ($stats->status==1)
+                    @include('components.invoiceStatsCard', ['title' => 'Amount due', 'value' => $stats->getPersonalAmountDue()])
+                @endif
             </div>
         </div>
         <div class="row mt-5">
@@ -25,7 +27,7 @@
                             </div>
                         </div>
                     </div>
-                    @include('insurees.partials.invoicesTable', ['invoices' => $insuree->person_data->invoices])
+                    @include('insurees.partials.invoicesTable', ['invoices' => $insuree->person_data->invoices()->paginate(5)])
                 </div>
             </div>
             <div class="col-xl-4 order-xl-2 mb-5 mb-xl-0">
@@ -45,8 +47,8 @@
                                     </div>
 
                                     <div>
-                                        <span class="heading"> {{ $stats->total_invoices->getInvoicesCount() }} </span>
-                                        <span class="description">{{ __('Invoices') }}</span>
+                                        <span class="heading"> {{ $stats->getStatus() }} </span>
+                                        <span class="description">{{ __('Status') }}</span>
                                     </div>
                                 </div>
                             </div>

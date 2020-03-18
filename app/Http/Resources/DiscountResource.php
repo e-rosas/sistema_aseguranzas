@@ -21,7 +21,7 @@ class DiscountResource extends JsonResource
             'start_date' => $this->start_date->format('Y-m-d'),
             'end_date' => $this->end_date->format('Y-m-d'),
             'active' => $this->active,
-            'discounted_total' => $this->getDiscountedTotalAttribute(),
+            'discounted_total' => $this->discounted_total,
         ];
     }
 }

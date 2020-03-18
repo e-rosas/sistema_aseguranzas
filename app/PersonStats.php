@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class PersonStats extends Model
 {
+    public $primaryKey = 'person_data_id';
     public $fillable = [
         'status',
         'amount_paid',
@@ -37,13 +38,25 @@ class PersonStats extends Model
         return number_format($this->personal_amount_due, 3);
     }
 
-
     /**
      * Get the value of amount_paid.
      */
     public function getAmount_paid()
     {
         return number_format($this->amount_paid, 3);
+    }
+
+    public function getTotal()
+    {
+        if (1 == $this->status) {
+            $total = $this->amount_paid + $this->personal_amount_due;
+
+            return number_format($total, 3);
+        }
+
+        $total = $this->amount_paid + $this->amount_due;
+
+        return number_format($total, 3);
     }
 
     public function person_data()

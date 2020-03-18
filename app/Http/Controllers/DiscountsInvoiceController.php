@@ -16,7 +16,7 @@ class DiscountsInvoiceController extends Controller
         if (1 != $person_stats->status) { //1 = personal discount already applied
             DiscountPersonData::create($validated);
             $person_stats->status = 1;
-            $person_stats->personal_amount_due = $validated->discounted_total;
+            $person_stats->personal_amount_due = $validated['discounted_total'];
             $person_stats->save();
             $discounts = DiscountPersonData::where('person_data_id', $validated['person_data_id'])->paginate(5);
 

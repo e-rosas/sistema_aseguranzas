@@ -13,7 +13,7 @@
         <tbody>
             @foreach ($discounts as $discount)
                 <tr>
-                    <td>{{ $discount->discount->percentage}}</td>
+                    <td>{{ $discount->discount_percentage}}</td>
                     <td>{{ $discount->discounted_total}}</td>
                     <td>{{ $discount->start_date}}</td>
                     <td>{{ $discount->end_date}}</td>
