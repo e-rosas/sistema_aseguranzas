@@ -62,9 +62,8 @@ class UpdatePersonStats
                     ['active', 1],
                 ])->get();
             $person_stats->personal_amount_due = $discounted_total - $stats->getAmountPaid();
-        } elseif (2 == $person_stats->status) {
-            $person_stats->amount_due = $stats->amount_due_without_discounts;
         } else {
+            $person_stats->total_amount_due = $stats->amount_due_without_discounts;
             $person_stats->amount_due = $stats->amount_due;
         }
         $person_stats->amount_paid = $stats->getAmountPaid();

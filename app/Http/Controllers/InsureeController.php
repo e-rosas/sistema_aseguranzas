@@ -7,7 +7,9 @@ use App\Actions\CalculateTotalsOfInvoices;
 use App\Beneficiary;
 use App\Insuree;
 use App\Insurer;
+use App\Invoice;
 use App\PersonData;
+use App\PersonStats;
 use Illuminate\Http\Request;
 
 class InsureeController extends Controller
@@ -37,14 +39,6 @@ class InsureeController extends Controller
         return view('insurees.create', compact('insurers'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-    }
 
     /**
      * Display the specified resource.
@@ -53,35 +47,14 @@ class InsureeController extends Controller
      */
     public function show(Insuree $insuree)
     {
-        $beneficiaries = Beneficiary::with('person_data.invoices')->where('insuree_id', '=', $insuree->id)->paginate(5);
-        $stats = new CalculatePersonStats();
-        $stats->calculateAmounts($insuree->person_data->id);
+        $beneficiaries = Beneficiary::with('person_data')->where('insuree_id', '=', $insuree->id)->paginate(5);
+        $stats = PersonStats::where('person_data_id', $insuree->person_data->id)->first();
 
-        /* $totals = new CalculateTotalsOfInvoices($insuree->person_data->invoices);
-        foreach ($beneficiaries as $beneficiary) {
-            $totals->addInvoices($beneficiary->person_data->invoices);
-        }
-        $totals->calculateTotals(); */
+        $invoices = Invoice::with('services')
+            ->where('person_data_id', $insuree->person_data->id)
+            ->paginate(5);
 
-        return view('insurees.show', compact('insuree', 'beneficiaries', 'stats'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Insuree $Insuree)
-    {
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Insuree $Insuree)
-    {
+        return view('insurees.show', compact('insuree', 'beneficiaries', 'stats', 'invoices'));
     }
 
     /**

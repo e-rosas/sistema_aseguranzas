@@ -12,6 +12,7 @@ class PersonStats extends Model
         'amount_paid',
         'amount_due',
         'personal_amount_due',
+        'total_amount_due',
         'person_data_id',
     ];
     protected $casts = [
@@ -19,6 +20,7 @@ class PersonStats extends Model
         'status' => 'string',
         'amount_paid' => 'decimal:13',
         'amount_due' => 'decimal:13',
+        'total_amount_due' => 'decimal:13',
         'personal_amount_due' => 'decimal:13',
     ];
 
@@ -36,6 +38,11 @@ class PersonStats extends Model
     public function getPersonalAmountDue()
     {
         return number_format($this->personal_amount_due, 3);
+    }
+
+    public function getTotalAmountDue()
+    {
+        return number_format($this->total_amount_due, 3);
     }
 
     /**

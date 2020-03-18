@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Beneficiary;
+use App\Invoice;
 use App\PersonStats;
 
 class BeneficiaryController extends Controller
@@ -37,10 +38,14 @@ class BeneficiaryController extends Controller
      */
     public function show(Beneficiary $beneficiary)
     {
-        $beneficiary->load('insuree.person_data');
+        $beneficiary->loadMissing('insuree.person_data');
+
+        $invoices = Invoice::with('services')
+            ->where('person_data_id', $beneficiary->person_data->id)
+            ->paginate(5);
 
         $stats = PersonStats::where('person_data_id', $beneficiary->person_data->id)->first();
 
-        return view('beneficiaries.show', compact('beneficiary', 'stats'));
+        return view('beneficiaries.show', compact('beneficiary', 'stats', 'invoices'));
     }
 }

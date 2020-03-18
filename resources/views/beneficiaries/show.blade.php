@@ -11,11 +11,13 @@
                 @include('components.invoiceStatsCard', ['title' => 'Amount due', 'value' => $stats->getAmount_due()])
                 @if ($stats->status==1)
                     @include('components.invoiceStatsCard', ['title' => 'Amount due', 'value' => $stats->getPersonalAmountDue()])
+                @elseif ($stats->status==2)
+                    @include('components.invoiceStatsCard', ['title' => 'Amount due', 'value' => $stats->getTotalAmountDue()])
                 @endif
             </div>
         </div>
         <div class="row mt-5">
-            <div class="col-xl-8 col-lg-6">
+            <div class="col-xl-4">
                 <div class="card card-stats mb-4 mb-xl-0">
                     <div class="card-body">
                         <div class="row">
@@ -29,48 +31,38 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-8 col-lg-6">
+                <div class="card card-stats mb-4 mb-xl-0">
+                    <div class="card-body">
                         <div class="row">
                             {{--  Latest call  --}}
                             @if ($beneficiary->person_data->calls->count()>0)
-                            <div class="col-md-4 col-auto form-group">
+                            <div class="col-md-6 col-auto form-group">
                                 <label class="form-control-label" for="label-latest_call">{{ __('Latest call') }}</label>
                                 <label id="label-calls">{{ $beneficiary->person_data->calls[0]->date->format('l jS \\of F Y')}}</label>
                             </div>
                             @endif
+                        </div>
+                        <div class="row">
                             {{--  Latest payment  --}}
                             @if ($beneficiary->person_data->payments->count()>0)
-                            <div class="col-md-3 col-auto form-group">
+                            <div class="col-md-6 col-auto form-group">
                                 <label class="form-control-label" for="label-latest_call">{{ __('Latest payment') }}</label>
                                 <label id="label-payments">{{ $beneficiary->person_data->payments[0]->date->format('l jS \\of F Y')}}</label>
                             </div>
                             @endif
                         </div>
-                    </div>
+                        </div>
                 </div>
             </div>
         </div>
         <div class="row mt-5">
             <div class="col-xl-8">
-                @include('components.personTab', ['invoices'=>$beneficiary->person_data->invoices()->paginate(5), 'person_data'=>$beneficiary->person_data,
+                @include('components.personTab', ['invoices'=>$invoices, 'person_data'=>$beneficiary->person_data,
                     'stats'=>$stats])
-                {{-- <div class="card shadow">
-                    <div class="card-header border-0">
-                        <div class="row align-items-center">
-                            <div class="col">
-                                <h3 class="mb-0">{{ __('Invoices') }}</h3>
-                            </div>
-                            <div class="col text-right">
-                                <a href="#!" class="btn btn-sm btn-primary">{{ __('Add') }}</a>
-                            </div>
-                        </div>
-                    </div>
-                    @include('insurees.partials.invoicesTable', ['invoices' => $invoices])
-                    <div class="card-footer py-4">
-                        <nav class="d-flex justify-content-end" aria-label="...">
-                            {{ $invoices->links() }}
-                        </nav>
-                    </div>
-                </div> --}}
             </div>
             <div class="col-xl-4 order-xl-2 mb-5 mb-xl-0">
                 <div class="card card-profile shadow">

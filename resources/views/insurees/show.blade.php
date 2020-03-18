@@ -4,7 +4,7 @@
     @include('layouts.headers.header', ['title' => $insuree->person_data->fullName(), 'description' => $insuree->insurance_id ])
 
     <div class="container-fluid mt--7">
-        <div class="row"> 
+        <div class="row">
             <div class="col-xl-12 mb-5 mb-xl-0 card-group">
                 @include('components.invoiceStatsCard', ['title' => 'Total', 'value' => $stats->getTotal()])
                 @include('components.invoiceStatsCard', ['title' => 'Amount paid', 'value' => $stats->getAmount_paid()])
@@ -16,18 +16,27 @@
         </div>
         <div class="row mt-5">
             <div class="col-xl-8">
-                <div class="card shadow">
-                    <div class="card-header border-0">
-                        <div class="row align-items-center">
-                            <div class="col">
-                                <h3 class="mb-0">{{ __('Invoices') }}</h3>
+                <div class="card card-stats mb-4 mb-xl-0">
+                    <div class="card-body">
+                        <div class="row">
+                            {{--  Latest call  --}}
+                            @if ($insuree->person_data->calls->count()>0)
+                            <div class="col-md-6 col-auto form-group">
+                                <label class="form-control-label" for="label-latest_call">{{ __('Latest call') }}</label>
+                                <label id="label-calls">{{ $insuree->person_data->calls[0]->date->format('l jS \\of F Y')}}</label>
                             </div>
-                            <div class="col text-right">
-                                <a href="{{ route('invoices.create') }}" class="btn btn-sm btn-primary">{{ __('Add') }}</a>
-                            </div>
+                            @endif
                         </div>
-                    </div>
-                    @include('insurees.partials.invoicesTable', ['invoices' => $insuree->person_data->invoices()->paginate(5)])
+                        <div class="row">
+                            {{--  Latest payment  --}}
+                            @if ($insuree->person_data->payments->count()>0)
+                            <div class="col-md-6 col-auto form-group">
+                                <label class="form-control-label" for="label-latest_call">{{ __('Latest payment') }}</label>
+                                <label id="label-payments">{{ $insuree->person_data->payments[0]->date->format('l jS \\of F Y')}}</label>
+                            </div>
+                            @endif
+                        </div>
+                        </div>
                 </div>
             </div>
             <div class="col-xl-4 order-xl-2 mb-5 mb-xl-0">
@@ -54,7 +63,7 @@
                             </div>
                         </div>
                         <div class="text-center">
-                            
+
                             <div class="h4 font-weight-300">
                                 <span> {{ $insuree->person_data->birth_date->format('M-d-Y') }} </span>
                             </div>
@@ -80,21 +89,8 @@
         </div>
         <div class="row mt-5">
             <div class="col-xl-12 mb-5 mb-xl-0">
-                @include('components.personTab', ['invoices'=>$insuree->person_data->invoices()->paginate(5), 'person_data'=>$insuree->person_data,
+                @include('components.personTab', ['invoices'=>$invoices, 'person_data'=>$insuree->person_data,
                     'stats'=>$stats, 'beneficiaries' => $beneficiaries])
-                {{-- <div class="card shadow">
-                    <div class="card-header border-0">
-                        <div class="row align-items-center">
-                            <div class="col">
-                                <h3 class="mb-0">{{ __('Beneficiaries') }}</h3>
-                            </div>
-                            <div class="col text-right">
-                                <a href="#!" class="btn btn-sm btn-primary">{{ __('Add') }}</a>
-                            </div>
-                        </div>
-                    </div>
-                    @include('insurees.partials.beneficiariesTable', ['beneficiaries' => $beneficiaries])
-                </div> --}}
             </div>
         </div>
     </div>

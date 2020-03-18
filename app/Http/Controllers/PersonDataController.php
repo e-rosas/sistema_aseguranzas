@@ -136,6 +136,7 @@ class PersonDataController extends Controller
             $stats['amount_paid'] = 0;
             $stats['personal_amount_due'] = 0;
             $stats['amount_due'] = $amounts->amount_due;
+            $stats['total_amount_due'] = $amounts->amount_due_without_discounts;
             PersonStats::create($stats);
         }
     }
