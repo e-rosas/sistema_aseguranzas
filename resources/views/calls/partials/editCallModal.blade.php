@@ -135,7 +135,7 @@
             return false;
     }
 
-    function Delete(id){
+    function DeleteCall(id){
         var r = confirm("Are you sure?");
         if(r){
             $.ajax({

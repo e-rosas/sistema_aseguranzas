@@ -18,7 +18,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::group(['middleware' => 'auth'], function () {
     Route::resource('insurers', 'InsurerController');
     Route::resource('services', 'ServiceController', ['except' => ['update']]);
-    Route::resource('discounts', 'DiscountController');
+    // Route::resource('discounts', 'DiscountController');
     Route::resource('beneficiaries', 'BeneficiaryController');
     Route::resource('insurees', 'InsureeController');
     Route::resource('invoices', 'InvoiceController', ['except' => ['update']]);
@@ -48,7 +48,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('insurees/searchIndex', 'SearchPatientController@searchInsureeIndex')->name('insurees.searchIndex');
     Route::post('services/searchIndex', 'SearchProductController@searchServiceIndex')->name('services.searchIndex');
 
-    Route::post('person_data/adddiscount', 'DiscountsInvoiceController@addDiscount')->name('person_data.discounts');
+    Route::post('discount_person/store', 'DiscountsPersonController@addDiscount')->name('discount_person.store');
+    Route::post('discount_person/find', 'DiscountsPersonController@find')->name('discount_person.find');
+    Route::patch('discount_person/update', 'DiscountsPersonController@update')->name('discount_person.update');
+    Route::delete('discount_person/destroy', 'DiscountsPersonController@delete')->name('discount_person.destroy');
 
     Route::post('items/search', 'SearchProductController@searchItem')->name('items.search');
     Route::post('items/find', 'SearchProductController@findItem')->name('items.find');

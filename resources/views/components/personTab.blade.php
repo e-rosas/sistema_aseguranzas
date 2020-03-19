@@ -32,7 +32,9 @@
             </div>
             <div class="tab-pane fade" id="tabs-icons-text-2" role="tabpanel" aria-labelledby="tabs-icons-text-2-tab">
                 <div class="col-md-12 col-auto text-right">
-                    <button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#modal-form">{{ __('Add') }}</i></button>
+                    @if ($stats->status!=1)
+                        <button type="button" id="add-personal-discount" class="btn btn-sm btn-success" data-toggle="modal" data-target="#modal-form">{{ __('Add') }}</i></button>
+                    @endif
                     <br />
                     @component('components.discountsModal',['person_data_id'=>$person_data->id, 'stats'=>$stats])
 

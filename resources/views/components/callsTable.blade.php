@@ -23,7 +23,7 @@
                                 <i class="fas fa-pencil-alt fa-2 "></i>
                             </span>
                         </button>
-                        <button rel="tooltip" class="btn btn-danger btn-sm btn-icon"  type="button" onClick="Delete({{ $call->id }})">
+                        <button rel="tooltip" class="btn btn-danger btn-sm btn-icon"  type="button" onClick="DeleteCall({{ $call->id }})">
                             <i class="fa fa-trash"></i>
                         </button>
                     </td>

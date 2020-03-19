@@ -144,7 +144,7 @@
 
     function sendAppliedDiscount(appliedDiscount){
         $.ajax({
-            url: "{{route('person_data.discounts')}}",
+            url: "{{route('discount_person.store')}}",
             dataType: 'json',
             type:"post",
             data: {
