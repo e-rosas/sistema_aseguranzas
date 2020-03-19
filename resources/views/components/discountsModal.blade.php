@@ -94,14 +94,14 @@
     </div>
 </div>
 
-<div class="modal fade bd-example-modal-lg" id="edit-discount-modal" tabindex="-1" role="dialog" aria-labelledby="edit-discount-modal" aria-hidden="true">
+<div class="modal fade bd-example-modal" id="edit-discount-modal" tabindex="-1" role="dialog" aria-labelledby="edit-discount-modal" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-body p-0">
                 <div class="card bg-secondary shadow border-0">
                     <div class="card-header bg-transparent">
                         <h5 class="heading-small text-muted mb-4">{{ __('Edit discount') }}</h5>
-                 
+
                     </div>
                     <div class="card-body px-lg-5 py-lg-5">
                         {{--  discount --}}
@@ -112,7 +112,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-calendar"></i></span>
                                 </div>
-                                <input type="date" name="start_date" id="update-start_date" class="form-control {{ $errors->has('start_date') ? ' is-invalid' : '' }}"
+                                <input type="date" name="start_date" id="update-start-date" class="form-control {{ $errors->has('start_date') ? ' is-invalid' : '' }}"
                                 value="{{ old('start_date') }}" required>
                                 @if ($errors->has('start_date'))
                                     <span class="invalid-feedback" role="alert">
@@ -127,7 +127,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-calendar"></i></span>
                                 </div>
-                                <input type="date" name="end_date" id="update-end_date" class="form-control {{ $errors->has('end_date') ? ' is-invalid' : '' }}"
+                                <input type="date" name="end_date" id="update-end-date" class="form-control {{ $errors->has('end_date') ? ' is-invalid' : '' }}"
                                 value="{{ old('end_date') }}" required>
                                 @if ($errors->has('end_date'))
                                     <span class="invalid-feedback" role="alert">
@@ -216,6 +216,8 @@
             appliedDiscounts = [];
             displayGeneratedDiscounts();
 
+            displayStats();
+
             $('#modal-form').modal('hide')
 
 
@@ -263,9 +265,13 @@
 
     function generateDiscounts(){
         appliedDiscounts = [];
+        displayStats();
         const person_data_id = {{ $person_data_id }}
-        const amount_due_without_discounts = {{ $stats->total_amount_due }}
-        const amount_due = {{ $stats->amount_due }};
+        var amount_due_without_discounts = document.getElementById("total-total").innerHTML;
+        var amount_due = document.getElementById("total").innerHTML;
+
+        amount_due_without_discounts = parseFloat(amount_due_without_discounts.replace(/,/g,''));
+        amount_due = parseFloat(amount_due.replace(/,/g,''));
 
         var today2 = new Date();
         var time = today2.toTimeString().split(' ')[0];
@@ -276,10 +282,30 @@
         var enddate = document.getElementById("input-end_date").value;
         var end_date = new Date(enddate+' '+time);
 
-        for(var i = 0; i < percentages.length; i++){
-            var possibleDiscount = new AppliedDiscount(person_data_id,
-            percentages[i], amount_due_without_discounts, amount_due, start_date, end_date, percentages.length);
-            addPossibleDiscount(possibleDiscount);
+        if(start_date.getTime() < end_date.getTime() ){
+
+            for(var i = 0; i < percentages.length; i++){
+                var possibleDiscount = new AppliedDiscount(person_data_id,
+                percentages[i], amount_due_without_discounts, amount_due, start_date, end_date, percentages.length);
+                addPossibleDiscount(possibleDiscount);
+            }
+        }
+        else {
+
+        }
+
+
+    }
+
+    function validateDates(start_date, end_date){
+        var d1 = new Date(start_date);
+        var d2 = new Date(end_date);
+
+        if(d1.getTime() >= d2.getTime()){
+            return false;
+        }
+        else {
+            return true;
         }
     }
 
@@ -321,14 +347,27 @@
 
         $("#generate").click(function(){
 
+
             generateDiscounts();
             displayGeneratedDiscounts();
+
+        });
+
+        $("#update-discount").click(function(){
+            var discount_id = document.getElementById("update-discount-id").value;
+            var start_date = document.getElementById("update-start-date").value;
+
+            var end_date = document.getElementById("update-end-date").value;
+
+            if(validateDates(start_date, end_date)){
+                updateDiscount(discount_id, )
+            }
 
         });
     });
 
     function showEditDiscountModal(id){
-        getDiscount(id); 
+        getDiscount(id);
         $('#edit-discount-modal').modal('show')
     }
     function getDiscount(id){
@@ -338,40 +377,39 @@
             type:"post",
             data: {
                 "_token": "{{ csrf_token() }}",
-                "discount_person_data_id" : id
+                "discount_id" : id
             },
-        success: function (response) {       
-                          
+        success: function (response) {
+                displayDiscountModal(response.data.id,
+                    response.data.start_date, response.data.end_date)
             }
         });
         return false;
     }
-    function displayDiscountModal(discount_person_data_id, number, date, amount, comments){
+
+    function displayDiscountModal(discount_person_data_id, start_date, end_date){
         document.getElementById("update-discount-id").value = discount_person_data_id;
-        document.getElementById("update-start-date").value = number;   
-        document.getElementById("update-end-date").value = date;
-        document.getElementById("update-payment-amount").value = amount;   
-              
+        document.getElementById("update-start-date").value = start_date;
+        document.getElementById("update-end-date").value = end_date;
+
       }
-    function updatePayment(id, number, amount, date, comments){
+    function updateDiscount(id, start_date, end_date){
         $.ajax({
-            url: "{{route('payments.update')}}",
+            url: "{{route('discount_person.update')}}",
             dataType: 'json',
             type:"patch",
             data: {
                 "_token": "{{ csrf_token() }}",
                 "person_data_id": {{ $person_data_id }},
                 "discount_person_data_id": id,
-                "number": number,
-                "amount": amount,
-                "date": date,
-                "comments": comments,
+                "start_date": start_date,
+                "end_date": end_date
             },
         success: function (response) {
-            DisplayPayments(response.data);
-            displayStats();                       
-            $('#edit-modal').modal('hide')
-            
+            DisplayDiscounts(response.data);
+            displayStats();
+            $('#edit-discount-modal').modal('hide')
+
             }
         });
             return false;

@@ -37,6 +37,17 @@ class UpdatePersonStats
         $this->updateStats($person_data_id);
     }
 
+    /**
+     * Handle the event.
+     *
+     * @param object $event
+     */
+    public function discount($event)
+    {
+        $person_data_id = $event->discount_person->person_data_id;
+        $this->updateStats($person_data_id);
+    }
+
     public function subscribe($events)
     {
         $events->listen(
@@ -48,6 +59,11 @@ class UpdatePersonStats
             'App\Events\PaymentEvent',
             'App\Listeners\UpdatePersonStats@payment'
         );
+
+        $events->listen(
+            'App\Events\DiscountPersonEvent',
+            'App\Listeners\UpdatePersonStats@discount'
+        );
     }
 
     private function updateStats($id)
@@ -55,17 +71,20 @@ class UpdatePersonStats
         $stats = new CalculatePersonStats();
         $stats->calculateAmounts($id);
         $person_stats = PersonStats::where('person_data_id', $id)->first();
+
         if (1 == $person_stats->status) { //with personal discount
-            $discounted_total = DiscountPersonData::select('discounted_total')
-                ->where([
+            $discount_person = DiscountPersonData::
+                where([
                     ['person_data_id', $id],
                     ['active', 1],
-                ])->get();
-            $person_stats->personal_amount_due = $discounted_total - $stats->getAmountPaid();
+                ])->first();
+            $person_stats->personal_amount_due =
+                (float) str_replace(',', '', $discount_person->discounted_total) - $stats->getAmountPaid();
         } else {
             $person_stats->total_amount_due = $stats->amount_due_without_discounts;
             $person_stats->amount_due = $stats->amount_due;
         }
+
         $person_stats->amount_paid = $stats->getAmountPaid();
         $person_stats->save();
     }

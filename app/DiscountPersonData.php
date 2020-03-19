@@ -2,11 +2,25 @@
 
 namespace App;
 
+use App\Events\DiscountPersonEvent;
 use Carbon\Carbon as Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
 
 class DiscountPersonData extends Model
 {
+    use Notifiable;
+
+    /**
+     * The event map for the model.
+     *
+     * @var array
+     */
+    protected $dispatchesEvents = [
+        'saved' => DiscountPersonEvent::class,
+        'updated' => DiscountPersonEvent::class,
+        'deleted' => DiscountPersonEvent::class,
+    ];
     public $fillable = [
         'person_data_id',
         'discount_percentage',

@@ -22,6 +22,7 @@ class PersonStatsResource extends JsonResource
             'status' => $this->status,
             'amount_due' => $this->getAmount_due(),
             'personal_amount_due' => $this->getPersonalAmountDue(),
+            'total_total' => $this->getTotalAmountDue()
         ];
     }
 }

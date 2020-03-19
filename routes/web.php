@@ -51,12 +51,11 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('discount_person/store', 'DiscountsPersonController@addDiscount')->name('discount_person.store');
     Route::post('discount_person/find', 'DiscountsPersonController@find')->name('discount_person.find');
     Route::patch('discount_person/update', 'DiscountsPersonController@update')->name('discount_person.update');
-    Route::delete('discount_person/destroy', 'DiscountsPersonController@delete')->name('discount_person.destroy');
+    Route::patch('discount_person/destroy', 'DiscountsPersonController@delete')->name('discount_person.destroy');
 
     Route::post('items/search', 'SearchProductController@searchItem')->name('items.search');
     Route::post('items/find', 'SearchProductController@findItem')->name('items.find');
 
-    Route::get('allcategories', 'CategoryController@list')->name('categories.list');
 
     Route::get('payments', 'PaymentController@index')->name('payments.index');
     Route::post('payments/add', 'PaymentController@store')->name('payments.store');

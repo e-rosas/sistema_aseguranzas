@@ -38,7 +38,7 @@ class CalculatePersonStats
             $this->total_invoices->total_with_discounts - $this->total_payments->amount_paid;
 
         $this->amount_due_without_discounts =
-            $this->total_invoices->total - $this->total_payments->amount_paid;
+            $this->total_invoices->total;
     }
 
     /**

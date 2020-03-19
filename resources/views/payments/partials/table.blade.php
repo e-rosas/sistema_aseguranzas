@@ -1,5 +1,5 @@
 {{-- Table of payments --}}
-<div  class="table-responsive">
+<div class="table-responsive">
     <table id="payments_table" class="table align-services-center table-flush">
         <thead class="thead-light">
             <tr>
@@ -61,7 +61,7 @@
                 },
             success: function (response) {
                 DisplayPayments(response.data);
-                displayStats(); 
+                displayStats();
                 }
             });
             return false;

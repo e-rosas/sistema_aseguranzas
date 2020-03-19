@@ -16,13 +16,10 @@ class DiscountsPersonController extends Controller
         $validated = $request->validated();
         $person_stats = PersonStats::find($validated['person_data_id']);
         if (1 != $person_stats->status) { //1 = personal discount already applied
-            DiscountPersonData::create($validated);
             $person_stats->status = 1;
-            $person_stats->personal_amount_due = $validated['discounted_total'];
             $person_stats->save();
-            $discounts = DiscountPersonData::where('person_data_id', $validated['person_data_id'])->paginate(5);
-
-            return DiscountResource::collection($discounts);
+            DiscountPersonData::create($validated);
+            return $this->getPersonDiscounts($validated['person_data_id']);
         }
     }
 
@@ -31,27 +28,37 @@ class DiscountsPersonController extends Controller
         $validated = $request->validated();
         $id = $validated['discount_person_data_id'];
         $discount = DiscountPersonData::find($id);
+        $person_data_id = $discount->person_data_id;
         $discount->fill($validated);
         $discount->save();
 
-        $discounts = DiscountPersonData::where('person_data_id', $validated['person_data_id'])
-            ->paginate(5)
-        ;
-
-        return discountResource::collection($discounts);
+        return $this->getPersonDiscounts($person_data_id);
     }
 
     public function delete(Request $request)
     {
         $discount = DiscountPersonData::find($request['discount_person_data_id']);
-        $person_data_id = $discount->person_data_id;
-        $discount->delete();
+        $discount->active = 0;
 
+        $person_data_id = $discount->person_data_id;
+
+        $person_stats = PersonStats::find($person_data_id);
+        $person_stats->status = 0;
+        $person_stats->save();
+
+        $discount->save();
+
+
+        return $this->getPersonDiscounts($person_data_id);
+    }
+
+    public function getPersonDiscounts($person_data_id)
+    {
         $discounts = DiscountPersonData::where('person_data_id', $person_data_id)
             ->paginate(5)
         ;
 
-        return discountResource::collection($discounts);
+        return DiscountResource::collection($discounts);
     }
 
     public function find(Request $request)

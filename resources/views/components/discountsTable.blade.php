@@ -32,7 +32,7 @@
                 </tr>
             @endforeach
         </tbody>
-        
+
     </table>
 </div>
 @push('js')
@@ -53,19 +53,20 @@
         }
         $('#discounts_person_table tbody').html(output);
     }
-    function Delete(id){
-        var r = confirm("Are you sure?");
+    function DeleteDiscount(id){
+        var r = confirm("Are you sure? Discount will be marked as inactive.");
         if(r){
             $.ajax({
                 url: "{{route('discount_person.destroy')}}",
                 dataType: 'json',
-                type:"delete",
+                type:"patch",
                 data: {
                     "_token": "{{ csrf_token() }}",
                     "discount_person_data_id" : id
                 },
             success: function (response) {
                 DisplayDiscounts(response.data);
+                displayStats();
                 }
             });
             return false;

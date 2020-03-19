@@ -8,11 +8,10 @@
             <div class="col-xl-12 mb-5 mb-xl-0 card-group">
                 @include('components.invoiceStatsCard', ['id' => 'total','title' => 'Total', 'value' => $stats->getTotal()])
                 @include('components.invoiceStatsCard', ['id' => 'amount-paid','title' => 'Amount paid', 'value' => $stats->getAmount_paid()])
-                @include('components.invoiceStatsCard', ['id' => 'amount-due','title' => 'Amount due', 'value' => $stats->getAmount_due()])
-                @if ($stats->status==1)
-                    @include('components.invoiceStatsCard', ['id' => 'personal-due','title' => 'Amount due', 'value' => $stats->getPersonalAmountDue()])
-                @elseif ($stats->status==2)
-                    @include('components.invoiceStatsCard', ['id' => 'total-total','title' => 'Amount due', 'value' => $stats->getTotalAmountDue()])
+                @include('components.invoiceStatsCard', ['id' => 'amount-due','title' => 'Amount due (insurance)', 'value' => $stats->getAmount_due()])
+                @include('components.invoiceStatsCard', ['id' => 'personal-due','title' => 'Amount due (personal)', 'value' => $stats->getPersonalAmountDue()])
+                @if ($stats->status==2)
+                    @include('components.invoiceStatsCard', ['id' => 'total-total-due','title' => 'Amount due', 'value' => $stats->getTotalAmountDue()])
                 @endif
             </div>
         </div>
@@ -74,7 +73,7 @@
                             <div class="col">
                                 <div class="card-profile-stats d-flex justify-content-center mt-md-5">
                                     <div>
-                                        <span class="heading"> {{ $stats->getStatus() }} </span>
+                                        <span id="stats-status" class="heading"> {{ $stats->getStatus() }} </span>
                                         <span class="description">{{ __('Status') }}</span>
                                     </div>
                                 </div>
@@ -84,6 +83,9 @@
                             <h3>
                                 {{ $beneficiary->person_data->fullName() }}<span class="font-weight-light"></span>
                             </h3>
+                            <div class="h4 font-weight-300">
+                                <span id="total-total"> {{ $stats->getTotalAmountDue() }} </span>
+                            </div>
                             <div class="h4 font-weight-300">
                                 <span> {{ $beneficiary->person_data->birth_date->format('M-d-Y') }} </span>
                             </div>
