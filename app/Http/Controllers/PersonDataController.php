@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Actions\CalculatePersonStats;
 use App\Beneficiary;
+use App\Http\Resources\PersonStatsResource;
 use App\Insuree;
 use App\PersonData;
 use App\PersonStats;
@@ -139,6 +140,13 @@ class PersonDataController extends Controller
             $stats['total_amount_due'] = $amounts->amount_due_without_discounts;
             PersonStats::create($stats);
         }
+    }
+
+    public function findStats(Request $request)
+    {
+        $stats = PersonStats::findOrFail($request->person_data_id);
+
+        return new PersonStatsResource($stats);
     }
 
     protected function validateData()

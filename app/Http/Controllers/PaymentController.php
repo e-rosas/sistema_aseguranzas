@@ -5,8 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\UpdatePaymentRequest;
 use App\Http\Resources\PaymentResource;
 use App\Payment;
-use App\person_stats;
-use App\PersonStats;
 use Illuminate\Http\Request;
 
 class PaymentController extends Controller
@@ -26,7 +24,8 @@ class PaymentController extends Controller
 
         $payments = Payment::where('person_data_id', $request->person_data_id)
             ->orderBy('date', 'desc')
-            ->paginate(5);
+            ->paginate(5)
+        ;
 
         //new action: Add paid amount, calculate amount due
         /* $person_stats->amount_due -= (float) $validated['amount'];
@@ -43,13 +42,14 @@ class PaymentController extends Controller
     public function update(UpdatePaymentRequest $request)
     {
         $validated = $request->validated();
-        $id = $validated->payment_id;
+        $id = $validated['payment_id'];
         $payment = Payment::find($id);
         $payment->fill($validated);
         $payment->save();
 
-        $payments = Payment::where('person_data_id', $validated->person_data_id)
-            ->paginate(10);
+        $payments = Payment::where('person_data_id', $validated['person_data_id'])
+            ->paginate(10)
+        ;
 
         return PaymentResource::collection($payments);
     }
@@ -57,14 +57,21 @@ class PaymentController extends Controller
     public function delete(Request $request)
     {
         $payment = Payment::find($request['payment_id']);
-
-
-        $payments = Payment::where('person_data_id', $payment->person_data_id)
-            ->paginate(5);
-
-
+        $person_data_id = $payment->person_data_id;
         $payment->delete();
+
+        $payments = Payment::where('person_data_id', $person_data_id)
+            ->paginate(5)
+        ;
+
         return PaymentResource::collection($payments);
+    }
+
+    public function find(Request $request)
+    {
+        $payment = Payment::findOrFail($request->payment_id);
+
+        return new PaymentResource($payment);
     }
 
     public function validatePayment()

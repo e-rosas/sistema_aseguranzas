@@ -6,8 +6,8 @@
                 <th scope="col">{{ __('Number') }}</th>
                 <th scope="col">{{ __('Date') }}</th>
                 <th scope="col">{{ __('Amount') }}</th>
-                <th scope="col">{{ __('Claim') }}</th>
                 <th scope="col">{{ __('Comments') }}</th>
+                <th scope="col">{{ __('Actions') }}</th>
             </tr>
         </thead>
         <tbody>
@@ -16,10 +16,9 @@
                     <td>{{ $payment->number}}</td>
                     <td>{{ $payment->date->format('M-d-Y')}}</td>
                     <td>{{ $payment->amount}}</td>
-                    <td>{{ $payment->claim}}</td>
                     <td>{{ $payment->comments}}</td>
                      <td class="td-actions text-right">
-                        <button class="btn btn-info btn-sm btn-icon" rel="tooltip"  type="button" onClick="mostrarModalEditar({{ $payment->id }})">
+                        <button class="btn btn-info btn-sm btn-icon" rel="tooltip"  type="button" onClick="showEditModal({{ $payment->id }})">
                                 <i class="fas fa-pencil-alt fa-2 "></i>
                         </button>
                         <button rel="tooltip" class="btn btn-danger btn-sm btn-icon"  type="button" onClick="Delete({{ $payment->id }})">
@@ -31,6 +30,7 @@
         </tbody>
     </table>
 </div>
+@include('payments.partials.editModal', ['person_data_id'=>$person_data_id])
 @push('js')
 <script>
     function DisplayPayments(data){
@@ -38,12 +38,11 @@
         var output = "";
         for(var i = 0; i < payments.length; i++){
             output += "<tr value="+payments[i].id+">"
-                + "<td>" + payments[i].id + "</td>"
-                + "<td>" + payments[i].nombre + "</td>"
-                + "<td>" + payments[i].numero_serie + "</td>"
-                + "<td>" + payments[i].departamento + "</td>"
-                +'<td class="text-right"><button class="btn btn-info btn-sm btn-icon"  type="button" onClick="mostrarModalEditar(\'' + payments[i].id + '\')"><span class="btn-inner--icon"><i class="fas fa-pencil-alt fa-2"></i></span></button>'
-                +'<button class="btn btn-success btn-sm btn-icon"  type="button" onClick="mostrarModalpayments(\'' + payments[i].id + '\',\'' + payments[i].nombre + '\')"><span class="btn-inner--icon"><i class="fa fa-eye"></i></span></button>'
+                + "<td>" + payments[i].number + "</td>"
+                + "<td>" + payments[i].date + "</td>"
+                + "<td>" + payments[i].amount + "</td>"
+                + "<td>" + payments[i].comments + "</td>"
+                +'<td class="text-right"><button class="btn btn-info btn-sm btn-icon"  type="button" onClick="showEditModal(\'' + payments[i].id + '\')"><span class="btn-inner--icon"><i class="fas fa-pencil-alt fa-2"></i></span></button>'
                 +'<button class="btn btn-danger btn-sm btn-icon"  type="button" onClick="Delete(\'' + payments[i].id + '\')"><span class="btn-inner--icon"><i class="fa fa-trash"></i></span></button></td>'
                 +  "</tr>";
         }
@@ -62,7 +61,7 @@
                 },
             success: function (response) {
                 DisplayPayments(response.data);
-
+                displayStats(); 
                 }
             });
             return false;

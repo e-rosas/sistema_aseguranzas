@@ -6,13 +6,13 @@
     <div class="container-fluid mt--7">
         <div class="row">
             <div class="col-xl-12 mb-5 mb-xl-0 card-group">
-                @include('components.invoiceStatsCard', ['title' => 'Total', 'value' => $stats->getTotal()])
-                @include('components.invoiceStatsCard', ['title' => 'Amount paid', 'value' => $stats->getAmount_paid()])
-                @include('components.invoiceStatsCard', ['title' => 'Amount due', 'value' => $stats->getAmount_due()])
+                @include('components.invoiceStatsCard', ['id' => 'total','title' => 'Total', 'value' => $stats->getTotal()])
+                @include('components.invoiceStatsCard', ['id' => 'amount-paid','title' => 'Amount paid', 'value' => $stats->getAmount_paid()])
+                @include('components.invoiceStatsCard', ['id' => 'amount-due','title' => 'Amount due', 'value' => $stats->getAmount_due()])
                 @if ($stats->status==1)
-                    @include('components.invoiceStatsCard', ['title' => 'Amount due', 'value' => $stats->getPersonalAmountDue()])
+                    @include('components.invoiceStatsCard', ['id' => 'personal-due','title' => 'Amount due', 'value' => $stats->getPersonalAmountDue()])
                 @elseif ($stats->status==2)
-                    @include('components.invoiceStatsCard', ['title' => 'Amount due', 'value' => $stats->getTotalAmountDue()])
+                    @include('components.invoiceStatsCard', ['id' => 'total-total','title' => 'Amount due', 'value' => $stats->getTotalAmountDue()])
                 @endif
             </div>
         </div>
