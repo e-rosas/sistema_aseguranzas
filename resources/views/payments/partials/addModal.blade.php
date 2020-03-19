@@ -119,10 +119,12 @@
             if(response.data.status == 1){
                 document.getElementById("personal-due").innerHTML = response.data.personal_amount_due;
                 document.getElementById("stats-status").innerHTML = 'Personal discount';
+                document.getElementById("add-personal-discount-button").style.display = 'none';
             }
             else if(response.data.status == 0){
                 document.getElementById("personal-due").innerHTML = 'NA';
                 document.getElementById("stats-status").innerHTML = 'Insurance discount';
+                document.getElementById("add-personal-discount-button").style.display = 'block';
             }
 
 

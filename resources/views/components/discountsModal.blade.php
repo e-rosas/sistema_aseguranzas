@@ -12,13 +12,19 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="fas fa-percent"></i></span>
                                     </div>
-                                    <input type="number" step="0.1" min="0" max="100" name="new_percentage" id="input-new_discount_percentage" class="form-control form-control-alternative"
+                                    <input required type="number" step="0.1" min="0.1" max="100" name="new_percentage" id="input-new_discount_percentage" class="form-control form-control-alternative"
                                     value=10>
                                 </div>
                             </div>
                             <div class="col-md-4 text-right">
                                 <button id="add-percentage" type="button" class="btn btn-outline-primary">{{ __('Add') }}</button>
                             </div>
+                        </div>
+                        <div id="list-percentages" class="form-row">
+                            <h3>Percentages:        </h3>
+                            <ul class="list-inline">
+
+                            </ul>
                         </div>
 
                         {{--  start_date  --}}
@@ -57,8 +63,6 @@
                                 <button id="generate" type="button" class="btn btn-outline-primary btn-sm btn-block">{{ __('Preview discounts') }}</button>
                             </div>
                         </div>
-
-
                     </div>
                     <div class="card-body px-lg-5 py-lg-5">
 
@@ -234,6 +238,18 @@
 
     var today = yyyy + '-' + mm + '-' + dd;
 
+    function displayPercentages(){
+        var output = "";
+
+        for(var i = 0; i < percentages.length; i++){
+
+            output += "<li class='list-inline-item'>"
+                + percentages[i] + "</li>"
+        }
+
+        $('#list-percentages ul').html(output);
+    }
+
     function displayGeneratedDiscounts(){
         var output = "";
 
@@ -312,6 +328,7 @@
 
     $(document).ready(function(){
         percentages = [20, 25, 30];
+        displayPercentages();
         $('#modal-form').on('shown.bs.modal', function (e) {
         })
         document.getElementById("input-start_date").value = today;
@@ -338,7 +355,12 @@
 
         $("#add-percentage").click(function(){
             var percentage = document.getElementById("input-new_discount_percentage").value;
-            percentages.push(percentage);
+
+            if(percentage > 0){
+                percentages.push(percentage);
+                displayPercentages();
+            }
+
 
 
         });

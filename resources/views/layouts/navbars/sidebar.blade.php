@@ -52,17 +52,17 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('beneficiaries.index') }}">
-                        <i class="ni ni-tv-2 text-primary"></i> {{ __('Beneficiaries') }}
+                        <i class="fas fa-user-friends text-primary"></i> {{ __('Beneficiaries') }}
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('insurees.index') }}">
-                        <i class="ni ni-tv-2 text-primary"></i> {{ __('Insurees') }}
+                        <i class="fas fa-user-shield text-primary"></i> {{ __('Insurees') }}
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('insurers.index') }}">
-                        <i class="ni ni-tv-2 text-primary"></i> {{ __('Insurers') }}
+                        <i class="fas fa-shield-alt text-primary"></i> {{ __('Insurers') }}
                     </a>
                 </li>
                 <li class="nav-item">
@@ -84,7 +84,7 @@
                     <a class="nav-link" href="{{ route('categories.index') }}">
                         <i class="fas fa-cube text-primary"></i> {{ __('Categories') }}
                     </a>
-                </li>              
+                </li>
             </ul>
         </div>
     </div>

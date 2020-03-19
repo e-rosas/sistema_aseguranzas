@@ -25,8 +25,8 @@
                                 <span class="h2 font-weight-bold mb-0"> <a href="{{ route('insurees.show', $beneficiary->insuree) }}"> {{ $beneficiary->insuree->fullName()  }} </a></span>
                             </div>
                             <div class="col-auto">
-                                <div class="icon icon-shape bg-orange text-white rounded-circle shadow">
-                                    <i class="fas fa-dollar-sign"></i>
+                                <div class="icon icon-shape bg-blue text-white rounded-circle shadow">
+                                    <i class="fas fa-user-shield"></i>
                                 </div>
                             </div>
                         </div>

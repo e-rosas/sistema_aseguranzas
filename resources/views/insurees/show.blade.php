@@ -57,7 +57,7 @@
                                     </div>
 
                                     <div>
-                                        <span class="heading"> {{ $stats->getStatus() }} </span>
+                                        <span id="stats-status" class="heading"> {{ $stats->getStatus() }} </span>
                                         <span class="description">{{ __('Status') }}</span>
                                     </div>
                                 </div>
