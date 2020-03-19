@@ -93,6 +93,58 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade bd-example-modal-lg" id="edit-discount-modal" tabindex="-1" role="dialog" aria-labelledby="edit-discount-modal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-body p-0">
+                <div class="card bg-secondary shadow border-0">
+                    <div class="card-header bg-transparent">
+                        <h5 class="heading-small text-muted mb-4">{{ __('Edit discount') }}</h5>
+                 
+                    </div>
+                    <div class="card-body px-lg-5 py-lg-5">
+                        {{--  discount --}}
+                        <input type="hidden" id="update-discount-id">
+                        {{--  start_date  --}}
+                        <div class="form-group {{ $errors->has('start_date') ? ' has-danger' : '' }}">
+                            <div class="input-group input-group-alternative">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-calendar"></i></span>
+                                </div>
+                                <input type="date" name="start_date" id="update-start_date" class="form-control {{ $errors->has('start_date') ? ' is-invalid' : '' }}"
+                                value="{{ old('start_date') }}" required>
+                                @if ($errors->has('start_date'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('start_date') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+                        {{--  end_date  --}}
+                        <div class="form-group {{ $errors->has('end_date') ? ' has-danger' : '' }}">
+                            <div class="input-group input-group-alternative">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-calendar"></i></span>
+                                </div>
+                                <input type="date" name="end_date" id="update-end_date" class="form-control {{ $errors->has('end_date') ? ' is-invalid' : '' }}"
+                                value="{{ old('end_date') }}" required>
+                                @if ($errors->has('end_date'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('end_date') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <button id="update-discount" class="btn btn-success mt-4">{{ __('Save') }}</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 @push('js')
 <script>
     // CSRF Token
@@ -158,21 +210,8 @@
             },
         success: function (response) {
 
-            var discounts_invoice = response['data'];
-            var output = "";
-
-            for(var i = 0; i < discounts_invoice.length; i++){
-                output += "<tr value="+discounts_invoice[i].id+">"
-                    + "<td>" + discounts_invoice[i].discount.percentage + "</td>"
-                    + "<td>" + discounts_invoice[i].discounted_total + "</td>"
-                    + "<td>" + discounts_invoice[i].start_date + "</td>"
-                    + "<td>" + discounts_invoice[i].end_date + "</td>"
-                    + "<td>" + discounts_invoice[i].discount.amount_of_days + "</td>"
-                    + "<td>" + discounts_invoice[i].active  + "</td>"
-                    +  "</tr>";
-            }
-
-            $('#discounts_invoice_table tbody').html(output);
+            var discounts_person = response.data;
+            DisplayDiscounts(discounts_person);
 
             appliedDiscounts = [];
             displayGeneratedDiscounts();
@@ -287,5 +326,55 @@
 
         });
     });
+
+    function showEditDiscountModal(id){
+        getDiscount(id); 
+        $('#edit-discount-modal').modal('show')
+    }
+    function getDiscount(id){
+        $.ajax({
+            url: "{{route('discount_person.find')}}",
+            dataType: 'json',
+            type:"post",
+            data: {
+                "_token": "{{ csrf_token() }}",
+                "discount_person_data_id" : id
+            },
+        success: function (response) {       
+                          
+            }
+        });
+        return false;
+    }
+    function displayDiscountModal(discount_person_data_id, number, date, amount, comments){
+        document.getElementById("update-discount-id").value = discount_person_data_id;
+        document.getElementById("update-start-date").value = number;   
+        document.getElementById("update-end-date").value = date;
+        document.getElementById("update-payment-amount").value = amount;   
+              
+      }
+    function updatePayment(id, number, amount, date, comments){
+        $.ajax({
+            url: "{{route('payments.update')}}",
+            dataType: 'json',
+            type:"patch",
+            data: {
+                "_token": "{{ csrf_token() }}",
+                "person_data_id": {{ $person_data_id }},
+                "discount_person_data_id": id,
+                "number": number,
+                "amount": amount,
+                "date": date,
+                "comments": comments,
+            },
+        success: function (response) {
+            DisplayPayments(response.data);
+            displayStats();                       
+            $('#edit-modal').modal('hide')
+            
+            }
+        });
+            return false;
+    }
 </script>
 @endpush

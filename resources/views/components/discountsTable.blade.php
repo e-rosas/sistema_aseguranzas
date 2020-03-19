@@ -57,16 +57,15 @@
         var r = confirm("Are you sure?");
         if(r){
             $.ajax({
-                url: "{{route('discounts.destroy')}}",
+                url: "{{route('discount_person.destroy')}}",
                 dataType: 'json',
                 type:"delete",
                 data: {
                     "_token": "{{ csrf_token() }}",
-                    "payment_id" : id
+                    "discount_person_data_id" : id
                 },
             success: function (response) {
                 DisplayDiscounts(response.data);
-                displayStats(); 
                 }
             });
             return false;

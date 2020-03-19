@@ -43,7 +43,7 @@ class DiscountsPersonController extends Controller
 
     public function delete(Request $request)
     {
-        $discount = DiscountPersonData::find($request['discount_id']);
+        $discount = DiscountPersonData::find($request['discount_person_data_id']);
         $person_data_id = $discount->person_data_id;
         $discount->delete();
 

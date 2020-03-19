@@ -71,11 +71,6 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('discounts.index') }}">
-                        <i class="ni ni-tv-2 text-primary"></i> {{ __('Discounts') }}
-                    </a>
-                </li>
-                <li class="nav-item">
                     <a class="nav-link" href="{{ route('invoices.index') }}">
                         <i class="fas fa-file-invoice-dollar text-primary"></i> {{ __('Invoices') }}
                     </a>
