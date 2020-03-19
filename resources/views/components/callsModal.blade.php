@@ -105,9 +105,8 @@
                 "date": date,
                 "comments": comments,
             },
-        success: function (data) {
-            console.log(data);
-            displayCalls(data);
+        success: function (response) {
+            displayCalls(response.data);
             $('#modal-call').modal('hide')
 
             }
@@ -132,8 +131,9 @@
                 + "<td>" + calls[i].date + "</td>" 
                 + "<td>" + calls[i].claim + "</td>" 
                 + "<td>" + calls[i].comments+ "</td>"
-                +'<td class="text-right"><button class="btn btn-icon btn-outline-warning btn-sm"  type="button" onClick="showEditCallModal(\'' + calls[i].id + '\')"><span class="btn-inner--icon"><i class="fas fa-edit"></i></span></button>' 
-                +  "</td></tr>";
+                +'<td class="text-right"><button class="btn btn-icon btn-info btn-sm"  type="button" onClick="showEditCallModal(\'' + calls[i].id + '\')"><span class="btn-inner--icon"><i class="fas fa-pencil-alt fa-2"></i></span></button>' 
+                +'<button class="btn btn-danger btn-sm btn-icon"  type="button" onClick="Delete(\'' + calls[i].id + '\')"><span class="btn-inner--icon"><i class="fa fa-trash"></i></span></button></td>'
+                +"</td></tr>";
         }
 
         $('#calls_table tbody').html(output);

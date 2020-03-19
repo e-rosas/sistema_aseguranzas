@@ -24,7 +24,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('invoices', 'InvoiceController', ['except' => ['update']]);
     Route::resource('categories', 'CategoryController');
     Route::resource('items', 'ItemController');
-    Route::resource('calls', 'CallController', ['except' => ['update']]);
+    // Route::resource('calls', 'CallController', ['except' => ['update']]);
     // Route::resource('payments', 'PaymentController');
 
     Route::resource('user', 'UserController', ['except' => ['show']]);
@@ -34,12 +34,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::patch('services_update', ['as' => 'service.update', 'uses' => 'ServiceController@update']);
     Route::patch('invoices_updateperson', ['as' => 'invoice.updateperson', 'uses' => 'InvoiceController@updatePersonData']);
     Route::patch('invoices_update', ['as' => 'invoice.update', 'uses' => 'InvoiceController@update']);
-    Route::patch('calls_update', ['as' => 'calls.update', 'uses' => 'CallController@update']);
     Route::post('insurees/search', 'SearchPatientController@searchInsuree')->name('insurees.search');
     Route::post('patients/search', 'SearchPatientController@search')->name('patients.search');
     Route::post('services/search', 'SearchProductController@searchService')->name('services.search');
     Route::post('services/find', 'SearchProductController@findService')->name('services.find');
-    Route::post('calls/find', 'CallController@find')->name('calls.find');
 
     Route::post('invoice_services', 'InvoiceServiceController@getInvoiceServices')->name('invoiceservices.get');
 
@@ -57,10 +55,17 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('allcategories', 'CategoryController@list')->name('categories.list');
 
+    Route::get('payments', 'PaymentController@index')->name('payments.index');
     Route::post('payments/add', 'PaymentController@store')->name('payments.store');
     Route::post('payments/find', 'PaymentController@find')->name('payments.find');
     Route::patch('payments/update', 'PaymentController@update')->name('payments.update');
     Route::delete('payments/destroy', 'PaymentController@delete')->name('payments.destroy');
+
+    Route::get('calls', 'CallController@index')->name('calls.index');
+    Route::post('calls/add', 'CallController@store')->name('calls.store');
+    Route::post('calls/find', 'CallController@find')->name('calls.find');
+    Route::patch('calls/update', 'CallController@update')->name('calls.update');
+    Route::delete('calls/destroy', 'CallController@delete')->name('calls.destroy');
 
     Route::post('personstats/find', 'PersonDataController@findStats')->name('personstats.find');
 

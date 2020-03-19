@@ -135,6 +135,26 @@
             return false;
     }
 
+    function Delete(id){
+        var r = confirm("Are you sure?");
+        if(r){
+            $.ajax({
+                url: "{{route('calls.destroy')}}",
+                dataType: 'json',
+                type:"delete",
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "call_id" : id
+                },
+            success: function (response) {
+                displayCalls(response.data);
+                }
+            });
+            return false;
+        }
+
+    }
+
     $(document).ready(function(){
         $('#calls_table').on("click", ".update-call", function(event) {
             var id = $(this).data('call');

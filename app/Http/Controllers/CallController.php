@@ -39,7 +39,7 @@ class CallController extends Controller
         $validated = $this->validateCall();
         Call::create($validated);
 
-        return $this->getPersonCalls($request->Person_id);
+        return $this->getPersonCalls($request->person_data_id);
     }
 
     /**
@@ -76,13 +76,17 @@ class CallController extends Controller
         return $this->getPersonCalls($call->person_data_id);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Call $call)
+    public function delete(Request $request)
     {
+        $call = Call::findOrFail($request['call_id']);
+        $person_data_id = $call->person_data_id;
+        $call->delete();
+
+        $calls = Call::where('person_data_id', $person_data_id)
+            ->paginate(5)
+        ;
+
+        return CallResource::collection($calls);
     }
 
     public function validateCall()
@@ -101,7 +105,10 @@ class CallController extends Controller
 
     private function getPersonCalls($person_data_id)
     {
-        $calls = Call::where('person_data_id', $person_data_id)->paginate(5);
+        $calls = Call::where('person_data_id', $person_data_id)
+            ->orderBy('date', 'desc')
+            ->paginate(5)
+        ;
 
         return CallResource::collection($calls);
     }

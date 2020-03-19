@@ -19,7 +19,7 @@ class PaymentResource extends JsonResource
             'id' => $this->id,
             'amount' => $this->amount,
             'number' => $this->number,
-            'comments' => $this->comments,
+            'comments' => is_null($this->comments) ? '' : $this->comments,
             'date' => $this->date->format('Y-m-d'),
         ];
     }

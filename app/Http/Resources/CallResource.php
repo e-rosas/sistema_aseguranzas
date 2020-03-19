@@ -18,8 +18,8 @@ class CallResource extends JsonResource
         return [
             'id' => $this->id,
             'number' => $this->number,
-            'comments' => $this->comments,
-            'claim' => $this->claim,
+            'comments' => is_null($this->comments) ? '' : $this->comments,
+            'claim' => is_null($this->claim) ? '' : $this->claim,
             'date' => $this->date->format('Y-m-d'),
             'person_data_id' => $this->person_data_id,
         ];

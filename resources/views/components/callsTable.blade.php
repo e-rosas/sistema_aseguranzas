@@ -18,10 +18,13 @@
                     <td>{{ $call->claim}}</td>
                     <td>{{ $call->comments}}</td>
                     <td class="text-right">
-                        <button class="btn btn-icon btn-outline-warning btn-sm"  type="button" onClick="showEditCallModal({{ $call->id }})">
+                        <button class="btn btn-icon btn-info btn-sm"  type="button" onClick="showEditCallModal({{ $call->id }})">
                             <span class="btn-inner--icon">
-                                <i class="fas fa-edit"></i>
+                                <i class="fas fa-pencil-alt fa-2 "></i>
                             </span>
+                        </button>
+                        <button rel="tooltip" class="btn btn-danger btn-sm btn-icon"  type="button" onClick="Delete({{ $call->id }})">
+                            <i class="fa fa-trash"></i>
                         </button>
                     </td>
                 </tr>
