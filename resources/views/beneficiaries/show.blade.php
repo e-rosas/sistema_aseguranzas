@@ -75,6 +75,13 @@
                                     <div>
                                         <span id="stats-status" class="heading"> {{ $stats->getStatus() }} </span>
                                         <span class="description">{{ __('Status') }}</span>
+                                        <form  method="post" action="{{ route('reports.invoices') }}" >
+                                            @csrf
+                                            <div class="form-group col-md-12 col-auto">
+                                                <input type="hidden" value=" {{ $beneficiary->person_data->id }} " name="person_data_id" id="input-person_data_id" class="custom-control-input">
+                                                <button type="submit" class="btn btn-success mt-4 btn-block">{{ __('PDF') }}</button>
+                                            </div>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
@@ -109,3 +116,4 @@
     </div>
     @include('calls.partials.editCallModal', ['person_data_id' => $beneficiary->person_data->id])
 @endsection
+

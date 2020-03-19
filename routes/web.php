@@ -71,6 +71,9 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::post('personstats/find', 'PersonDataController@findStats')->name('personstats.find');
 
+
+    Route::post('reports/invoices', 'ReportController@personInvoicesReport')->name('reports.invoices');
+
     Route::get('fullnames', 'PersonDataController@fullNames');
     Route::get('stats', 'PersonDataController@Stats');
     Route::get('profile', ['as' => 'profile.edit', 'uses' => 'ProfileController@edit']);
