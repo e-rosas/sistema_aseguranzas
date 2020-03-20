@@ -46,6 +46,13 @@
                         <h3>
                             {{ $insuree->person_data->fullName() }}<span class="font-weight-light"></span>
                         </h3>
+                        <form  method="post" action="{{ route('reports.invoices') }}" >
+                            @csrf
+                            <div class="form-group col-md-12 col-auto">
+                                <input type="hidden" value=" {{ $insuree->person_data->id }} " name="person_data_id" id="input-person_data_id" class="custom-control-input">
+                                <button type="submit" class="btn btn-success mt-4 btn-block">{{ __('PDF') }}</button>
+                            </div>
+                        </form>
                     </div>
                     <div class="card-body pt-0 pt-md-4">
                         <div class="row">
