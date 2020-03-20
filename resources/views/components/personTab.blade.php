@@ -53,6 +53,7 @@
                 @component('components.callsTable', ['calls'=>$person_data->calls()->paginate(5)])
 
                 @endcomponent
+                 @include('calls.partials.editCallModal', ['person_data_id' => $person_data->id])
             </div>
             <div class="tab-pane fade" id="tabs-icons-text-4" role="tabpanel" aria-labelledby="tabs-icons-text-3-tab">
                 <div class="col-md-12 col-auto text-right">

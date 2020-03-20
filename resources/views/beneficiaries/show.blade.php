@@ -114,6 +114,5 @@
             </div>
         </div>
     </div>
-    @include('calls.partials.editCallModal', ['person_data_id' => $beneficiary->person_data->id])
 @endsection
 
