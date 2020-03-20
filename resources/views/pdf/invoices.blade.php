@@ -7,11 +7,6 @@
             font: 14px/1.4 "Helvetica Neue", Helvetica, Arial, sans-serif;
         }
 
-        /* html {
-            margin: 0px;
-            padding: 0px;
-        } */
-
         table {
             border-collapse: collapse;
             border-spacing: 0;
@@ -23,9 +18,6 @@
         }
         th:last-child {
             border-top-right-radius: 5px;
-        }
-        tbody tr:nth-child(even) {
-            background: #f0f0f2;
         }
 
         td {
@@ -39,14 +31,14 @@
 
         th,
         td {
-        padding: 10px 15px;
+        padding: 4px 6px;
         vertical-align: middle;
         }
 
         th {
             font-style: normal;
             font-size: 12px;
-            color: #5851D8;
+            color: #475057;
             width: 100%;
             text-align: center;
         }
@@ -56,7 +48,7 @@
             font-size: 11px;
             text-transform: uppercase;
         }
-        
+
         .sub-container{
             padding: 0px 20px;
         }
@@ -84,14 +76,13 @@
             width: 100%;
             text-align: right;
             padding: 0px;
-            margin: 0px;
+            margin: 66px 0 22px 0;
         }
 
         .sub-heading-text {
             font-style: normal;
             font-weight: 600;
-            font-size: 16px;
-            /* line-height: 21px; */
+            font-size: 14px;
             color: #595959;
             padding: 0px;
             margin: 0px;
@@ -99,7 +90,7 @@
         }
 
         .expenses-title {
-            margin-top: 60px;
+            margin-top: 8px;
             padding-left: 3px;
             font-style: normal;
             font-weight: normal;
@@ -185,43 +176,65 @@
             font-weight: 500;
             font-size: 20px;
             color: #5851D8;
-        } 
+        }
         .description {
             text-align: left;
+        }
+        .date {
+            width: 30%;
+        }
+        .h-total, .h-discounted{
+            width: 23%;
+        }
+        .h-total{
+            width: 17%;
+        }
+        .invoice-detail{
+            color: #6e7175;
+            font-size: 11px;
+            font-weight: 500;
+        }
+        .logo {
+            border-top: 4px solid #7267e4;
+            float: left;
+            font-size: 20px;
+            font-weight: 100;
+            letter-spacing: .5px;
+            text-transform: uppercase;
         }
     </style>
 </head>
 <body>
+    <header class="primary-header">
+
+      <h1 class="logo">
+        Hospital México
+      </h1>
+
+      <h3 class="heading-date-range">{{ $datetime }}</h3>
+
+    </header>
+    <section class="row-alt">
+        <p class="sub-heading-text">
+            {{ $person->fullName() }}
+        </p>
+    </section>
+
     <div class="main-container">
         <div class="sub-container">
-            <table class="header">
-                <tr>
-                    <td>
-                        <p class="heading-text">Hospital México</p>
-                    </td>
-                    <td>
-                        <p class="heading-date-range"> {{ $datetime }} </p>
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="2">
-                        <p class="sub-heading-text">{{ $person->fullName() }} </p>
-                    </td>
-                </tr>
-            </table>
             <p class="expenses-title">Invoices</p>
             <div class="expenses-table-container">
                 @foreach ($invoices as $invoice)
 
-                <h5>Number: {{ $invoice->number }} </h5>
-                <h6>Date: {{ $invoice->date->toFormattedDateString() }} </h6>
+                <p class="invoice-detail">Number: {{ $invoice->number }} </p>
+                <p class="invoice-detail">{{ $invoice->date->toFormattedDateString() }} </p>
                 <table class="expenses-table">
                     <thead>
                         <tr>
-                            <th>{{ __('Description') }}</th>
-                            <th>{{ __('Date') }}</th>
-                            <th>{{ __('Total') }}</th>
-                            <th>{{ __('Total Discounted') }}</th>
+                            <th class="description">{{ __('Description') }}</th>
+                            <th class="date">{{ __('Date') }}</th>
+                            <th class="h-total">{{ __('Total') }}</th>
+                            <th class="h-discounted">{{ __('Discounted') }}</th>
                         </tr>
                     </thead>
                     @foreach ($invoice->services as $service)
