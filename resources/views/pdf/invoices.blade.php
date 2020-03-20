@@ -2,10 +2,9 @@
 <html lang="en">
 <head>
     <title>Invoices</title>
-    {{-- <link href="https://fonts.googleapis.com/css?family=Poppins&display=swap" rel="stylesheet"> --}}
     <style type="text/css">
         body {
-            font-family: "DejaVu Sans";
+            font: 14px/1.4 "Helvetica Neue", Helvetica, Arial, sans-serif;
         }
 
         /* html {
@@ -15,6 +14,33 @@
 
         table {
             border-collapse: collapse;
+            border-spacing: 0;
+        }
+
+        th:first-child {
+            border-top-left-radius: 5px;
+            text-align: left;
+        }
+        th:last-child {
+            border-top-right-radius: 5px;
+        }
+        tbody tr:nth-child(even) {
+            background: #f0f0f2;
+        }
+
+        td {
+            border-bottom: 1px solid #cecfd5;
+            border-right: 1px solid #cecfd5;
+        }
+        td:first-child {
+            border-left: 1px solid #cecfd5;
+            text-align: left;
+        }
+
+        th,
+        td {
+        padding: 10px 15px;
+        vertical-align: middle;
         }
 
         th {
@@ -25,10 +51,12 @@
             text-align: center;
         }
 
-        .main-container {
-            /* padding: 30px 60px; */
+        thead {
+            background: #F6F9FC;
+            font-size: 11px;
+            text-transform: uppercase;
         }
-
+        
         .sub-container{
             padding: 0px 20px;
         }
@@ -93,7 +121,6 @@
             font-style: normal;
             font-weight: normal;
             font-size: 10px;
-            line-height: 21px;
             color: #595959;
             text-align: center;
         }
@@ -128,7 +155,6 @@
             font-style: normal;
             font-weight: 500;
             font-size: 16px;
-            line-height: 21px;
             text-align: right;
             color: #040405;
         }
@@ -148,7 +174,6 @@
             font-style: normal;
             font-weight: 600;
             font-size: 16px;
-            line-height: 21px;
             color: #595959;
         }
 
@@ -159,8 +184,10 @@
             font-style: normal;
             font-weight: 500;
             font-size: 20px;
-            line-height: 21px;
             color: #5851D8;
+        } 
+        .description {
+            text-align: left;
         }
     </style>
 </head>
@@ -200,7 +227,7 @@
                     @foreach ($invoice->services as $service)
                         <tr>
                             <td>
-                                <p class="expense-title">
+                                <p class="expense-title description">
                                     {{ $service->description}}
                                 </p>
                             </td>
