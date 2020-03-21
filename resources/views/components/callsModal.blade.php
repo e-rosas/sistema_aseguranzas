@@ -111,7 +111,7 @@
 
             }
         });
-            return false;
+        return false;
     }
 
     function showEditCallModal(id){

@@ -12,6 +12,7 @@
         </div>
     </div>
 </div>
+
 {{-- <div class="row mt-5">
     <div class="col-xl-8 mb-5 mb-xl-0">
         <div class="card shadow">
@@ -39,8 +40,8 @@
                                         <a href="{{ route('insurees.show', ) }}">
                                     @else
                                         <a href="{{ route('beneficiaries.show', $person_data->getBeneficiary()) }}">
-                                    @endif 
-                                    {{ $person_data->person_data->fullName() }} {{-- </a> 
+                                    @endif
+                                    {{ $person_data->person_data->fullName() }} {{-- </a>
                                 </td>
                                 <td>{{ $person_data->person_stats->getAmount_paid() }}</td>
                                 <td>{{ $person_data->person_stats->getAmount_due() }}</td>
@@ -53,6 +54,7 @@
     </div>
 </div> --}}
 
-    
+@include('charts.payments')
+
 @endsection
 
