@@ -46,7 +46,7 @@
                 <div class="col-md-12 col-auto text-right">
                     <button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#modal-call">{{ __('Add') }}</i></button>
                     <br />
-                    @component('components.callsModal',['person_data_id'=>$person_data->id])
+                    @component('components.callsModal',['person_data'=>$person_data])
 
                     @endcomponent
                 </div>

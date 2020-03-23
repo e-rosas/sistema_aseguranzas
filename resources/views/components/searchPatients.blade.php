@@ -1,6 +1,6 @@
 <!-- For defining autocomplete -->
 <div class="row">
-  <select id='person_data_id' class="custom-select form-control{{ $errors->has('person_data_id') ? ' is-invalid' : '' }}" name="person_data_id"> 
+  <select id='person_data_id' class="custom-select form-control" name="person_data_id"> 
     <option value='0'>{{ __('Select patient') }}</option>
   </select>
 </div>

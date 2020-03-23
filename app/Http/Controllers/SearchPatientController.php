@@ -20,7 +20,7 @@ class SearchPatientController extends Controller
         foreach ($patients as $patient) {
             $response[] = [
                 'id' => $patient->id,
-                'text' => $patient->fullName(),
+                'text' => $patient->full_name.' - '.$patient->birth_date->format('Y-m-d'),
             ];
         }
         echo json_encode($response);
@@ -33,7 +33,7 @@ class SearchPatientController extends Controller
         $patients = PersonData::query($search)
             ->where('insured', 1)
             ->where(function ($query) use ($search) {
-                $query->whereLike(['name', 'last_name', 'maiden_name'], $search)
+                $query->whereLike(['full_name'], $search)
                 ;
             })
             ->get()->take(20)
@@ -42,7 +42,7 @@ class SearchPatientController extends Controller
         foreach ($patients as $patient) {
             $response[] = [
                 'id' => $patient->id,
-                'text' => $patient->fullName(),
+                'text' => $patient->full_name.' - '.$patient->birth_date->format('Y-m-d'),
             ];
         }
         echo json_encode($response);
@@ -53,7 +53,7 @@ class SearchPatientController extends Controller
     {
         $search = $request->search;
 
-        $insurees = Insuree::whereLike(['person_data.name', 'person_data.last_name', 'person_data.maiden_name'], $search)
+        $insurees = Insuree::whereLike(['person_data.full_name', 'insurance_id'], $search)
             ->paginate(10)
         ;
 
@@ -63,7 +63,7 @@ class SearchPatientController extends Controller
     public function searchBeneficiary(Request $request)
     {
         $search = $request->search;
-        $beneficiaries = Beneficiary::whereLike(['person_data.name', 'person_data.last_name', 'person_data.maiden_name'], $search)
+        $beneficiaries = Beneficiary::whereLike(['person_data.full_name'], $search)
             ->paginate(10)
         ;
 

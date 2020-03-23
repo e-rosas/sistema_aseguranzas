@@ -216,14 +216,15 @@
                     </div>
                     <div class="card-body">
                         {{-- Selecting service --}}
-                        <div class="form-inline">
-                            <div class="col-md-6 form-group col-auto">
+                        <div class="col-xl-12 order-xl-1">
                                 @component('components.searchServices')
                                 
-                                @endcomponent
-                            </div>
+                                @endcomponent                          
+                        </div>
+                        <br />
+                        <div class="form-row">
                             {{--  date  --}}
-                            <div class="col-md-4 col-auto form-group">
+                            <div class="col-lg-2 col-auto">
                                 <div class="input-group input-group-alternative">
                                     <div class="input-group-prepend">
                                         <span  class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
@@ -232,19 +233,19 @@
                                 </div>
                             </div>
                             {{--  price  --}}
-                            <div class=" col-auto form-group">
+                            <div class="col-lg-2 col-auto form-group">
                                 <input type="numeric"  name="quantity" id="custom-price" class="form-control form-control-alternative" 
                                 placeholder="Price" required>
                             
                             </div>
                             {{--  discounted-price  --}}
-                            <div class=" col-auto form-group">
+                            <div class="col-lg-2 col-auto form-group">
                                 <input type="numeric" min="1" name="quantity" id="custom-discounted-price" class="form-control form-control-alternative" 
                                 placeholder="Discounted"  required>
                             
                             </div>
                             {{--  quantity  --}}
-                            <div class=" col-auto form-group{{ $errors->has('quantity') ? ' has-danger' : '' }}">
+                            <div class="col-lg-2 col-auto form-group{{ $errors->has('quantity') ? ' has-danger' : '' }}">
                                 <input type="numeric" min="1" name="quantity" id="input-quantity" class="form-control form-control-alternative{{ $errors->has('quantity') ? ' is-invalid' : '' }}" 
                                 placeholder="Quantity" value=1 required>
                             
@@ -255,7 +256,7 @@
                                 @endif
                             </div>
                             {{-- Add --}}
-                            <div class="col-md-4 form-group col-auto">
+                            <div class=" col-lg-2 col-md-3 form-group col-auto text-right">
                                 <button type="button" id="add_service" class="btn btn-outline-success">{{ __('Add') }}</button>
                             </div>
                         </div>

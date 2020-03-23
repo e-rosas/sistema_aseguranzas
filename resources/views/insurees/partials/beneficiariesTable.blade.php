@@ -12,7 +12,7 @@
         <tbody>
             @foreach ($beneficiaries as $beneficiary)
                 <tr>
-                    <td>{{ $beneficiary->fullName() }}</td>
+                    <td><a href="{{ route('beneficiaries.show', $beneficiary) }}">{{ $beneficiary->fullName()}}</a></td>
                     <td>
                         <a href="mailto:{{$beneficiary->person_data->email}}">{{ $beneficiary->person_data->email }}</a>
                     </td>

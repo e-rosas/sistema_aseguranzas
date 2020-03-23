@@ -21,7 +21,7 @@
                     <div class="card-body">
                         <div class="row">
                             {{--  Latest call  --}}
-                            @if ($insuree->person_data->calls->count()>0)
+                            @if (count($insuree->person_data->calls)>0)
                             <div class="col-md-6 col-auto form-group">
                                 <label class="form-control-label" for="label-latest_call">{{ __('Latest call') }}</label>
                                 <label id="label-calls">{{ $insuree->person_data->calls[0]->date->format('l jS \\of F Y')}}</label>
@@ -30,7 +30,7 @@
                         </div>
                         <div class="row">
                             {{--  Latest payment  --}}
-                            @if ($insuree->person_data->payments->count()>0)
+                            @if (count($insuree->person_data->payments)>0)
                             <div class="col-md-6 col-auto form-group">
                                 <label class="form-control-label" for="label-latest_call">{{ __('Latest payment') }}</label>
                                 <label id="label-payments">{{ $insuree->person_data->payments[0]->date->format('l jS \\of F Y')}}</label>

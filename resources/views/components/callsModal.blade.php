@@ -5,17 +5,11 @@
                 <div class="card bg-secondary shadow border-0">
                     <div class="card-header bg-transparent">
                         <h6 class="heading-small text-muted mb-4">{{ __('Add call') }}</h6>
+                        <h4>{{ $person_data->phone_number }}</h4>
                     </div>
                     <div class="card-body px-lg-5 py-lg-5">
                         <div class="form-group">
                             <div class="form-group">
-                                {{--  Invoice --}}
-                                <div class="form-group">
-                                    <div class="input-group input-group-alternative">
-                                        <input readonly type="hidden" name="person_data_id" id="input-person_data_id" class="form-control"
-                                        value="{{ $person_data_id ?? '' }}" required>
-                                    </div>
-                                </div>
                                 {{--  Number --}}
                                 <div class="form-group {{ $errors->has('number') ? ' has-danger' : '' }}">
                                     <div class="input-group input-group-alternative">
@@ -99,7 +93,7 @@
             type:"post",
             data: {
                 "_token": "{{ csrf_token() }}",
-                "person_data_id": {{ $person_data_id }},
+                "person_data_id": {{ $person_data->id }},
                 "number": number,
                 "claim": claim,
                 "date": date,
