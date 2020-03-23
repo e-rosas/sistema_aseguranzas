@@ -19,6 +19,7 @@ class DiscountsPersonController extends Controller
             $person_stats->status = 1;
             $person_stats->save();
             DiscountPersonData::create($validated);
+
             return $this->getPersonDiscounts($validated['person_data_id']);
         }
     }
@@ -48,14 +49,14 @@ class DiscountsPersonController extends Controller
 
         $discount->save();
 
-
         return $this->getPersonDiscounts($person_data_id);
     }
 
     public function getPersonDiscounts($person_data_id)
     {
         $discounts = DiscountPersonData::where('person_data_id', $person_data_id)
-            ->paginate(5)
+            ->orderBy('date', 'desc')
+            ->paginate(15)
         ;
 
         return DiscountResource::collection($discounts);

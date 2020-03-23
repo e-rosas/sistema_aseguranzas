@@ -38,7 +38,7 @@
 
                     @endcomponent
                 </div>
-                @component('components.discountsTable', ['discounts'=>$person_data->discounts()->paginate(5)])
+                @component('components.discountsTable', ['discounts'=>$person_data->discounts()->paginate(15)])
 
                 @endcomponent
             </div>
@@ -46,11 +46,11 @@
                 <div class="col-md-12 col-auto text-right">
                     <button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#modal-call">{{ __('Add') }}</i></button>
                     <br />
-                    @component('components.callsModal',['number'=>$person_data->calls->count() + 1, 'person_data_id'=>$person_data->id])
+                    @component('components.callsModal',['person_data_id'=>$person_data->id])
 
                     @endcomponent
                 </div>
-                @component('components.callsTable', ['calls'=>$person_data->calls()->paginate(5)])
+                @component('components.callsTable', ['calls'=>$person_data->calls()->paginate(15)])
 
                 @endcomponent
                  @include('calls.partials.editCallModal', ['person_data_id' => $person_data->id])
@@ -59,9 +59,9 @@
                 <div class="col-md-12 col-auto text-right">
                     <button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#modal-payment">{{ __('Add') }}</i></button>
                     <br />
-                    @include('payments.partials.addModal',['number'=>$person_data->payments->count() + 1, 'person_data_id'=>$person_data->id])
+                    @include('payments.partials.addModal',['person_data_id'=>$person_data->id])
                 </div>
-                @include('payments.partials.table', ['payments'=>$person_data->payments()->paginate(5), 'person_data_id'=>$person_data->id])
+                @include('payments.partials.table', ['payments'=>$person_data->payments()->paginate(15), 'person_data_id'=>$person_data->id])
             </div>
             @if ($person_data->insured)
             <div class="tab-pane fade" id="tabs-icons-text-5" role="tabpanel" aria-labelledby="tabs-icons-text-3-tab">

@@ -16,7 +16,7 @@
                                         <span class="input-group-text"><i class="fas fa-hashtag"></i></span>
                                     </div>
                                     <input type="number" name="number" id="update-payment-number" class="form-control {{ $errors->has('number') ? ' is-invalid' : '' }}"
-                                    value="{{ $number ?? '' }}" placeholder="Number" required>
+                                     placeholder="Number" required>
                                     @if ($errors->has('number'))
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $errors->first('number') }}</strong>
@@ -104,7 +104,7 @@
         document.getElementById("update-payment-id").value = payment_id;
         document.getElementById("update-payment-number").value = number;
         document.getElementById("update-payment-date").value = date;
-        document.getElementById("update-payment-amount").value = amount;
+        document.getElementById("update-payment-amount").value = parseFloat(amount.replace(/,/g, ''));;
         document.getElementById("update-payment-comments").value = comments;
 
       }
@@ -135,6 +135,7 @@
 
 
     $(document).ready(function(){
+        setPaymentCount();
         $("#update-payment").click(function(){
             var payment_id = document.getElementById("update-payment-id").value;
             var number = document.getElementById("update-payment-number").value;

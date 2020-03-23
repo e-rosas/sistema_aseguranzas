@@ -79,6 +79,10 @@
 @push('js')
 
 <script>
+    function setPaymentCount(){
+        var n = document.getElementById("payments_table").rows.length;
+        document.getElementById("payment-number").value = n;
+    }
     function sendPayment(number, amount, date, comments){
         $.ajax({
             url: "{{route('payments.store')}}",

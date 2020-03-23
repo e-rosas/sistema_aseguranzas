@@ -82,11 +82,7 @@ class CallController extends Controller
         $person_data_id = $call->person_data_id;
         $call->delete();
 
-        $calls = Call::where('person_data_id', $person_data_id)
-            ->paginate(5)
-        ;
-
-        return CallResource::collection($calls);
+        return $this->getPersonCalls($person_data_id);
     }
 
     public function validateCall()
@@ -107,7 +103,7 @@ class CallController extends Controller
     {
         $calls = Call::where('person_data_id', $person_data_id)
             ->orderBy('date', 'desc')
-            ->paginate(5)
+            ->paginate(15)
         ;
 
         return CallResource::collection($calls);

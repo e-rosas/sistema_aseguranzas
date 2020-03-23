@@ -23,7 +23,7 @@
                                             <span class="input-group-text"><i class="fas fa-phone"></i></span>
                                         </div>
                                         <input type="number" name="number" id="input-number" class="form-control {{ $errors->has('number') ? ' is-invalid' : '' }}"
-                                        value="{{ $number ?? '' }}" placeholder="Number" required>
+                                        placeholder="Number" required>
                                         @if ($errors->has('number'))
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $errors->first('number') }}</strong>
@@ -137,6 +137,7 @@
         }
 
         $('#calls_table tbody').html(output);
+        setCallCount();
     }
 
     $("#save_call").click(function(){

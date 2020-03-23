@@ -83,6 +83,10 @@
 @push('js')
 
 <script>
+    function setCallCount(){
+        var n = document.getElementById("calls_table").rows.length;
+        document.getElementById("input-number").value = n;
+    }
     function updateCall(id, number, claim, date, 
     comments){
         $.ajax({
@@ -156,6 +160,7 @@
     }
 
     $(document).ready(function(){
+        setCallCount();
         $('#calls_table').on("click", ".update-call", function(event) {
             var id = $(this).data('call');
             getCallData(id);

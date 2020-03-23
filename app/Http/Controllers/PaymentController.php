@@ -24,7 +24,7 @@ class PaymentController extends Controller
 
         $payments = Payment::where('person_data_id', $request->person_data_id)
             ->orderBy('date', 'desc')
-            ->paginate(5)
+            ->paginate(15)
         ;
 
         //new action: Add paid amount, calculate amount due
@@ -48,7 +48,8 @@ class PaymentController extends Controller
         $payment->save();
 
         $payments = Payment::where('person_data_id', $validated['person_data_id'])
-            ->paginate(10)
+            ->orderBy('date', 'desc')
+            ->paginate(15)
         ;
 
         return PaymentResource::collection($payments);
@@ -61,7 +62,8 @@ class PaymentController extends Controller
         $payment->delete();
 
         $payments = Payment::where('person_data_id', $person_data_id)
-            ->paginate(5)
+            ->orderBy('date', 'desc')
+            ->paginate(15)
         ;
 
         return PaymentResource::collection($payments);
