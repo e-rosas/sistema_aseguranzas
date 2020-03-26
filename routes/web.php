@@ -56,7 +56,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('items/search', 'SearchProductController@searchItem')->name('items.search');
     Route::post('items/find', 'SearchProductController@findItem')->name('items.find');
 
-
     Route::get('payments', 'PaymentController@index')->name('payments.index');
     Route::post('payments/add', 'PaymentController@store')->name('payments.store');
     Route::post('payments/find', 'PaymentController@find')->name('payments.find');
@@ -71,10 +70,10 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::post('personstats/find', 'PersonDataController@findStats')->name('personstats.find');
 
-
     Route::post('reports/invoices', 'ReportController@personInvoicesReport')->name('reports.invoices');
 
-    Route::post('charts/paymnets', 'ChartController@payments')->name('reports.invoices');
+    Route::post('charts/payments', 'ChartController@payments')->name('charts.payments');
+    Route::get('charts', 'ChartController@index')->name('charts.index');
 
     Route::get('fullnames', 'PersonDataController@fullNames');
     Route::get('stats', 'PersonDataController@Stats');

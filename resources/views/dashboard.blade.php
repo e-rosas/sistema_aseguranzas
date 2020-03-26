@@ -54,7 +54,6 @@
     </div>
 </div> --}}
 
-{{-- @include('charts.payments') --}}
 
 @endsection
 
