@@ -1,6 +1,9 @@
 <div class="card shadow">
     <div class="card-header bg-transparent">
-        <h5 class="text-uppercase text-muted ls-1 mb-1">Number of payments</h5>
+        <div class="col">
+            <h6 class="text-uppercase text-muted ls-1 mb-1">Payments</h6>
+            <h2 class="mb-0">Total payments</h2>
+        </div>
     </div>
     <div class="card-body">
         <div class="chart">
@@ -8,7 +11,6 @@
         </div>
 
     </div>
-    <div
 </div>
 
 
@@ -23,7 +25,7 @@
             data: {
                 labels: [],
                 datasets: [{
-                    label: 'Amount',
+                    label: '$',
                     backgroundColor: 'rgb(255, 99, 132)',
                     borderColor: 'rgb(255, 99, 132)',
                     data: [],
@@ -39,7 +41,7 @@
                 text: "Payment amounts",
                 },
                 legend: {
-                display: false
+                display: true
                 },
                 scales: {
                 yAxes: [{
@@ -63,6 +65,8 @@
                     label: 'Quantity',
                     backgroundColor: 'rgb(255, 99, 132)',
                     borderColor: 'rgb(255, 99, 132)',
+                    borderWidth: 1,
+                    barThickness: 2,
                     data: [],
                     fill: false,
                 }]
@@ -113,6 +117,7 @@
             }
             addData(paymentsChart, labels, data);
             addData(paymentAmountChart, labels, amounts);
+            RefreshStats();
         }});
         return false;
     }
@@ -128,9 +133,5 @@
         chart.data.labels = [];
         chart.data.datasets[0].data = [];
     }
-
-    $(document).ready(function(){
-        
-    });
 </script>
 @endpush

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\PaymentChartRequest;
+use App\Http\Requests\MonthlyChartRequest;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -11,10 +11,13 @@ class ChartController extends Controller
 {
     public function index()
     {
-        return view('charts.index');
+        $end = Carbon::today()->addDay();
+        $start = Carbon::today()->subMonths(3);
+
+        return view('charts.index', compact('end', 'start'));
     }
 
-    public function payments(PaymentChartRequest $request)
+    public function payments(MonthlyChartRequest $request)
     {
         /* $start = Carbon::parse($request->start_date);
         $end = Carbon::parse($request->end_date); */
@@ -37,9 +40,34 @@ class ChartController extends Controller
 
         foreach ($payments as $payment) {
             $date = new Carbon($payment->date);
-            $payment->date = $date->format('M');
+            $payment->date = $date->format('M-y');
         }
 
         return json_encode($payments);
+    }
+
+    public function stats(Request $request)
+    {
+        /* $start = Carbon::parse($request->start_date);
+        $end = Carbon::parse($request->end_date); */
+
+        $stats = [];
+
+        $personal_stats = DB::table('person_stats')
+            ->select([DB::raw('(SUM(personal_amount_due)) as personal_amount_due'),
+                DB::raw('(SUM(amount_paid)) as amount_paid'), ])
+            ->where('status', 1)
+            ->get()
+        ;
+
+        $insurance_stats = DB::table('person_stats')
+            ->select([DB::raw('(SUM(amount_due)) as amount_due'),
+                DB::raw('(SUM(amount_paid)) as amount_paid'), ])
+            ->where('status', 0)
+            ->get()
+        ;
+        array_push($stats, $personal_stats, $insurance_stats);
+
+        return json_encode($stats);
     }
 }

@@ -73,6 +73,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('reports/invoices', 'ReportController@personInvoicesReport')->name('reports.invoices');
 
     Route::post('charts/payments', 'ChartController@payments')->name('charts.payments');
+    Route::post('charts/stats', 'ChartController@stats')->name('charts.stats');
     Route::get('charts', 'ChartController@index')->name('charts.index');
 
     Route::get('fullnames', 'PersonDataController@fullNames');

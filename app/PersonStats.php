@@ -17,7 +17,7 @@ class PersonStats extends Model
     ];
     protected $casts = [
         'person_data_id' => 'integer',
-        'status' => 'string',
+        'status' => 'integer',
         'amount_paid' => 'decimal:13',
         'amount_due' => 'decimal:13',
         'total_amount_due' => 'decimal:13',

@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class PaymentChartRequest extends FormRequest
+class MonthlyChartRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
