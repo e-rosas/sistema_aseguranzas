@@ -66,7 +66,7 @@
                     backgroundColor: 'rgb(255, 99, 132)',
                     borderColor: 'rgb(255, 99, 132)',
                     borderWidth: 1,
-                    barThickness: 2,
+                    barPercentage: 0.6,
                     data: [],
                     fill: false,
                 }]
