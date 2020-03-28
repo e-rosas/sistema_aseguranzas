@@ -2,6 +2,80 @@
 
 @section('content')
 <div class="header bg-gradient-primary pb-8 pt-5 pt-md-8">
+    <div class="row">
+        <div class="col-xl-3 col-lg-6">
+            <div class="card card-stats mb-4 mb-xl-0">
+                <div class="card-body">        
+                    <div class="row">
+                        <div class="col">
+                            <h5 class="card-title text-uppercase text-muted mb-0">Total amount due</h5>
+                            <p class="h2 font-weight-bold mb-0"> {{ $stats['total_amount_due'] }} </p>
+                        </div>
+                        <div class="col-auto">
+                        <div class="icon icon-shape bg-orange text-white rounded-circle shadow">
+                            <i class="fas fa-dollar-sign"></i>
+                        </div>
+                        </div>
+                    </div>
+        
+                </div> 
+            </div>
+        </div>
+        <div class="col-xl-3 col-lg-6">
+            <div class="card card-stats mb-4 mb-xl-0">
+                <div class="card-body">        
+                    <div class="row">
+                        <div class="col">
+                            <h5 class="card-title text-uppercase text-muted mb-0">Total amount due (Insurance)</h5>
+                            <p id="total-amount-due-insurance" class="h2 font-weight-bold mb-0">{{ $stats['insurance_amount_due'] }} </p>
+                        </div>
+                        <div class="col-auto">
+                        <div class="icon icon-shape bg-orange text-white rounded-circle shadow">
+                            <i class="fas fa-dollar-sign"></i>
+                        </div>
+                        </div>
+                    </div>
+        
+                </div> 
+            </div>
+        </div>
+        <div class="col-xl-3 col-lg-6">
+            <div class="card card-stats mb-4 mb-xl-0">
+                <div class="card-body">        
+                    <div class="row">
+                        <div class="col">
+                            <h5 class="card-title text-uppercase text-muted mb-0">Total amount due (Discount)</h5>
+                            <p id="total-amount-due-personal" class="h2 font-weight-bold mb-0">{{ $stats['personal_amount_due']}}</p>
+                        </div>
+                        <div class="col-auto">
+                        <div class="icon icon-shape bg-orange text-white rounded-circle shadow">
+                            <i class="fas fa-dollar-sign"></i>
+                        </div>
+                        </div>
+                    </div>
+        
+                </div> 
+            </div>
+        </div>
+        <div class="col-xl-3 col-lg-6">
+            <div class="card card-stats mb-4 mb-xl-0">
+                <div class="card-body">        
+                    <div class="row">
+                        <div class="col">
+                            <h5 class="card-title text-uppercase text-muted mb-0">Total amount paid</h5>
+                            <p id="total-amount-paid" class="h2 font-weight-bold mb-0">{{ $stats['total_amount_paid']}}</p>
+                        </div>
+                        <div class="col-auto">
+                        <div class="icon icon-shape bg-orange text-white rounded-circle shadow">
+                            <i class="fas fa-dollar-sign"></i>
+                        </div>
+                        </div>
+                    </div>
+        
+                </div> 
+            </div>
+        </div>
+    </div>
 </div>
 <div class="container-fluid">
     <div class="row">

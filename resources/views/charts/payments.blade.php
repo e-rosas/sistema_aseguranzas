@@ -26,8 +26,8 @@
                 labels: [],
                 datasets: [{
                     label: '$',
-                    backgroundColor: 'rgb(255, 99, 132)',
-                    borderColor: 'rgb(255, 99, 132)',
+                    backgroundColor: 'rgb(75, 192, 192)',
+                    borderColor: 'rgb(75, 192, 192)',
                     data: [],
                     fill: false,
                 }]
@@ -63,8 +63,8 @@
                 labels: [],
                 datasets: [{
                     label: 'Quantity',
-                    backgroundColor: 'rgb(255, 99, 132)',
-                    borderColor: 'rgb(255, 99, 132)',
+                    backgroundColor: 'rgb(255, 159, 64)',
+                    borderColor: 'rgb(255, 159, 64)',
                     borderWidth: 1,
                     barPercentage: 0.6,
                     data: [],
