@@ -36,11 +36,11 @@
                         @foreach ($discounts as $discount)
                             <tr>
                                 <td>
-                                    {{-- @if ($discount->discount->insured)
-                                        <a href="{{ route('insurees.show', ) }}">
+                                    @if ($discount->person_data->insured)
+                                        <a href="{{ route('insurees.show', $discount->person_data->insuree) }}">
                                     @else
-                                        <a href="{{ route('beneficiaries.show', $discount->getBeneficiary()) }}">
-                                    @endif --}}
+                                        <a href="{{ route('beneficiaries.show', $discount->person_data->beneficiary) }}">
+                                    @endif
                                     {{ $discount->person_data->full_name }}  </a>
                                 </td>
                                 <td>{{ $discount->discounted_total}}</td>
@@ -74,11 +74,11 @@
                         @foreach ($insurance_discounts as $discount)
                             <tr>
                                 <td>
-                                    {{-- @if ($discount->discount->insured)
-                                        <a href="{{ route('insurees.show', ) }}">
+                                    @if ($discount->person_data->insured)
+                                        <a href="{{ route('insurees.show', $discount->person_data->insuree) }}">
                                     @else
-                                        <a href="{{ route('beneficiaries.show', $discount->getBeneficiary()) }}">
-                                    @endif --}}
+                                        <a href="{{ route('beneficiaries.show', $discount->person_data->beneficiary) }}">
+                                    @endif
                                     {{ $discount->person_data->full_name }}  </a>
                                 </td>
                                 <td>{{ $discount->getAmount_due()}}</td>
@@ -112,11 +112,11 @@
                         @foreach ($personal_discounts as $discount)
                             <tr>
                                 <td>
-                                    {{-- @if ($discount->discount->insured)
-                                        <a href="{{ route('insurees.show', ) }}">
+                                    @if ($discount->person_data->insured)
+                                        <a href="{{ route('insurees.show', $discount->person_data->insuree) }}">
                                     @else
-                                        <a href="{{ route('beneficiaries.show', $discount->getBeneficiary()) }}">
-                                    @endif --}}
+                                        <a href="{{ route('beneficiaries.show', $discount->person_data->beneficiary) }}">
+                                    @endif
                                     {{ $discount->person_data->full_name }}  </a>
                                 </td>
                                 <td>{{ $discount->getPersonalAmountDue()}}</td>
