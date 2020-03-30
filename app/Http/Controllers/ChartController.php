@@ -16,22 +16,22 @@ class ChartController extends Controller
 
         $personal_stats = DB::table('person_stats')
             ->select([DB::raw('(SUM(personal_amount_due)) as personal_amount_due'),
-                DB::raw('(SUM(amount_paid)) as amount_paid'), ])
+                DB::raw('(SUM(amount_paid)) as amount_paid'), DB::raw('(SUM(total_amount_due)) as total'), ])
             ->where('status', 1)
             ->get()
         ;
 
         $insurance_stats = DB::table('person_stats')
             ->select([DB::raw('(SUM(amount_due)) as amount_due'),
-                DB::raw('(SUM(amount_paid)) as amount_paid'), ])
+                DB::raw('(SUM(amount_paid)) as amount_paid'), DB::raw('(SUM(total_amount_due)) as total'), ])
             ->where('status', 0)
             ->get()
         ;
 
-        $stats['total_amount_due'] = $personal_stats[0]->personal_amount_due + $insurance_stats[0]->amount_due;
         $stats['personal_amount_due'] = $personal_stats[0]->personal_amount_due;
         $stats['insurance_amount_due'] = $insurance_stats[0]->amount_due;
         $stats['total_amount_paid'] = $personal_stats[0]->amount_paid + $insurance_stats[0]->amount_paid;
+        $stats['total_amount_due'] = $personal_stats[0]->total + $insurance_stats[0]->total - $stats['total_amount_paid'];
 
         return view('charts.index', compact('end', 'start', 'stats'));
     }
