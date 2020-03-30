@@ -19,25 +19,9 @@
             <div class="col-xl-8">
                 <div class="card card-stats mb-4 mb-xl-0">
                     <div class="card-body">
-                        <div class="row">
-                            {{--  Latest call  --}}
-                            @if (count($insuree->person_data->calls)>0)
-                            <div class="col-md-6 col-auto form-group">
-                                <label class="form-control-label" for="label-latest_call">{{ __('Latest call') }}</label>
-                                <label id="label-calls">{{ $insuree->person_data->calls[0]->date->format('l jS \\of F Y')}}</label>
-                            </div>
-                            @endif
-                        </div>
-                        <div class="row">
-                            {{--  Latest payment  --}}
-                            @if (count($insuree->person_data->payments)>0)
-                            <div class="col-md-6 col-auto form-group">
-                                <label class="form-control-label" for="label-latest_call">{{ __('Latest payment') }}</label>
-                                <label id="label-payments">{{ $insuree->person_data->payments[0]->date->format('l jS \\of F Y')}}</label>
-                            </div>
-                            @endif
-                        </div>
-                        </div>
+                        @include('components.personTab', ['invoices'=>$invoices, 'person_data'=>$insuree->person_data,
+                            'stats'=>$stats, 'beneficiaries' => $beneficiaries])
+                    </div>
                 </div>
             </div>
             <div class="col-xl-4 order-xl-2 mb-5 mb-xl-0">
@@ -71,6 +55,24 @@
                             </div>
                         </div>
                         <div class="text-center">
+                            {{--  Latest call  --}}
+                            @if (count($insuree->person_data->calls)>0)
+                            <div class="form-group">
+                                <label class="form-control-label" for="label-latest_call">{{ __('Latest call') }}</label>
+                                <label id="label-calls">{{ $insuree->person_data->calls[0]->date->format('l jS \\of F Y')}}</label>
+                            </div>
+                            @endif
+                        </div>
+                        <div class="text-center">
+                            {{--  Latest payment  --}}
+                            @if (count($insuree->person_data->payments)>0)
+                            <div class="">
+                                <label class="h4 font-weight-300" for="label-latest_call">{{ __('Latest payment') }}</label>
+                                <label class="h4 font-weight-200" id="label-payments">{{ $insuree->person_data->payments[0]->date->format('l jS \\of F Y')}}</label>
+                            </div>
+                            @endif
+                        </div>
+                        <div class="text-center">
                             <div class="h4 font-weight-300">
                                 <span id="total-total"> {{ $stats->getTotalAmountDue() }} </span>
                             </div>
@@ -95,12 +97,6 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="row mt-5">
-            <div class="col-xl-12 mb-5 mb-xl-0">
-                @include('components.personTab', ['invoices'=>$invoices, 'person_data'=>$insuree->person_data,
-                    'stats'=>$stats, 'beneficiaries' => $beneficiaries])
             </div>
         </div>
     </div>

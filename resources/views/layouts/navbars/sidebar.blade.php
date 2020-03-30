@@ -81,6 +81,11 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" href="{{ route('charts.index') }}">
+                        <i class="fas fa-chart-line text-primary"></i> {{ __('Stats') }}
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="{{ route('categories.index') }}">
                         <i class="fas fa-cube text-primary"></i> {{ __('Categories') }}
                     </a>
