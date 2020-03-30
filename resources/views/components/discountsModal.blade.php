@@ -382,7 +382,7 @@
             var end_date = document.getElementById("update-end-date").value;
 
             if(validateDates(start_date, end_date)){
-                updateDiscount(discount_id, )
+                updateDiscount(discount_id, start_date, end_date);
             }
 
         });

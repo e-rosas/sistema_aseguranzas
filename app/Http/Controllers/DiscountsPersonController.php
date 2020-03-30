@@ -55,7 +55,7 @@ class DiscountsPersonController extends Controller
     public function getPersonDiscounts($person_data_id)
     {
         $discounts = DiscountPersonData::where('person_data_id', $person_data_id)
-            ->orderBy('date', 'desc')
+            ->orderBy('end_date', 'desc')
             ->paginate(15)
         ;
 

@@ -6,20 +6,20 @@
         <div class="header-body">
            {{--  <!-- Card stats -->
             <div class="row">
-                @include('components.person_dataStatsCard', ['title' => 'Total due', 'value' => $topPersons->person_stats->getAmount_due()])
-                @include('components.person_dataStatsCard', ['title' => 'Total paid', 'value' => $topPersons->person_stats->getAmount_paid()])
+                @include('components.discountStatsCard', ['title' => 'Total due', 'value' => $topPersons->person_stats->getAmount_due()])
+                @include('components.discountStatsCard', ['title' => 'Total paid', 'value' => $topPersons->person_stats->getAmount_paid()])
             </div> --}}
         </div>
     </div>
 </div>
 
-{{-- <div class="row mt-5">
-    <div class="col-xl-8 mb-5 mb-xl-0">
+<div class="row mt-5">
+    <div class="col-xl-4 mb-5 mb-xl-0">
         <div class="card shadow">
             <div class="card-header border-0">
                 <div class="row align-items-center">
                     <div class="col">
-                        <h3 class="mb-0">{{ __('Patients') }}</h3>
+                        <h3 class="mb-0">{{ __('Discounts ending soon') }}</h3>
                     </div>
                 </div>
             </div>
@@ -28,23 +28,23 @@
                     <thead class="thead-light">
                         <tr>
                             <th scope="col">{{ __('Patient') }}</th>
-                            <th scope="col">{{ __('Amount paid') }}</th>
-                            <th scope="col">{{ __('Amount due') }}</th>
+                            <th scope="col">{{ __('Total') }}</th>
+                            <th scope="col">{{ __('End date') }}</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($topPersons as $person_data)
+                        @foreach ($discounts as $discount)
                             <tr>
                                 <td>
-                                    {{-- @if ($person_data->person_data->insured)
+                                    {{-- @if ($discount->discount->insured)
                                         <a href="{{ route('insurees.show', ) }}">
                                     @else
-                                        <a href="{{ route('beneficiaries.show', $person_data->getBeneficiary()) }}">
-                                    @endif
-                                    {{ $person_data->person_data->fullName() }} {{-- </a>
+                                        <a href="{{ route('beneficiaries.show', $discount->getBeneficiary()) }}">
+                                    @endif --}}
+                                    {{ $discount->person_data->full_name }}  </a>
                                 </td>
-                                <td>{{ $person_data->person_stats->getAmount_paid() }}</td>
-                                <td>{{ $person_data->person_stats->getAmount_due() }}</td>
+                                <td>{{ $discount->discounted_total}}</td>
+                                <td>{{ $discount->end_date->format('m-d-Y')}}</td>
                             </tr>
                         @endforeach
                     </tbody>
@@ -52,7 +52,83 @@
             </div>
         </div>
     </div>
-</div> --}}
+    <div class="col-xl-4 mb-5 mb-xl-0">
+        <div class="card shadow">
+            <div class="card-header border-0">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h3 class="mb-0">{{ __('Insurance discounts') }}</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="table-responsive table-sm">
+                <table class="table align-items-center table-flush">
+                    <thead class="thead-light">
+                        <tr>
+                            <th scope="col">{{ __('Patient') }}</th>
+                            <th scope="col">{{ __('Amount due') }}</th>
+                            <th scope="col">{{ __('Amount paid') }}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($insurance_discounts as $discount)
+                            <tr>
+                                <td>
+                                    {{-- @if ($discount->discount->insured)
+                                        <a href="{{ route('insurees.show', ) }}">
+                                    @else
+                                        <a href="{{ route('beneficiaries.show', $discount->getBeneficiary()) }}">
+                                    @endif --}}
+                                    {{ $discount->person_data->full_name }}  </a>
+                                </td>
+                                <td>{{ $discount->getAmount_due()}}</td>
+                                <td>{{ $discount->getAmount_paid()}}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-4 mb-5 mb-xl-0">
+        <div class="card shadow">
+            <div class="card-header border-0">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h3 class="mb-0">{{ __('Personal discounts') }}</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="table-responsive table-sm">
+                <table class="table align-items-center table-flush">
+                    <thead class="thead-light">
+                        <tr>
+                            <th scope="col">{{ __('Patient') }}</th>
+                            <th scope="col">{{ __('Amount due') }}</th>
+                            <th scope="col">{{ __('Amount paid') }}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($personal_discounts as $discount)
+                            <tr>
+                                <td>
+                                    {{-- @if ($discount->discount->insured)
+                                        <a href="{{ route('insurees.show', ) }}">
+                                    @else
+                                        <a href="{{ route('beneficiaries.show', $discount->getBeneficiary()) }}">
+                                    @endif --}}
+                                    {{ $discount->person_data->full_name }}  </a>
+                                </td>
+                                <td>{{ $discount->getPersonalAmountDue()}}</td>
+                                <td>{{ $discount->getAmount_paid()}}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div> 
 
 
 @endsection

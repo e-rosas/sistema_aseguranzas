@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\DiscountPersonData;
 use App\PersonStats;
 
 class HomeController extends Controller
@@ -21,13 +22,26 @@ class HomeController extends Controller
      */
     public function index()
     {
-        /* $persons = PersonStats::with('person_data')->orderBy('amount_due', 'desc')->get();
-        $topPersons = [];
+        $discounts = DiscountPersonData::with('person_data')
+            ->where('active', 1)
+            ->orderBy('end_date', 'desc')
+            ->take(10)
+            ->get()
+        ;
+        $insurance_discounts = PersonStats::with('person_data')
+            ->where('status', 0)
+            ->orderBy('amount_due', 'desc')
+            ->take(10)
+            ->get()
+        ;
 
-        for ($i = 0; $i < 10; ++$i) {
-            array_push($topPersons, $persons[$i]);
-        } */
+        $personal_discounts = PersonStats::with('person_data')
+            ->where('status', 1)
+            ->orderBy('personal_amount_due', 'desc')
+            ->take(10)
+            ->get()
+        ;
 
-        return view('dashboard');
+        return view('dashboard', compact('discounts', 'insurance_discounts', 'personal_discounts'));
     }
 }
