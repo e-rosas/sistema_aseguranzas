@@ -14,6 +14,7 @@
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/', 'HomeController@welcome')->name('welcome');
 
 Route::group(['middleware' => 'auth'], function () {
     Route::resource('insurers', 'InsurerController');

@@ -44,4 +44,9 @@ class HomeController extends Controller
 
         return view('dashboard', compact('discounts', 'insurance_discounts', 'personal_discounts'));
     }
+
+    public function welcome()
+    {
+        return view('welcome');
+    }
 }
