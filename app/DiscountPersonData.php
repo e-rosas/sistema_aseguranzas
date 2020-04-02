@@ -10,17 +10,6 @@ use Illuminate\Notifications\Notifiable;
 class DiscountPersonData extends Model
 {
     use Notifiable;
-
-    /**
-     * The event map for the model.
-     *
-     * @var array
-     */
-    protected $dispatchesEvents = [
-        'saved' => DiscountPersonEvent::class,
-        'updated' => DiscountPersonEvent::class,
-        'deleted' => DiscountPersonEvent::class,
-    ];
     public $fillable = [
         'person_data_id',
         'discount_percentage',
@@ -37,6 +26,17 @@ class DiscountPersonData extends Model
         'end_date' => 'date|required',
         'discounted_total' => 'numeric|required|between:0,999999999.999',
         'active' => 'boolean',
+    ];
+
+    /**
+     * The event map for the model.
+     *
+     * @var array
+     */
+    protected $dispatchesEvents = [
+        'saved' => DiscountPersonEvent::class,
+        'updated' => DiscountPersonEvent::class,
+        'deleted' => DiscountPersonEvent::class,
     ];
     protected $casts = [
         'id' => 'integer',
@@ -67,5 +67,11 @@ class DiscountPersonData extends Model
     public function person_data()
     {
         return $this->belongsTo('App\PersonData');
+    }
+
+    public function expired()
+    {
+        $this->active = 0;
+        $this->status = 'Not active';
     }
 }
