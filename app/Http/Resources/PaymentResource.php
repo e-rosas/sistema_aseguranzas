@@ -17,10 +17,12 @@ class PaymentResource extends JsonResource
     {
         return [
             'id' => $this->id,
+            'invoice' => $this->invoice->number,
             'amount' => $this->amount,
             'number' => $this->number,
             'comments' => is_null($this->comments) ? '' : $this->comments,
             'date' => $this->date->format('Y-m-d'),
+            'date_service' => $this->date_service->format('Y-m-d'),
         ];
     }
 }

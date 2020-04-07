@@ -22,14 +22,11 @@ class PaymentController extends Controller
 
         Payment::create($validated);
 
-        $payments = Payment::where('person_data_id', $request->person_data_id)
+        $payments = Payment::with('invoice')
+            ->where('person_data_id', $request->person_data_id)
             ->orderBy('date', 'desc')
             ->paginate(15)
         ;
-
-        //new action: Add paid amount, calculate amount due
-        /* $person_stats->amount_due -= (float) $validated['amount'];
-        $person_stats->save(); */
 
         return PaymentResource::collection($payments);
     }
@@ -43,11 +40,12 @@ class PaymentController extends Controller
     {
         $validated = $request->validated();
         $id = $validated['payment_id'];
-        $payment = Payment::find($id);
+
+        $payment = Payment::findOrFail($id);
         $payment->fill($validated);
         $payment->save();
 
-        $payments = Payment::where('person_data_id', $validated['person_data_id'])
+        $payments = Payment::with('invoice')->where('person_data_id', $validated['person_data_id'])
             ->orderBy('date', 'desc')
             ->paginate(15)
         ;
@@ -61,7 +59,7 @@ class PaymentController extends Controller
         $person_data_id = $payment->person_data_id;
         $payment->delete();
 
-        $payments = Payment::where('person_data_id', $person_data_id)
+        $payments = Payment::with('invoice')->where('person_data_id', $person_data_id)
             ->orderBy('date', 'desc')
             ->paginate(15)
         ;

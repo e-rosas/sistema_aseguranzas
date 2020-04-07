@@ -23,6 +23,12 @@
                                     @endif
                                 </div>
                             </div>
+                            {{--  Invoice  --}}
+                            <div class="form-group">
+                                <select id='invoice' class="custom-select form-control"  style="width: 100%" name="invoice_id"> 
+                                    <option value='0'>{{ __('Select invoice') }}</option>
+                                </select>
+                            </div>
                             {{--  amount  --}}
                             <div class="form-group{{ $errors->has('amount') ? ' has-danger' : '' }}">
                                 <label class="form-control-label" for="payment-amount">{{ __('Amount paid') }}</label>
@@ -46,6 +52,21 @@
                                     @if ($errors->has('date'))
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $errors->first('date') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+                            </div>
+                            {{--  date_service  --}}
+                            <div class="form-group {{ $errors->has('date_service') ? ' has-danger' : '' }}">
+                                <div class="input-group input-group-alternative">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-calendar"></i></span>
+                                    </div>
+                                    <input type="date" name="date_service" id="payment-date_service" class="form-control {{ $errors->has('date_service') ? ' is-invalid' : '' }}"
+                                    value="{{ old('date_service') }}" required>
+                                    @if ($errors->has('date_service'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('date_service') }}</strong>
                                         </span>
                                     @endif
                                 </div>
@@ -83,7 +104,7 @@
         var n = document.getElementById("payments_table").rows.length;
         document.getElementById("payment-number").value = n;
     }
-    function sendPayment(number, amount, date, comments){
+    function sendPayment(number, amount, date, comments, date_service, invoice_id){
         $.ajax({
             url: "{{route('payments.store')}}",
             dataType: 'json',
@@ -95,6 +116,8 @@
                 "amount": amount,
                 "date": date,
                 "comments": comments,
+                "date_service": date_service,
+                "invoice_id": invoice_id,
             },
         success: function (response) {
             DisplayPayments(response.data);
@@ -144,15 +167,44 @@
         var amount = Number(document.getElementById("payment-amount").value);
 
         var date = document.getElementById("payment-date").value;
+        var date_service = document.getElementById("payment-date_service").value;
+        var invoice_id = document.getElementById("invoice").value;
 
         var comments = document.getElementById("payment-comments").value;
 
-        if(amount > 0){
-            sendPayment(number, amount, date, comments);
+        if(amount > 0 && invoice_id > 0){
+            sendPayment(number, amount, date, comments, date_service, invoice_id);
         }
 
 
 
+    });
+    $(document).ready(function(){
+        $("#invoice").select2({
+          minimumInputLength: 2,
+          dropdownParent: $('#modal-payment'),
+          ajax: { 
+            url: "{{route('invoices.searchNumber')}}",
+            type:'post',
+            dataType: 'json',
+            delay: 250,
+            data: function (params) {
+              return {
+                _token: CSRF_TOKEN,
+                person_data_id: {{ $person_data->id }},
+                search: params.term // search term
+              };
+            },
+            processResults: function (response) {
+              return {
+                results: response
+              };
+            },
+            cache: true
+          }
+    
+        });
+    
     });
 </script>
 

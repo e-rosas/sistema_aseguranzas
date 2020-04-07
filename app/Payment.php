@@ -9,6 +9,24 @@ use Illuminate\Notifications\Notifiable;
 class Payment extends Model
 {
     use Notifiable;
+    public $fillable = [
+        'amount',
+        'number',
+        'comments',
+        'date',
+        'date_service',
+        'person_data_id',
+        'invoice_id',
+    ];
+    public static $rules = [
+        'amount' => 'required|numeric|between:0,999999999.999',
+        'comments' => 'max:1000',
+        'number' => 'required',
+        'date' => 'date',
+        'date_service' => 'date',
+        'person_data_id' => 'required',
+        'invoice_id' => 'required',
+    ];
     /**
      * The event map for the model.
      *
@@ -19,20 +37,6 @@ class Payment extends Model
         'updated' => PaymentEvent::class,
         'deleted' => PaymentEvent::class,
     ];
-    public $fillable = [
-        'amount',
-        'number',
-        'comments',
-        'date',
-        'person_data_id',
-    ];
-    public static $rules = [
-        'amount' => 'required|numeric|between:0,999999999.999',
-        'comments' => 'max:1000',
-        'number' => 'required',
-        'date' => 'date',
-        'person_data_id' => 'required',
-    ];
     protected $casts = [
         'id' => 'integer',
         'person_data_id' => 'integer',
@@ -41,7 +45,7 @@ class Payment extends Model
         'number' => 'string',
     ];
 
-    protected $dates = ['date'];
+    protected $dates = ['date', 'date_service'];
 
     public function getAmountAttribute($value)
     {
@@ -51,5 +55,10 @@ class Payment extends Model
     public function person_data()
     {
         return $this->belongsTo('App\PersonData');
+    }
+
+    public function invoice()
+    {
+        return $this->belongsTo('App\Invoice');
     }
 }

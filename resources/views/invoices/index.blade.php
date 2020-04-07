@@ -53,8 +53,19 @@
                             <tbody>
                                 @foreach ($invoices as $invoice)
                                     <tr>
-                                        <td>{{ $invoice->number}}</td>
-                                        <td>{{ $invoice->person_data->fullName() }}</td>
+                                        <td>
+                                            <a href="{{ route('invoices.show', $invoice) }}">
+                                                {{ $invoice->number}}
+                                            </a>
+                                        </td>
+                                        <td>
+                                            @if ($invoice->person_data->insured)
+                                                <a href="{{ route('insurees.show', $invoice->person_data->insuree) }}">
+                                            @else
+                                                <a href="{{ route('beneficiaries.show', $invoice->person_data->beneficiary) }}">
+                                            @endif
+                                            {{ $invoice->person_data->full_name }}
+                                        </td>
                                         <td>{{ $invoice->date->format('M-d-Y') }}</td>
                                         <td>{{ $invoice->total }}</td>
                                         <td>{{ $invoice->total_with_discounts }}</td>

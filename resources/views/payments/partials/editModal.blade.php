@@ -51,6 +51,16 @@
                                     @endif
                                 </div>
                             </div>
+                            {{--  date_service  --}}
+                            <div class="form-group">
+                                <div class="input-group input-group-alternative">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-calendar"></i></span>
+                                    </div>
+                                    <input type="date" name="date_service" id="update-payment-date_service" class="form-control {{ $errors->has('date_service') ? ' is-invalid' : '' }}"
+                                    value="{{ old('date_service') }}" required>
+                                </div>
+                            </div>
                             {{--  comments  --}}
                             <div class="form-group {{ $errors->has('comments') ? ' has-danger' : '' }}">
                                 <div class="input-group input-group-alternative">
@@ -95,20 +105,21 @@
             },
         success: function (response) {
                 displayPaymentModal(response.data.id, response.data.number,
-                    response.data.date, response.data.amount, response.data.comments);
+                    response.data.date, response.data.amount, response.data.comments, response.data.date_service);
             }
         });
         return false;
     }
-    function displayPaymentModal(payment_id, number, date, amount, comments){
+    function displayPaymentModal(payment_id, number, date, amount, comments, date_service){
         document.getElementById("update-payment-id").value = payment_id;
         document.getElementById("update-payment-number").value = number;
         document.getElementById("update-payment-date").value = date;
         document.getElementById("update-payment-amount").value = parseFloat(amount.replace(/,/g, ''));;
         document.getElementById("update-payment-comments").value = comments;
+        document.getElementById("update-payment-date_service").value = date_service;
 
       }
-    function updatePayment(id, number, amount, date, comments){
+    function updatePayment(id, number, amount, date, comments, date_service){
         $.ajax({
             url: "{{route('payments.update')}}",
             dataType: 'json',
@@ -121,6 +132,7 @@
                 "amount": amount,
                 "date": date,
                 "comments": comments,
+                "date_service": date_service,
             },
         success: function (response) {
             DisplayPayments(response.data);
@@ -143,11 +155,11 @@
             var amount = Number(document.getElementById("update-payment-amount").value);
 
             var date = document.getElementById("update-payment-date").value;
-
+            var date_service = document.getElementById("update-payment-date_service").value;
             var comments = document.getElementById("update-payment-comments").value;
 
             if(amount > 0 && number > 0){
-                updatePayment(payment_id, number, amount, date, comments);
+                updatePayment(payment_id, number, amount, date, comments, date_service);
             }
 
         });

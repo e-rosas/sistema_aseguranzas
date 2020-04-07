@@ -4,7 +4,9 @@
         <thead class="thead-light">
             <tr>
                 <th scope="col">{{ __('Number') }}</th>
+                <th scope="col">{{ __('Invoice') }}</th>
                 <th scope="col">{{ __('Date') }}</th>
+                <th scope="col">{{ __('DOS') }}</th>
                 <th scope="col">{{ __('Amount') }}</th>
                 <th scope="col">{{ __('Comments') }}</th>
                 <th scope="col">{{ __('Actions') }}</th>
@@ -14,7 +16,14 @@
             @foreach ($payments as $payment)
                 <tr>
                     <td>{{ $payment->number}}</td>
+                    <td>
+                        <a href="{{ route('invoices.show', $payment->invoice) }}">
+                            {{ $payment->invoice->number}}
+                        </a>
+                    </td>
                     <td>{{ $payment->date->format('M-d-Y')}}</td>
+
+                    <td>{{ $payment->date_service->format('M-d-Y')}}</td>
                     <td>{{ $payment->amount}}</td>
                     <td>{{ $payment->comments}}</td>
                      <td class="td-actions text-right">
@@ -39,7 +48,9 @@
         for(var i = 0; i < payments.length; i++){
             output += "<tr value="+payments[i].id+">"
                 + "<td>" + payments[i].number + "</td>"
+                + "<td>" + payments[i].invoice + "</td>"
                 + "<td>" + payments[i].date + "</td>"
+                + "<td>" + payments[i].date_service + "</td>"
                 + "<td>" + payments[i].amount + "</td>"
                 + "<td>" + payments[i].comments + "</td>"
                 +'<td class="text-right"><button class="btn btn-info btn-sm btn-icon"  type="button" onClick="showEditModal(\'' + payments[i].id + '\')"><span class="btn-inner--icon"><i class="fas fa-pencil-alt fa-2"></i></span></button>'

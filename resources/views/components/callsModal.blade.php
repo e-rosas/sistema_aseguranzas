@@ -25,6 +25,7 @@
                                         @endif
                                     </div>
                                 </div>
+                                {{--  Invoice  --}}
                                 <div class="form-group">
                                     <select id='invoice_id' class="custom-select form-control"  style="width: 100%" name="invoice_id"> 
                                         <option value='0'>{{ __('Select invoice') }}</option>
@@ -196,7 +197,7 @@
     
         });
     
-      });
+    });
 </script>
 
 @endpush

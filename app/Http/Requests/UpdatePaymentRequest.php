@@ -29,7 +29,7 @@ class UpdatePaymentRequest extends FormRequest
             'comments' => 'max:1000',
             'number' => 'required',
             'date' => 'date',
-            'person_data_id' => 'required',
+            'date_service' => 'date',
         ];
     }
 }

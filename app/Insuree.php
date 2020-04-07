@@ -50,6 +50,6 @@ class Insuree extends Model
     {
         $data = $this->person_data;
 
-        return $data->last_name.' '.$data->maiden_name.' '.$data->name;
+        return $data->full_name;
     }
 }
