@@ -36,9 +36,8 @@
                                     <th scope="col">{{ __('Status') }}</th>
                                     <th scope="col">{{ __('Date') }}</th>
                                     <th scope="col">{{ __('Invoice') }}</th>
-                                    <th scope="col">{{ __('Invoice status') }}</th>
                                     <th scope="col">{{ __('Patient') }}</th>
-                                    <th scope="col"></th>
+                                    <th scope="col">{{ __('Comments') }}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -53,33 +52,15 @@
                                                 {{ $call->invoice->number}}
                                             </a>
                                         </td>
-                                        <td>{{ $call->invoice->status }}</td>
                                         <td>
                                             @if ($call->person_data->insured)
                                                 <a href="{{ route('insurees.show', $call->person_data->insuree) }}">
                                             @else
                                                 <a href="{{ route('beneficiaries.show', $call->person_data->beneficiary) }}">
                                             @endif
-                                            {{ $call->person_data->full_name }}</td>
-                                        <td class="text-right">
-                                            <div class="dropdown">
-                                                <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                    <i class="fas fa-ellipsis-v"></i>
-                                                </a>
-                                                <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                                        {{--  <form action="{{ route('call.destroy', $call) }}" method="post">
-                                                            @csrf
-                                                            @method('delete')
-                                                            
-                                                            <a class="dropdown-item" href="{{ route('call.edit', $call) }}">{{ __('Edit') }}</a>
-                                                            <button type="button" class="dropdown-item" onclick="confirm('{{ __("Are you sure you want to delete this call?") }}') ? this.parentElement.submit() : ''">
-                                                                {{ __('Delete') }}
-                                                            </button>
-                                                        </form>    --}}  
-                                                        <a class="dropdown-item" href="{{ route('profile.edit') }}">{{ __('Edit') }}</a>
-                                                </div>
-                                            </div>
+                                            {{ $call->person_data->full_name }}
                                         </td>
+                                        <td>{{ $call->comments}}</td>  
                                     </tr>
                                 @endforeach
                             </tbody>

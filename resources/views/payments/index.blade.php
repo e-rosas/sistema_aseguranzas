@@ -34,7 +34,7 @@
                                     <th scope="col">{{ __('Number') }}</th>
                                     <th scope="col">{{ __('Invoice') }}</th>
                                     <th scope="col">{{ __('Date') }}</th>
-                                    <th scope="col">{{ __('DOS') }}</th>
+                                    <th scope="col">{{ __('D.O.S') }}</th>
                                     <th scope="col">{{ __('Amount') }}</th>
                                     <th scope="col">{{ __('Comments') }}</th>
                                     {{-- <th scope="col">{{ __('Actions') }}</th> --}}

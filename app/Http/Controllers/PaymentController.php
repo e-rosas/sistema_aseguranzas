@@ -16,9 +16,12 @@ class PaymentController extends Controller
      */
     public function index()
     {
-        $payments = Payment::with('person_data', 'invoice')->paginate(15);
+        $payments = Payment::with('person_data', 'invoice')
+            ->orderBy('date', 'desc')
+            ->paginate(15)
+        ;
 
-        return view('payments.index', compact('calls'));
+        return view('payments.index', compact('payments'));
     }
 
     /**
