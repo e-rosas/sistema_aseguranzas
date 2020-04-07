@@ -1,4 +1,4 @@
-<div class="modal fade" id="modal-update-call" tabindex="-1" role="dialog" aria-labelledby="modal-call" aria-hidden="true">
+<div class="modal fade" id="modal-update-call" role="dialog" aria-labelledby="modal-call" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
         <div class="modal-content">
             <div class="modal-body p-0">
@@ -53,6 +53,21 @@
                                         @endif
                                     </div>
                                 </div>
+                                {{--  status  --}}
+                                <div class="form-group {{ $errors->has('comments') ? ' has-danger' : '' }}">
+                                    <div class="input-group input-group-alternative">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-align-justify"></i></span>
+                                        </div>
+                                        <select multiple class="form-control" id="update-status">
+                                            <option>In process</option>
+                                            <option>Deductibles</option>
+                                            <option>Denied for non covered charges</option>
+                                            <option>Paid</option>
+                                            <option>Denied for timely filing</option>
+                                          </select>
+                                    </div>
+                                </div>
                                 {{--  comments  --}}
                                 <div class="form-group {{ $errors->has('comments') ? ' has-danger' : '' }}">
                                     <div class="input-group input-group-alternative">
@@ -88,7 +103,7 @@
         document.getElementById("input-number").value = n;
     }
     function updateCall(id, number, claim, date, 
-    comments){
+    comments, status){
         $.ajax({
             url: "{{route('calls.update')}}",
             dataType: 'json',
@@ -101,6 +116,7 @@
                 "claim": claim,
                 "date": date,
                 "comments": comments,
+                "status": status
             },
         success: function (response) {
             var calls = response.data;
@@ -113,12 +129,13 @@
     }
 
     function CallData(call_id, number, claim, date, 
-        comments){
+        comments, status){
             document.getElementById("update-call_id").value = call_id;
             document.getElementById("update-number").value = number;
             document.getElementById("update-claim").value = claim;
             document.getElementById("update-date").value = date;
             document.getElementById("update-comments").value = comments;
+            document.getElementById("update-status").value = status;
             
     }
 
@@ -133,7 +150,7 @@
             },
         success: function (data) {          
             CallData(data.id,data.number, data.claim, 
-                    data.date, data.comments);                                 
+                    data.date, data.comments, data.status);                                 
             }
         });
             return false;
@@ -167,14 +184,16 @@
 
 
         })
+        
         $("#update_call").click(function(){
             var call_id = document.getElementById("update-call_id").value;
             var number = document.getElementById("update-number").value;
             var claim = document.getElementById("update-claim").value;
             var date = document.getElementById("update-date").value;
             var comments = document.getElementById("update-comments").value;
+            var status = document.getElementById("update-status").value;
 
-            updateCall(call_id, number, claim, date, comments);
+            updateCall(call_id, number, claim, date, comments, status);
             
         });
     });

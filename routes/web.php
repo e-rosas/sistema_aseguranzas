@@ -43,6 +43,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('invoice_services', 'InvoiceServiceController@getInvoiceServices')->name('invoiceservices.get');
 
     Route::post('invoices/search', 'InvoiceController@search')->name('invoices.search');
+    Route::post('invoices/search_number', 'InvoiceController@searchNumber')->name('invoices.searchNumber');
     Route::post('beneficiaries/search', 'SearchPatientController@searchBeneficiary')->name('beneficiaries.search');
     Route::post('beneficiaries/find', 'SearchPatientController@findBeneficiary')->name('beneficiaries.find');
     Route::post('insurees/find', 'SearchPatientController@findInsuree')->name('insurees.find');

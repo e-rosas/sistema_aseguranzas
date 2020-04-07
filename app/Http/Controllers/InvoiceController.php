@@ -142,6 +142,25 @@ class InvoiceController extends Controller
     {
     }
 
+    public function searchNumber(Request $request)
+    {
+        $search = $request->search;
+        $invoices = Invoice::query()
+            ->where('person_data_id', $request->person_data_id)
+            ->whereLike('number', $search)
+            ->get()->take(8)
+        ;
+        $response = [];
+        foreach ($invoices as $invoice) {
+            $response[] = [
+                'id' => $invoice->id,
+                'text' => $invoice->number.' '.$invoice->date->format('m-d-y'),
+            ];
+        }
+        echo json_encode($response);
+        exit;
+    }
+
     protected function validateInvoice()
     {
         return request()->validate(Invoice::$rules);

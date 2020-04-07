@@ -1,4 +1,4 @@
-<div class="modal fade" id="modal-call" tabindex="-1" role="dialog" aria-labelledby="modal-call" aria-hidden="true">
+<div class="modal fade" id="modal-call" role="dialog" aria-labelledby="modal-call" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
         <div class="modal-content">
             <div class="modal-body p-0">
@@ -24,6 +24,11 @@
                                             </span>
                                         @endif
                                     </div>
+                                </div>
+                                <div class="form-group">
+                                    <select id='invoice_id' class="custom-select form-control"  style="width: 100%" name="invoice_id"> 
+                                        <option value='0'>{{ __('Select invoice') }}</option>
+                                    </select>
                                 </div>
                                 {{--  Claim  --}}
                                 <div class="form-group {{ $errors->has('claim') ? ' has-danger' : '' }}">
@@ -53,6 +58,21 @@
                                                 <strong>{{ $errors->first('date') }}</strong>
                                             </span>
                                         @endif
+                                    </div>
+                                </div>
+                                {{--  status  --}}
+                                <div class="form-group {{ $errors->has('comments') ? ' has-danger' : '' }}">
+                                    <div class="input-group input-group-alternative">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-align-justify"></i></span>
+                                        </div>
+                                        <select class="form-control" id="input-status">
+                                            <option>In process</option>
+                                            <option>Deductibles</option>
+                                            <option>Denied for non covered charges</option>
+                                            <option>Paid</option>
+                                            <option>Denied for timely filing</option>
+                                          </select>
                                     </div>
                                 </div>
                                 {{--  comments  --}}
@@ -85,8 +105,9 @@
 @push('js')
 
 <script>
+    var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
     function sendCall(number, claim, date,
-    comments){
+    comments, status, invoice_id){
         $.ajax({
             url: "{{route('calls.store')}}",
             dataType: 'json',
@@ -98,6 +119,8 @@
                 "claim": claim,
                 "date": date,
                 "comments": comments,
+                "status": status,
+                'invoice_id': invoice_id
             },
         success: function (response) {
             displayCalls(response.data);
@@ -122,8 +145,10 @@
         for(var i = 0; i < calls.length; i++){
             output += "<tr value="+calls[i].id+">"
                 + "<td>" + calls[i].number + "</td>"
+                + "<td>" + calls[i].invoice + "</td>"
                 + "<td>" + calls[i].date + "</td>"
                 + "<td>" + calls[i].claim + "</td>"
+                + "<td>" + calls[i].status + "</td>"
                 + "<td>" + calls[i].comments+ "</td>"
                 +'<td class="text-right"><button class="btn btn-icon btn-info btn-sm"  type="button" onClick="showEditCallModal(\'' + calls[i].id + '\')"><span class="btn-inner--icon"><i class="fas fa-pencil-alt fa-2"></i></span></button>'
                 +'<button class="btn btn-danger btn-sm btn-icon"  type="button" onClick="DeleteCall(\'' + calls[i].id + '\')"><span class="btn-inner--icon"><i class="fa fa-trash"></i></span></button></td>'
@@ -139,11 +164,43 @@
         var claim = document.getElementById("input-claim").value;
         var date = document.getElementById("input-date").value;
         var comments = document.getElementById("input-comments").value;
-
-        sendCall(number, claim, date, comments);
+        var status = document.getElementById("input-status").value;
+        var invoice_id = document.getElementById("invoice_id").value;
+        sendCall(number, claim, date, comments, status, invoice_id);
 
 
     });
+    $(document).ready(function(){
+        $("#invoice_id").select2({
+          minimumInputLength: 2,
+          dropdownParent: $('#modal-call'),
+          ajax: { 
+            url: "{{route('invoices.searchNumber')}}",
+            type:'post',
+            dataType: 'json',
+            delay: 250,
+            data: function (params) {
+              return {
+                _token: CSRF_TOKEN,
+                person_data_id: {{ $person_data->id }},
+                search: params.term // search term
+              };
+            },
+            processResults: function (response) {
+              return {
+                results: response
+              };
+            },
+            cache: true
+          }
+    
+        });
+    
+      });
 </script>
 
+@endpush
+@push('headjs')
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
 @endpush

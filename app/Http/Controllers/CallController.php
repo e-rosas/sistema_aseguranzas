@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Call;
+use App\Http\Requests\UpdateCallRequest;
 use App\Http\Resources\CallResource;
 use Illuminate\Http\Request;
 
@@ -15,7 +16,7 @@ class CallController extends Controller
      */
     public function index()
     {
-        $calls = \App\Call::with(['Person.person_data'])->paginate(15);
+        $calls = \App\Call::with('Person.person_data', 'invoice')->paginate(15);
 
         return view('calls.index', compact('calls'));
     }
@@ -65,11 +66,12 @@ class CallController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update(UpdateCallRequest $request)
     {
-        $validated = $this->validateCall();
+        $validated = $request->validated();
         $id = $request->id;
-        $call = Call::find($id);
+
+        $call = Call::findOrFail($id);
         $call->fill($validated);
         $call->save();
 
