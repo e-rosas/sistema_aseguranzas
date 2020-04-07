@@ -10,6 +10,18 @@ use Illuminate\Http\Request;
 class PaymentController extends Controller
 {
     /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        $payments = Payment::with('person_data', 'invoice')->paginate(15);
+
+        return view('payments.index', compact('calls'));
+    }
+
+    /**
      * Store a newly created resource in storage.
      *
      * @return \Illuminate\Http\Response
@@ -45,7 +57,7 @@ class PaymentController extends Controller
         $payment->fill($validated);
         $payment->save();
 
-        $payments = Payment::with('invoice')->where('person_data_id', $validated['person_data_id'])
+        $payments = Payment::with('invoice')->where('person_data_id', $request['person_data_id'])
             ->orderBy('date', 'desc')
             ->paginate(15)
         ;

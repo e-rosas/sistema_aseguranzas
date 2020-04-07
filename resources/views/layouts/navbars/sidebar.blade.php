@@ -67,7 +67,7 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('services.index') }}">
-                        <i class="ni ni-tv-2 text-primary"></i> {{ __('Services') }}
+                        <i class="fas fa-procedures text-primary"></i> {{ __('Services') }}
                     </a>
                 </li>
                 <li class="nav-item">
@@ -76,8 +76,18 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" href="{{ route('calls.index') }}">
+                        <i class="fas fa-phone text-primary"></i> {{ __('Calls') }}
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('payments.index') }}">
+                        <i class="fas fa-dollar-sign text-primary"></i> {{ __('Payments') }}
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="{{ route('items.index') }}">
-                        <i class="ni ni-tv-2 text-primary"></i> {{ __('Items') }}
+                        <i class="fas fa-prescription-bottle text-primary"></i> {{ __('Items') }}
                     </a>
                 </li>
                 <li class="nav-item">

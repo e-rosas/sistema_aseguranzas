@@ -53,7 +53,11 @@
                             <tbody>
                                 @foreach ($insurees as $insuree)
                                     <tr>
-                                        <td>{{ $insuree->fullName() }}</td>
+                                        <td>
+                                            <a href="{{ route('insurees.show', $insuree) }}">
+                                                {{ $insuree->fullName() }}
+                                            </a>
+                                        </td>
                                         <td>
                                             <a href="mailto:{{$insuree->person_data->email}}">{{$insuree->person_data->email}}</a>
                                         </td>

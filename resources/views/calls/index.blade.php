@@ -33,8 +33,9 @@
                                 <tr>
                                     <th scope="col">{{ __('Number') }}</th>
                                     <th scope="col">{{ __('Claim') }}</th>
+                                    <th scope="col">{{ __('Status') }}</th>
                                     <th scope="col">{{ __('Date') }}</th>
-                                    <th scope="col">{{ __('Invoice number') }}</th>
+                                    <th scope="col">{{ __('Invoice') }}</th>
                                     <th scope="col">{{ __('Invoice status') }}</th>
                                     <th scope="col">{{ __('Patient') }}</th>
                                     <th scope="col"></th>
@@ -44,11 +45,22 @@
                                 @foreach ($calls as $call)
                                     <tr>
                                         <td>{{ $call->number}}</td>
-                                        <td>{{ $call->claim}}</td>                                       
+                                        <td>{{ $call->claim}}</td>     
+                                        <td>{{ $call->status}}</td>                                     
                                         <td>{{ $call->date->format('m-d-Y') }}</td>
-                                        <td>{{ $call->invoice->number }}</td>
+                                        <td>
+                                            <a href="{{ route('invoices.show', $call->invoice) }}">
+                                                {{ $call->invoice->number}}
+                                            </a>
+                                        </td>
                                         <td>{{ $call->invoice->status }}</td>
-                                        <td>{{ $call->person_data->fullName() }}</td>
+                                        <td>
+                                            @if ($call->person_data->insured)
+                                                <a href="{{ route('insurees.show', $call->person_data->insuree) }}">
+                                            @else
+                                                <a href="{{ route('beneficiaries.show', $call->person_data->beneficiary) }}">
+                                            @endif
+                                            {{ $call->person_data->full_name }}</td>
                                         <td class="text-right">
                                             <div class="dropdown">
                                                 <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

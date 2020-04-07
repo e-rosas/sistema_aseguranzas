@@ -16,7 +16,7 @@ class CallController extends Controller
      */
     public function index()
     {
-        $calls = \App\Call::with('Person.person_data', 'invoice')->paginate(15);
+        $calls = Call::with('person_data', 'invoice')->paginate(15);
 
         return view('calls.index', compact('calls'));
     }
