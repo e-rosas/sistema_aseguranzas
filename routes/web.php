@@ -78,6 +78,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('charts/stats', 'ChartController@stats')->name('charts.stats');
     Route::get('charts', 'ChartController@index')->name('charts.index');
 
+    Route::get('invoices_year', 'InvoiceController@year');
+    Route::get('invoices_yearbefore', 'InvoiceController@yearBefore');
+
     Route::get('fullnames', 'PersonDataController@fullNames');
     Route::get('stats', 'PersonDataController@Stats');
     Route::get('profile', ['as' => 'profile.edit', 'uses' => 'ProfileController@edit']);

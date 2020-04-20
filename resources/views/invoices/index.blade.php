@@ -8,23 +8,43 @@
             <div class="col">
                 <div class="card shadow">
                     <div class="card-header border-0">
+                        <h3 class="card-title">Invoices</h3>
                         <div class="row align-items-center">
-                            <div class="col-8">
-                                <h3 class="mb-0">{{ __('Invoices') }}</h3>
+                            <div class="col-md-10">
+                                <!-- Search form -->
+                                <form  method="post" action="{{ route('invoices.search') }}" >
+                                    @csrf                                 
+                                    <div class="form-row">
+                                        <div class="col-md-3">
+                                            <select id='year' class="custom-select" name="year"> 
+                                                <option value='0'>All</option>
+                                                <option value='2020'>2020</option>
+                                                <option value='2019'>2019</option>
+                                                <option value='2018'>2018</option>
+                                                <option value='2017'>2017</option>
+                                                <option value='2016'>2016</option>
+                                                <option value='2015'>2015</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="col-md-7">
+                                            <input name="search" class="form-control" type="text" placeholder="Buscar" aria-label="Search"> 
+                                        </div> 
+                                        <div class="col-md-1">
+                                            <button class="btn btn-primary btn-fab btn-icon">
+                                                <i class="fas fa-search"></i>
+                                              </button>
+                                        </div>                  
+                                    </div>
+                                </form>
                             </div>
-                            <div class="col-4 text-right">
-                                <a href="{{ route('invoices.create') }}" class="btn btn-sm btn-primary">{{ __('Add invoice') }}</a>
+                            <div class="col-md-1">
+                                <a href="{{ route('invoices.create') }}" class="btn btn-primary">Add Invoice</a>
                             </div>
                         </div>
                     </div>
 
-                    <form  method="post" action="{{ route('invoices.search') }}" >
-                        @csrf
-                        <div class="form-group col-md-12 col-auto">
-                            <label for="example-search-input" class="form-control-label">Search</label>
-                            <input name="search" class="form-control" type="search" required placeholder="Search..." id="search">
-                        </div>
-                    </form>
+                    
 
                     <div class="col-12">
                         @if (session('status'))
@@ -44,9 +64,9 @@
                                     <th scope="col">{{ __('Number') }}</th>
                                     <th scope="col">{{ __('Patient') }}</th>
                                     <th scope="col">{{ __('Date') }}</th>
+                                    <th scope="col">{{ __('Year') }}</th>
                                     <th scope="col">{{ __('Total') }}</th>
                                     <th scope="col">{{ __('Total with discounts') }}</th>
-                                    <th scope="col">{{ __('Amount paid') }}</th>
                                     <th scope="col"></th>
                                 </tr>
                             </thead>
@@ -67,9 +87,9 @@
                                             {{ $invoice->person_data->full_name }}
                                         </td>
                                         <td>{{ $invoice->date->format('M-d-Y') }}</td>
+                                        <td>{{ $invoice->year }}</td>
                                         <td>{{ $invoice->total }}</td>
                                         <td>{{ $invoice->total_with_discounts }}</td>
-                                        <td>{{ $invoice->amount_paid }}</td>
                                         <td class="text-right">
                                             <div class="dropdown">
                                                 <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

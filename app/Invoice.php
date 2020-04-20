@@ -14,17 +14,6 @@ class Invoice extends Model
     use SoftDeletes;
     public $insuree;
 
-    /**
-     * The event map for the model.
-     *
-     * @var array
-     */
-    protected $dispatchesEvents = [
-        'saved' => InvoiceEvent::class,
-        'updated' => InvoiceEvent::class,
-        'deleted' => InvoiceEvent::class,
-    ];
-
     public $fillable = [
         'number',
         'comments',
@@ -54,6 +43,16 @@ class Invoice extends Model
         'amount_paid' => 'numeric|between:0,999999999.999',
         'amount_due' => 'numeric|between:0,999999999.999',
         'person_data_id' => 'required',
+    ];
+
+    /**
+     * The event map for the model.
+     *
+     * @var array
+     */
+    protected $dispatchesEvents = [
+        'saved' => InvoiceEvent::class, // 'updated' => InvoiceEvent::class,
+        'deleted' => InvoiceEvent::class,
     ];
     protected $casts = [
         'id' => 'integer',

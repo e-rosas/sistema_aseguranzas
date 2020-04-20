@@ -33,10 +33,22 @@ class InvoiceController extends Controller
 
     public function search(Request $request)
     {
-        $search = $request->search;
-        $invoices = Invoice::whereLike(['number', 'person_data.name', 'person_data.last_name', 'person_data.maiden_name'], $search)
-            ->paginate(10)
+        if (is_null($request['search'])) {
+            $search = '';
+        } else {
+            $search = $request['search'];
+        }
+        $year = $request['year'];
+        if ($year > 0) {
+            $invoices = Invoice::where('year', $year)
+                ->whereLike(['number', 'person_data.name', 'person_data.last_name', 'person_data.maiden_name'], $search)
+                ->paginate()
         ;
+        } else {
+            $invoices = Invoice::whereLike(['number', 'person_data.name', 'person_data.last_name', 'person_data.maiden_name'], $search)
+                ->paginate()
+        ;
+        }
 
         return view('invoices.index', compact('invoices'));
     }
@@ -159,6 +171,30 @@ class InvoiceController extends Controller
         }
         echo json_encode($response);
         exit;
+    }
+
+    public function year()
+    {
+        $invoices = Invoice::where('id', '<=', 959)->get();
+        foreach ($invoices as $invoice) {
+            $services = InvoiceService::where('invoice_id', $invoice->id)->get();
+            foreach ($services as $service) {
+                $service->created_at = $invoice->date;
+                $service->save();
+            }
+            $invoice->year = $invoice->date->year;
+            $invoice->save();
+        }
+    }
+
+    public function yearBefore()
+    {
+        $invoices = Invoice::where('id', '>=', 960)->get();
+        foreach ($invoices as $invoice) {
+            $service = InvoiceService::where('invoice_id', $invoice->id)->first();
+            $invoice->year = $service->created_at->year;
+            $invoice->save();
+        }
     }
 
     protected function validateInvoice()
