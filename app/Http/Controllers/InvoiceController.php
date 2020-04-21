@@ -14,12 +14,12 @@ class InvoiceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    /* public function index()
     {
         $invoices = \App\Invoice::with(['person_data'])->paginate(15);
 
         return view('invoices.index', compact('invoices'));
-    }
+    } */
 
     /**
      * Show the form for creating a new resource.
@@ -31,7 +31,7 @@ class InvoiceController extends Controller
         return view('invoices.create');
     }
 
-    public function search(Request $request)
+    public function index(Request $request)
     {
         if (is_null($request['search'])) {
             $search = '';
@@ -41,16 +41,16 @@ class InvoiceController extends Controller
         $year = $request['year'];
         if ($year > 0) {
             $invoices = Invoice::where('year', $year)
-                ->whereLike(['number', 'person_data.name', 'person_data.last_name', 'person_data.maiden_name'], $search)
+                ->whereLike(['number', 'person_data.full_name'], $search)
                 ->paginate()
         ;
         } else {
-            $invoices = Invoice::whereLike(['number', 'person_data.name', 'person_data.last_name', 'person_data.maiden_name'], $search)
+            $invoices = Invoice::whereLike(['number', 'person_data.full_name'], $search)
                 ->paginate()
         ;
         }
 
-        return view('invoices.index', compact('invoices'));
+        return view('invoices.index', compact('invoices', 'search', 'year'));
     }
 
     /**

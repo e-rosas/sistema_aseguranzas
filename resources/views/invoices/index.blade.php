@@ -12,28 +12,27 @@
                         <div class="row align-items-center">
                             <div class="col-md-10">
                                 <!-- Search form -->
-                                <form  method="post" action="{{ route('invoices.search') }}" >
-                                    @csrf                                 
+                                <form  method="get" action="{{ route('invoices.index') }}" >                           
                                     <div class="form-row">
                                         <div class="col-md-3">
                                             <select id='year' class="custom-select" name="year"> 
-                                                <option value='0'>All</option>
-                                                <option value='2020'>2020</option>
-                                                <option value='2019'>2019</option>
-                                                <option value='2018'>2018</option>
-                                                <option value='2017'>2017</option>
-                                                <option value='2016'>2016</option>
-                                                <option value='2015'>2015</option>
+                                                <option value='0' {{ $year == 0 ? 'selected' : '' }} >All</option>
+                                                <option value='2020' {{ $year == 2020 ? 'selected' : '' }}>2020</option>
+                                                <option value='2019' {{ $year == 2019 ? 'selected' : '' }}>2019</option>
+                                                <option value='2018' {{ $year == 2018 ? 'selected' : '' }}>2018</option>
+                                                <option value='2017' {{ $year == 2017 ? 'selected' : '' }}>2017</option>
+                                                <option value='2016' {{ $year == 2016 ? 'selected' : '' }}>2016</option>
+                                                <option value='2015' {{ $year == 2015 ? 'selected' : '' }}>2015</option>
                                             </select>
                                         </div>
 
                                         <div class="col-md-7">
-                                            <input name="search" class="form-control" type="text" placeholder="Buscar" aria-label="Search"> 
+                                            <input name="search" value="{{ $search ?? '' }}" class="form-control" type="text" placeholder="Buscar" aria-label="Search"> 
                                         </div> 
                                         <div class="col-md-1">
-                                            <button class="btn btn-primary btn-fab btn-icon">
+                                            <button type="submit" class="btn btn-primary btn-fab btn-icon">
                                                 <i class="fas fa-search"></i>
-                                              </button>
+                                            </button>
                                         </div>                  
                                     </div>
                                 </form>
@@ -117,7 +116,7 @@
                     </div>
                     <div class="card-footer py-4">
                         <nav class="d-flex justify-content-end" aria-label="...">
-                            {{ $invoices->links() }}
+                            {{ $invoices->appends(['search' => $search ?? '', 'year' => $year ?? 0])->links() }}
                         </nav>
                     </div>
                 </div>

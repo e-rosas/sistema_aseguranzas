@@ -35,6 +35,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::patch('services_update', ['as' => 'service.update', 'uses' => 'ServiceController@update']);
     Route::patch('invoices_updateperson', ['as' => 'invoice.updateperson', 'uses' => 'InvoiceController@updatePersonData']);
     Route::patch('invoices_update', ['as' => 'invoice.update', 'uses' => 'InvoiceController@update']);
+
     Route::post('insurees/search', 'SearchPatientController@searchInsuree')->name('insurees.search');
     Route::post('patients/search', 'SearchPatientController@search')->name('patients.search');
     Route::post('services/search', 'SearchProductController@searchService')->name('services.search');
@@ -42,7 +43,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::post('invoice_services', 'InvoiceServiceController@getInvoiceServices')->name('invoiceservices.get');
 
-    Route::post('invoices/search', 'InvoiceController@search')->name('invoices.search');
+    //Route::get('invoices/search', 'InvoiceController@index')->name('invoices.search');
     Route::post('invoices/search_number', 'InvoiceController@searchNumber')->name('invoices.searchNumber');
     Route::post('beneficiaries/search', 'SearchPatientController@searchBeneficiary')->name('beneficiaries.search');
     Route::post('beneficiaries/find', 'SearchPatientController@findBeneficiary')->name('beneficiaries.find');
