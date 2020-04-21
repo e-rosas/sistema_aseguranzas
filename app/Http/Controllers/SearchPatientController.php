@@ -49,6 +49,23 @@ class SearchPatientController extends Controller
         exit;
     }
 
+    public function searchInsuree2(Request $request)
+    {
+        $search = $request->search;
+        $patients = Insuree::with('person_data')->whereLike(['person_data.full_name', 'insurance_id'], $search)
+            ->get()->take(10)
+    ;
+        $response = [];
+        foreach ($patients as $patient) {
+            $response[] = [
+                'id' => $patient->id,
+                'text' => $patient->person_data->full_name.' - '.$patient->id,
+            ];
+        }
+        echo json_encode($response);
+        exit;
+    }
+
     public function searchInsureeIndex(Request $request)
     {
         $search = $request->search;

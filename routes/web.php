@@ -82,6 +82,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('invoices_year', 'InvoiceController@year');
     Route::get('invoices_yearbefore', 'InvoiceController@yearBefore');
 
+    Route::patch('beneficiaries/update', 'BeneficiaryController@update')->name('beneficiaries.update');
+    Route::post('insurees/search2', 'SearchPatientController@searchInsuree2')->name('insurees.search2');
+
     Route::get('fullnames', 'PersonDataController@fullNames');
     Route::get('stats', 'PersonDataController@Stats');
     Route::get('profile', ['as' => 'profile.edit', 'uses' => 'ProfileController@edit']);

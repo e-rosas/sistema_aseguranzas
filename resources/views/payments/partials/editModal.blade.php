@@ -144,6 +144,24 @@
             return false;
     }
 
+    function change(beneficiary_id){
+        var insuree_id = document.getElementById("insuree_selected").value;
+        $.ajax({
+            url: "{{route('beneficiaries.update')}}",
+            dataType: 'json',
+            type:"patch",
+            data: {
+                "_token": "{{ csrf_token() }}",
+                "insuree_id": insuree_id,
+                "beneficiary_id": beneficiary_id,
+            },
+        success: function (response) {
+            console.log(response);
+    
+            }
+        });
+            return false;
+      }
 
 
     $(document).ready(function(){

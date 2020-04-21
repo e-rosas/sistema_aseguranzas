@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Beneficiary;
 use App\Invoice;
 use App\PersonStats;
+use Illuminate\Http\Request;
 
 class BeneficiaryController extends Controller
 {
@@ -31,6 +32,15 @@ class BeneficiaryController extends Controller
         return view('beneficiaries.create');
     }
 
+    public function update(Request $request)
+    {
+        $beneficiary = Beneficiary::findOrFail($request->beneficiary_id);
+        $beneficiary->insuree_id = $request->insuree_id;
+        $beneficiary->save();
+
+        return json_encode($beneficiary);
+    }
+
     /**
      * Display the specified resource.
      *
@@ -42,7 +52,8 @@ class BeneficiaryController extends Controller
 
         $invoices = Invoice::with('services')
             ->where('person_data_id', $beneficiary->person_data->id)
-            ->paginate(5);
+            ->paginate(5)
+        ;
 
         $stats = PersonStats::where('person_data_id', $beneficiary->person_data->id)->first();
 

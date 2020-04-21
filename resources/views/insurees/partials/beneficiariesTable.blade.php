@@ -1,3 +1,4 @@
+@include('components.searchInsurees2')
 <div class="table-responsive">
     <table class="table align-items-center table-flush">
         <thead class="thead-light">
@@ -6,7 +7,7 @@
                 <th scope="col">{{ __('Email') }}</th>
                 <th scope="col">{{ __('Phone') }}</th>
                 <th scope="col">{{ __('Birth date') }}</th>
-                <!-- <th scope="col">{{ __('Invoices') }}</th> -->
+                <th scope="col"></th>
             </tr>
         </thead>
         <tbody>
@@ -18,7 +19,14 @@
                     </td>
                     <td>{{ $beneficiary->person_data->phone_number }}</td>
                     <td>{{ $beneficiary->person_data->birth_date->format('M-d-Y')}}</td>
-
+                    <td>
+                        <div>
+                            <input id="insuree_selected" type="numeric" name="insuree_id" required>
+                            <button id="change_insuree" class="btn-sm btn-warning" onclick="change('{{ $beneficiary->id }}') ? this.parentElement.submit() : ''">
+                                Change
+                            </button>
+                        </div>  
+                    </td>
                 </tr>
             @endforeach
         </tbody>
