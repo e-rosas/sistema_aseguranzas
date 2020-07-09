@@ -12,7 +12,7 @@ return [
     |
     */
 
-    'name' => 'Hospital Mexico',
+    'name' => 'Hospital México - Cartera Vencida',
 
     /*
     |--------------------------------------------------------------------------
