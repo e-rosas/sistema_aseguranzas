@@ -152,6 +152,8 @@ class InvoiceController extends Controller
      */
     public function destroy(Invoice $invoice)
     {
+        $invoice->delete();
+        return back()->withStatus(__('Invoice successfully deleted.'));
     }
 
     public function searchNumber(Request $request)
